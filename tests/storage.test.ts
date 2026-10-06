@@ -53,4 +53,10 @@ it('exports status, anchors, source and selection; protects CSV formula cells', 
   expect(csv).toContain("'=unsafe-name");
   expect(csv).toContain('"0.5","kg"');
   expect(csv).toContain('file-download?statInfId=');
+  const tabbed = makeCsv(
+    { ...current, name: '\t=unsafe-name' },
+    release,
+    evaluate(current, release, city()),
+  );
+  expect(tabbed).toContain("'\t=unsafe-name");
 });

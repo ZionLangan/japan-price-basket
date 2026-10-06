@@ -3,7 +3,7 @@ import type { Result } from '../../../packages/domain/src/domain';
 
 const cell = (value: unknown) => {
   let text = String(value ?? '');
-  if (/^[=+@-]/.test(text) && !/^-?\d+(\.\d+)?$/.test(text)) text = `'${text}`;
+  if (/^[\s\u0000-\u001f]*[=+@-]/.test(text) && !/^-?\d+(\.\d+)?$/.test(text)) text = `'${text}`;
   return `"${text.replaceAll('"', '""')}"`;
 };
 export function makeCsv(basket: Basket, release: Release, rows: Result[]) {
@@ -52,7 +52,13 @@ export function makeCsv(basket: Basket, release: Release, rows: Result[]) {
         r.status,
         r.change,
         r.index,
-        r.comparable ? 'comparable' : 'unresolved_break',
+        !r.comparable
+          ? 'unresolved_break'
+          : rows[0]?.cost === null
+            ? 'unavailable_baseline'
+            : r.cost === null
+              ? 'unavailable_target'
+              : 'comparable',
         r.change !== null && (r.status === 'estimated' || rows[0]?.status === 'estimated'),
         r.yoy,
         r.yoyEstimated,
