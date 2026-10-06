@@ -21,21 +21,22 @@ export function PriceChart({
   const values = rows.map((r) => (r[measure] === null ? null : Number(r[measure])));
   const present = values.filter((v): v is number => v !== null);
   const [width, setWidth] = useState(900);
+  const [height, setHeight] = useState(310);
   const ref = useRef<SVGSVGElement>(null);
   const hasData = present.length > 0;
   useEffect(() => {
     if (!ref.current) return;
     const observer = new ResizeObserver((entries) => {
       setWidth(Math.max(280, entries[0].contentRect.width));
+      setHeight(Math.max(224, entries[0].contentRect.height));
     });
     observer.observe(ref.current);
     return () => observer.disconnect();
   }, [hasData]);
   if (!present.length) return <p className="notice">{empty}</p>;
-  const height = 310,
-    left = 70,
+  const left = 70,
     top = 20,
-    bottom = 265,
+    bottom = height - 45,
     right = width - 20;
   const lower = Math.max(0, Math.min(...present) * 0.9);
   const upper = Math.max(...present) * 1.1 || 1;
@@ -66,8 +67,8 @@ export function PriceChart({
       <title>{label}</title>
       <desc>
         {locale === 'en'
-          ? 'Monthly values with gaps and specification boundaries. The equivalent table follows.'
-          : '欠測と銘柄変更の境界を保持した月次の値です。同じ値を下の表に示します。'}
+          ? 'Monthly values with gaps and specification boundaries. Exact values are in the Monthly data tab.'
+          : '欠測と銘柄変更の境界を保持した月次の値です。正確な値は月次データのタブで確認できます。'}
       </desc>
       {ticks.map((v, i) => (
         <g key={i}>
@@ -82,7 +83,7 @@ export function PriceChart({
         <text
           key={i}
           x={x(i)}
-          y={290}
+          y={height - 20}
           textAnchor={i === 0 ? 'start' : i === rows.length - 1 ? 'end' : 'middle'}
         >
           {rows[i].month}
@@ -135,7 +136,9 @@ export function PriceChart({
             strokeWidth={2}
           >
             <title>
-              {row.month}: {format(values[i]!)} · {row.status}
+              {row.month}: {measure === 'cost' ? '¥' : ''}
+              {format(values[i]!)} ·{' '}
+              {locale === 'en' ? row.status : row.status === 'estimated' ? '推定' : '実測'}
             </title>
           </circle>
         ),
