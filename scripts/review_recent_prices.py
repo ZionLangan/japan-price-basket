@@ -30,6 +30,13 @@ def make_fixture(staging, review):
     start, end = snapshots[0]["month"], snapshots[-1]["month"]
     if review["approvedWindow"] != {"start": start, "end": end}:
         raise ValueError("Staging window differs from the reviewed catalog; review required")
+    expected = []
+    year, month = map(int, start.split("-"))
+    while f"{year:04}-{month:02}" <= end:
+        expected.append(f"{year:04}-{month:02}")
+        year, month = (year + 1, 1) if month == 12 else (year, month + 1)
+    if [s["month"] for s in snapshots] != expected:
+        raise ValueError("Missing, duplicate, or unordered monthly snapshot")
     english = ["Sapporo", "Hakodate", "Asahikawa", "Aomori", "Hachinohe", "Morioka",
                "Sendai", "Akita", "Yamagata", "Fukushima", "Koriyama", "Mito", "Hitachi",
                "Utsunomiya", "Oyama", "Maebashi", "Saitama", "Kumagaya", "Kawaguchi",
@@ -68,9 +75,24 @@ def make_fixture(staging, review):
             if len(rows) != 1 or code not in s["specs"]:
                 raise ValueError(f"Missing or duplicate item {code}, {s['month']}")
             row, spec = rows[0], s["specs"][code]
-            if normalized(row["name"]) != normalized(spec["name"]):
+            if code == "1001":
+                names_match = (normalized(row["name"]) == normalized(mapping["sourceName"])
+                               and normalized(spec["name"]) == normalized(mapping["specName"]))
+            else:
+                names_match = normalized(row["name"]) == normalized(spec["name"])
+            if not names_match:
                 raise ValueError(f"Name mismatch {code}")
-            if mapping["unit"] == "kg":
+            if code in {"1001", "1303", "1341"}:
+                expected_source, expected_spec, quantity_term = {
+                    "1001": ("1袋・5kg", "1袋", "5kg入り"),
+                    "1303": ("1本・1000mL", "1本", "1000mL入り"),
+                    "1341": ("1パック・10個", "1パック", "10個入り"),
+                }[code]
+                if (normalized(row["unit"]).replace("･", "・").replace(",", "") != expected_source
+                        or normalized(spec["unit"]) != expected_spec
+                        or quantity_term not in normalized(spec["definition"]).replace(",", "")):
+                    raise ValueError(f"Unreviewed quoted quantity {code}: {row['unit']}")
+            elif mapping["unit"] == "kg":
                 expected = "1袋・1kg" if code == "1632" else "1kg"
                 # e-Stat uses U+FF65 in the sugar package unit; normalization
                 # yields a middle dot. The reviewed bag contains exactly 1 kg.
@@ -98,13 +120,14 @@ def make_fixture(staging, review):
                                  "continuityFromPrevious": False})
             signatures.append(signature)
             all_rows.append((s, row, segments[-1]["id"]))
-        units = ["kg", "g"] if mapping["unit"] == "kg" else ["package"]
+        units = ["kg", "g"] if mapping["unit"] == "kg" else ["L", "mL"] if mapping["unit"] == "L" else [mapping["unit"]]
         products.append({"id": mapping["id"], "familyId": mapping["id"], "variantId": mapping["id"],
                          "code": code, "names": {"en": mapping["en"], "ja": all_rows[-1][1]["name"]},
                          "aliases": mapping["aliases"], "category": "food" if int(code) < 3000 else "household",
                          "unit": mapping["unit"], "quoteQuantity": mapping["quoteQuantity"],
-                         "quoteLabel": {"en": ("1 kg" if mapping["unit"] == "kg" else
-                                                "1 roll" if code == "4401" else "1 specified refill"),
+                         "quoteLabel": {"en": mapping.get("quoteLabelEn", (
+                             f"{mapping['quoteQuantity']} {mapping['unit']}" if mapping["unit"] in {"kg", "L"}
+                             else "1 roll" if code == "4401" else "1 specified refill")),
                                         "ja": ("1本（期間ごとの指定容量）" if code == "4431" else all_rows[-1][1]["unit"])},
                          "units": units, "presets": mapping["presets"], "segments": segments})
         counts = Counter()
