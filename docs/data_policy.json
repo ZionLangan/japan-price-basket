@@ -1,0 +1,44 @@
+{
+  "policy_version": "1.0",
+  "updated_at": "2026-10-06",
+  "primary_source": "Statistics Bureau Retail Price Survey Trend Survey",
+  "ingestion_start_month": "2000-01",
+  "default_gap_mode": "allow_reviewed_estimates",
+  "temporary_gap": {
+    "max_anchor_age_calendar_months": 2,
+    "requires_reviewed_missing_reason": true
+  },
+  "seasonal_gap": {
+    "enabled": true,
+    "max_anchor_age_calendar_months": 11,
+    "requires_effective_dated_survey_calendar": true,
+    "requires_anchor_in_preceding_survey_season": true,
+    "allowed_only_in_scheduled_off_season": true,
+    "stop_when_new_season_complete_month_is_published": true
+  },
+  "carry_forward": {
+    "anchor_must_be_actual_observation": true,
+    "require_same_city_scope": true,
+    "require_same_specification_segment": true,
+    "require_complete_published_month": true,
+    "allow_before_first_observation": false,
+    "allow_after_discontinuation": false,
+    "allow_chained_estimates": false,
+    "allow_city_or_product_substitution": false
+  },
+  "comparison": {
+    "require_fixed_city_variants_and_quantities": true,
+    "require_reviewed_continuity_between_endpoints": true,
+    "allow_estimated_endpoints_with_explicit_label": true,
+    "allow_replacement_variant_bridge": false,
+    "require_positive_baseline_cost": true
+  },
+  "point_statuses": ["observed", "estimated_temporary", "estimated_seasonal", "unavailable", "pending"],
+  "basket_statuses": ["observed", "estimated", "unavailable"],
+  "unavailable_price_value": null,
+  "decimal_wire_format": "string",
+  "search_fields": ["name_en", "name_ja", "reviewed_aliases", "reviewed_readings", "family", "category", "form", "specification_terms", "explicit_source_brands", "official_item_code"],
+  "normalization": ["NFKC", "English case folding", "whitespace normalization"],
+  "catalog_admission_requires_resolved_local_specifications": true,
+  "source_prices_overwritten_by_estimates": false
+}

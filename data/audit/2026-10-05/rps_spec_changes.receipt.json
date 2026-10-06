@@ -1,0 +1,14 @@
+{
+  "name": "rps_spec_changes",
+  "requested_url": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx",
+  "retrieved_at_utc": "2026-10-05T00:13:49.374919+00:00",
+  "status": 200,
+  "final_url": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx",
+  "content_type": "application/octet-stream",
+  "content_disposition": null,
+  "last_modified": "Thu, 01 Oct 2026 23:31:20 GMT",
+  "etag": "\"7fe4b67f5eeadf1380002f34762037a4\"",
+  "bytes": 459537,
+  "sha256": "3d539bd904817d2a7e040f7512b71428540f48b737a46dfb4f6623b5d7460d19",
+  "file": "data/audit/2026-10-05/rps_spec_changes.xlsx"
+}

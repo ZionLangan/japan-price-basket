@@ -1,0 +1,1226 @@
+{
+  "source": "Statistics Bureau of Japan — Retail Price Survey (Trend), via e-Stat public files",
+  "area_code": "13100",
+  "area_en": "Tokyo wards",
+  "area_ja": "東京都区部",
+  "as_of_date": "2026-10-05",
+  "latest_complete_basket_month": "2026-08",
+  "latest_release_checked": "2026-09 (Tokyo release dated 2026-10-02)",
+  "latest_month_reason": "September fresh-food file contains ten-day observations but no full-month September row.",
+  "credentials_used": false,
+  "items": [
+    {
+      "code": "1021",
+      "name_en": "White bread",
+      "name_ja": "食パン",
+      "eligible": true,
+      "unit_en": "1 kg",
+      "unit_ja": "1kg",
+      "note_en": "Endpoint specifications and units match; no change recorded in the 2001–2026 change workbook.",
+      "note_ja": "両時点の基本銘柄と単位が一致し、2001～2026年の新旧対照表に改正の記録はありません。",
+      "old_specification": {
+        "name": "食パン",
+        "definition": "普通品",
+        "unit": "1kg",
+        "row": 11,
+        "evidence_stem": "rps_specs_2000"
+      },
+      "current_specification": {
+        "name": "食パン",
+        "definition": "普通品",
+        "unit": "１ｋｇ",
+        "row": 7,
+        "evidence_stem": "rps_specs_2026"
+      },
+      "august_2000_specification": {
+        "name": "食パン",
+        "definition": "普通品",
+        "unit": "1kg",
+        "row": 11,
+        "evidence_stem": "rps_specs_jul2000"
+      },
+      "changes": [],
+      "observations": {
+        "2000-01": {
+          "period": "2000-01",
+          "value": 422.0,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_jan2000_city_a.xls",
+          "evidence_stem": "rps_jan2000_city_a",
+          "sheet": "A001-1",
+          "row": 39,
+          "column_1_based": 15
+        },
+        "2000-08": {
+          "period": "2000-08",
+          "value": 422.0,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_tokyo_sep2000_history.xls",
+          "evidence_stem": "rps_tokyo_sep2000_history",
+          "sheet": "A002",
+          "row": 292,
+          "column_1_based": 16
+        },
+        "2026-08": {
+          "period": "2026-08",
+          "value": 566,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_food_aug2026.xlsx",
+          "evidence_stem": "rps_food_aug2026",
+          "sheet": "B001-1",
+          "row": 14,
+          "column_1_based": 39
+        }
+      },
+      "comparisons": {
+        "2000-01": {
+          "difference_yen": 144.0,
+          "change_percent": 34.12322274881517
+        },
+        "2000-08": {
+          "difference_yen": 144.0,
+          "change_percent": 34.12322274881517
+        }
+      }
+    },
+    {
+      "code": "1632",
+      "name_en": "White sugar",
+      "name_ja": "砂糖（上白糖）",
+      "eligible": true,
+      "unit_en": "1 kg bag",
+      "unit_ja": "1kg袋",
+      "note_en": "Endpoint specifications and units match; no change recorded in the 2001–2026 change workbook.",
+      "note_ja": "両時点の基本銘柄と単位が一致し、2001～2026年の新旧対照表に改正の記録はありません。",
+      "old_specification": {
+        "name": "砂糖",
+        "definition": "上白､袋入り(1kg入り)",
+        "unit": "1袋",
+        "row": 149,
+        "evidence_stem": "rps_specs_2000"
+      },
+      "current_specification": {
+        "name": "砂糖",
+        "definition": "上白，袋入り（１ｋｇ入り）",
+        "unit": "１袋",
+        "row": 132,
+        "evidence_stem": "rps_specs_2026"
+      },
+      "august_2000_specification": {
+        "name": "砂糖",
+        "definition": "上白､袋入り(1kg入り)",
+        "unit": "1袋",
+        "row": 149,
+        "evidence_stem": "rps_specs_jul2000"
+      },
+      "changes": [],
+      "observations": {
+        "2000-01": {
+          "period": "2000-01",
+          "value": 218.0,
+          "currency": "JPY",
+          "source_unit": "1袋",
+          "source_file": "data/audit/2026-10-05/rps_jan2000_city_a.xls",
+          "evidence_stem": "rps_jan2000_city_a",
+          "sheet": "A001-1",
+          "row": 1382,
+          "column_1_based": 18
+        },
+        "2000-08": {
+          "period": "2000-08",
+          "value": 207.0,
+          "currency": "JPY",
+          "source_unit": "1袋",
+          "source_file": "data/audit/2026-10-05/rps_tokyo_sep2000_history.xls",
+          "evidence_stem": "rps_tokyo_sep2000_history",
+          "sheet": "A002",
+          "row": 515,
+          "column_1_based": 13
+        },
+        "2026-08": {
+          "period": "2026-08",
+          "value": 274,
+          "currency": "JPY",
+          "source_unit": "1袋･1kg",
+          "source_file": "data/audit/2026-10-05/rps_food_aug2026.xlsx",
+          "evidence_stem": "rps_food_aug2026",
+          "sheet": "B001-1",
+          "row": 139,
+          "column_1_based": 39
+        }
+      },
+      "comparisons": {
+        "2000-01": {
+          "difference_yen": 56.0,
+          "change_percent": 25.688073394495415
+        },
+        "2000-08": {
+          "difference_yen": 67.0,
+          "change_percent": 32.36714975845412
+        }
+      }
+    },
+    {
+      "code": "1401",
+      "name_en": "Cabbage",
+      "name_ja": "キャベツ",
+      "eligible": true,
+      "unit_en": "1 kg",
+      "unit_ja": "1kg",
+      "note_en": "Endpoint specifications and units match; no change recorded in the 2001–2026 change workbook.",
+      "note_ja": "両時点の基本銘柄と単位が一致し、2001～2026年の新旧対照表に改正の記録はありません。",
+      "old_specification": {
+        "name": "キャベツ",
+        "definition": "",
+        "unit": "1kg",
+        "row": 75,
+        "evidence_stem": "rps_specs_2000"
+      },
+      "current_specification": {
+        "name": "キャベツ",
+        "definition": null,
+        "unit": "１ｋｇ",
+        "row": 64,
+        "evidence_stem": "rps_specs_2026"
+      },
+      "august_2000_specification": {
+        "name": "キャベツ",
+        "definition": "",
+        "unit": "1kg",
+        "row": 75,
+        "evidence_stem": "rps_specs_jul2000"
+      },
+      "changes": [],
+      "observations": {
+        "2000-01": {
+          "period": "2000-01",
+          "value": 160.0,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_jan2000_city_a.xls",
+          "evidence_stem": "rps_jan2000_city_a",
+          "sheet": "A001-1",
+          "row": 710,
+          "column_1_based": 12
+        },
+        "2000-08": {
+          "period": "2000-08",
+          "value": 145.0,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_tokyo_sep2000_history.xls",
+          "evidence_stem": "rps_tokyo_sep2000_history",
+          "sheet": "A002",
+          "row": 102,
+          "column_1_based": 12
+        },
+        "2026-08": {
+          "period": "2026-08",
+          "value": 224,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_food_aug2026.xlsx",
+          "evidence_stem": "rps_food_aug2026",
+          "sheet": "B001-1",
+          "row": 71,
+          "column_1_based": 39
+        }
+      },
+      "comparisons": {
+        "2000-01": {
+          "difference_yen": 64.0,
+          "change_percent": 39.99999999999999
+        },
+        "2000-08": {
+          "difference_yen": 79.0,
+          "change_percent": 54.48275862068965
+        }
+      }
+    },
+    {
+      "code": "1412",
+      "name_en": "Potatoes",
+      "name_ja": "じゃがいも",
+      "eligible": true,
+      "unit_en": "1 kg",
+      "unit_ja": "1kg",
+      "note_en": "2010 rename (ばれいしょ → じゃがいも) resolved as a name-only change; definition and kg unit match.",
+      "note_ja": "2010年の「ばれいしょ」から「じゃがいも」への名称変更を確認。基本銘柄とkg単位は同一です。",
+      "old_specification": {
+        "name": "ばれいしょ",
+        "definition": "",
+        "unit": "1kg",
+        "row": 84,
+        "evidence_stem": "rps_specs_2000"
+      },
+      "current_specification": {
+        "name": "じゃがいも",
+        "definition": null,
+        "unit": "１ｋｇ",
+        "row": 73,
+        "evidence_stem": "rps_specs_2026"
+      },
+      "august_2000_specification": {
+        "name": "ばれいしょ",
+        "definition": "",
+        "unit": "1kg",
+        "row": 84,
+        "evidence_stem": "rps_specs_jul2000"
+      },
+      "changes": [
+        {
+          "year_sheet": "2010年",
+          "row": 5,
+          "values": [
+            1412,
+            "ばれいしょ\n　　↓\nじゃがいも",
+            null,
+            null,
+            "１ｋｇ",
+            null
+          ]
+        }
+      ],
+      "observations": {
+        "2000-01": {
+          "period": "2000-01",
+          "value": 280.0,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_jan2000_city_a.xls",
+          "evidence_stem": "rps_jan2000_city_a",
+          "sheet": "A001-1",
+          "row": 822,
+          "column_1_based": 10
+        },
+        "2000-08": {
+          "period": "2000-08",
+          "value": 278.0,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_tokyo_sep2000_history.xls",
+          "evidence_stem": "rps_tokyo_sep2000_history",
+          "sheet": "A002",
+          "row": 142,
+          "column_1_based": 10
+        },
+        "2026-08": {
+          "period": "2026-08",
+          "value": 547,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_food_aug2026.xlsx",
+          "evidence_stem": "rps_food_aug2026",
+          "sheet": "B001-1",
+          "row": 80,
+          "column_1_based": 39
+        }
+      },
+      "comparisons": {
+        "2000-01": {
+          "difference_yen": 267.0,
+          "change_percent": 95.35714285714285
+        },
+        "2000-08": {
+          "difference_yen": 269.0,
+          "change_percent": 96.76258992805755
+        }
+      }
+    },
+    {
+      "code": "1415",
+      "name_en": "Carrots",
+      "name_ja": "にんじん",
+      "eligible": true,
+      "unit_en": "1 kg",
+      "unit_ja": "1kg",
+      "note_en": "Endpoint specifications and units match; no change recorded in the 2001–2026 change workbook.",
+      "note_ja": "両時点の基本銘柄と単位が一致し、2001～2026年の新旧対照表に改正の記録はありません。",
+      "old_specification": {
+        "name": "にんじん",
+        "definition": "",
+        "unit": "1kg",
+        "row": 87,
+        "evidence_stem": "rps_specs_2000"
+      },
+      "current_specification": {
+        "name": "にんじん",
+        "definition": null,
+        "unit": "１ｋｇ",
+        "row": 76,
+        "evidence_stem": "rps_specs_2026"
+      },
+      "august_2000_specification": {
+        "name": "にんじん",
+        "definition": "",
+        "unit": "1kg",
+        "row": 87,
+        "evidence_stem": "rps_specs_jul2000"
+      },
+      "changes": [],
+      "observations": {
+        "2000-01": {
+          "period": "2000-01",
+          "value": 271.0,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_jan2000_city_a.xls",
+          "evidence_stem": "rps_jan2000_city_a",
+          "sheet": "A001-1",
+          "row": 822,
+          "column_1_based": 13
+        },
+        "2000-08": {
+          "period": "2000-08",
+          "value": 330.0,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_tokyo_sep2000_history.xls",
+          "evidence_stem": "rps_tokyo_sep2000_history",
+          "sheet": "A002",
+          "row": 142,
+          "column_1_based": 13
+        },
+        "2026-08": {
+          "period": "2026-08",
+          "value": 487,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_food_aug2026.xlsx",
+          "evidence_stem": "rps_food_aug2026",
+          "sheet": "B001-1",
+          "row": 83,
+          "column_1_based": 39
+        }
+      },
+      "comparisons": {
+        "2000-01": {
+          "difference_yen": 216.0,
+          "change_percent": 79.70479704797049
+        },
+        "2000-08": {
+          "difference_yen": 157.0,
+          "change_percent": 47.575757575757585
+        }
+      }
+    },
+    {
+      "code": "1001",
+      "name_en": "Koshihikari rice",
+      "name_ja": "コシヒカリ",
+      "eligible": false,
+      "unit_en": null,
+      "unit_ja": null,
+      "note_en": "10 kg quotation changed to a specified 5 kg bag in 2002; product rules also changed. No automatic join.",
+      "note_ja": "2002年に10kg当たりから指定の5kg袋へ変更。銘柄の条件も改正されているため、自動接続しません。",
+      "old_specification": {
+        "name": "うるち米",
+        "definition": "国内産､精米､単一品種､「コシヒカリ」",
+        "unit": "10kg",
+        "row": 5,
+        "evidence_stem": "rps_specs_2000"
+      },
+      "current_specification": {
+        "name": "うるち米",
+        "definition": "国内産，精米，単一原料米（産地，品種及び産年が同一のもの），袋入り（５ｋｇ入り），「コシヒカリ」",
+        "unit": "１袋",
+        "row": 5,
+        "evidence_stem": "rps_specs_2026"
+      },
+      "august_2000_specification": {
+        "name": "うるち米",
+        "definition": "国内産､精米､単一品種､「コシヒカリ」",
+        "unit": "10kg",
+        "row": 5,
+        "evidence_stem": "rps_specs_jul2000"
+      },
+      "changes": [
+        {
+          "year_sheet": "2009年",
+          "row": 47,
+          "values": [
+            1001,
+            "うるち米",
+            "国内産，精米，単一原料米（産地，品種及び産年が同一のもの），袋入り（５ｋｇ入り），「コシヒカリ」",
+            "国内産，精米，単一品種（産地，産年が同一のもの），袋入り（５ｋｇ入り），「コシヒカリ」",
+            "１袋",
+            "11月"
+          ]
+        },
+        {
+          "year_sheet": "2002年",
+          "row": 3,
+          "values": [
+            1001,
+            "うるち米",
+            "国内産，精米，単一品種（産地，産年が同一のもの），袋入り（５ｋｇ入り），「コシヒカリ」",
+            "国内産，精米，単一品種，「コシヒカリ」",
+            "１０ｋｇ\n↓\n１袋",
+            "１月",
+            null,
+            null
+          ]
+        }
+      ],
+      "observations": {
+        "2000-01": {
+          "period": "2000-01",
+          "value": 5922.0,
+          "currency": "JPY",
+          "source_unit": "10kg",
+          "source_file": "data/audit/2026-10-05/rps_jan2000_city_a.xls",
+          "evidence_stem": "rps_jan2000_city_a",
+          "sheet": "A001-1",
+          "row": 39,
+          "column_1_based": 9
+        },
+        "2000-08": {
+          "period": "2000-08",
+          "value": 5853.0,
+          "currency": "JPY",
+          "source_unit": "10kg",
+          "source_file": "data/audit/2026-10-05/rps_tokyo_sep2000_history.xls",
+          "evidence_stem": "rps_tokyo_sep2000_history",
+          "sheet": "A002",
+          "row": 292,
+          "column_1_based": 10
+        },
+        "2026-08": {
+          "period": "2026-08",
+          "value": 4326,
+          "currency": "JPY",
+          "source_unit": "1袋･5kg",
+          "source_file": "data/audit/2026-10-05/rps_food_aug2026.xlsx",
+          "evidence_stem": "rps_food_aug2026",
+          "sheet": "B001-1",
+          "row": 12,
+          "column_1_based": 39
+        }
+      },
+      "comparisons": {
+        "2000-01": null,
+        "2000-08": null
+      }
+    },
+    {
+      "code": "1303",
+      "name_en": "Milk",
+      "name_ja": "牛乳",
+      "eligible": false,
+      "unit_en": null,
+      "unit_ja": null,
+      "note_en": "Specification revisions in 2002 and January 2026 need review, despite the matching 1 L unit.",
+      "note_ja": "単位は1Lですが、2002年および2026年1月の基本銘柄改正の確認が必要です。",
+      "old_specification": {
+        "name": "牛乳",
+        "definition": "牛乳(加工乳､特別牛乳及び乳飲料を除く)､店頭売り､紙容器入り(1,000ml入り)",
+        "unit": "1本",
+        "row": 68,
+        "evidence_stem": "rps_specs_2000"
+      },
+      "current_specification": {
+        "name": "牛乳",
+        "definition": "紙パック入り（１，０００ｍＬ入り）",
+        "unit": "１本",
+        "row": 57,
+        "evidence_stem": "rps_specs_2026"
+      },
+      "august_2000_specification": {
+        "name": "牛乳",
+        "definition": "牛乳(加工乳､特別牛乳及び乳飲料を除く)､店頭売り､紙容器入り(1,000ml入り)",
+        "unit": "1本",
+        "row": 68,
+        "evidence_stem": "rps_specs_jul2000"
+      },
+      "changes": [
+        {
+          "year_sheet": "2026年",
+          "row": 3,
+          "values": [
+            1303,
+            "牛乳",
+            "紙パック入り（１，０００ｍＬ入り）",
+            "牛乳，店頭売り，紙容器入り（１，０００ｍＬ入り）",
+            "１本",
+            "１月"
+          ]
+        },
+        {
+          "year_sheet": "2002年",
+          "row": 54,
+          "values": [
+            1303,
+            "牛  乳(紙容器入り,店頭売り)",
+            "牛乳，店頭売り，紙容器入り（1，000ｍL入り）",
+            "牛乳 (加工乳､特別牛乳及び乳飲料を除く｡)，店頭売り， 紙容器入り， 1，000mL入り",
+            "１本",
+            null,
+            null,
+            null
+          ]
+        }
+      ],
+      "observations": {
+        "2000-01": {
+          "period": "2000-01",
+          "value": 210.0,
+          "currency": "JPY",
+          "source_unit": "1本",
+          "source_file": "data/audit/2026-10-05/rps_jan2000_city_a.xls",
+          "evidence_stem": "rps_jan2000_city_a",
+          "sheet": "A001-1",
+          "row": 598,
+          "column_1_based": 16
+        },
+        "2000-08": {
+          "period": "2000-08",
+          "value": 209.0,
+          "currency": "JPY",
+          "source_unit": "1本",
+          "source_file": "data/audit/2026-10-05/rps_tokyo_sep2000_history.xls",
+          "evidence_stem": "rps_tokyo_sep2000_history",
+          "sheet": "A002",
+          "row": 403,
+          "column_1_based": 15
+        },
+        "2026-08": {
+          "period": "2026-08",
+          "value": 264,
+          "currency": "JPY",
+          "source_unit": "1本･1,000mL",
+          "source_file": "data/audit/2026-10-05/rps_food_aug2026.xlsx",
+          "evidence_stem": "rps_food_aug2026",
+          "sheet": "B001-1",
+          "row": 64,
+          "column_1_based": 39
+        }
+      },
+      "comparisons": {
+        "2000-01": null,
+        "2000-08": null
+      }
+    },
+    {
+      "code": "1341",
+      "name_en": "Eggs",
+      "name_ja": "鶏卵",
+      "eligible": false,
+      "unit_en": null,
+      "unit_ja": null,
+      "note_en": "Eggs changed from a weight quotation to a 10-egg pack; size rules changed too.",
+      "note_ja": "重量当たりから10個入りパックへ変更され、卵のサイズの条件も改正されています。",
+      "old_specification": {
+        "name": "鶏卵",
+        "definition": "1個約60g",
+        "unit": "1kg",
+        "row": 74,
+        "evidence_stem": "rps_specs_2000"
+      },
+      "current_specification": {
+        "name": "鶏卵",
+        "definition": "白色卵，パック詰（１０個入り），サイズ混合，〔卵重〕「ＭＳ５２ｇ～ＬＬ７６ｇ未満」，「ＭＳ５２ｇ～Ｌ７０ｇ未満」又は「Ｍ５８ｇ～Ｌ７０ｇ未満」",
+        "unit": "１パック",
+        "row": 63,
+        "evidence_stem": "rps_specs_2026"
+      },
+      "august_2000_specification": {
+        "name": "鶏卵",
+        "definition": "1個約60g",
+        "unit": "1kg",
+        "row": 74,
+        "evidence_stem": "rps_specs_jul2000"
+      },
+      "changes": [
+        {
+          "year_sheet": "2018年",
+          "row": 3,
+          "values": [
+            1341,
+            "鶏卵",
+            "白色卵，パック詰（１０個入り），サイズ混合，〔卵重〕「ＭＳ５２ｇ～ＬＬ７６ｇ未満」，「ＭＳ５２ｇ～Ｌ７０ｇ未満」又は「Ｍ５８ｇ～Ｌ７０ｇ未満」",
+            "白色卵，Ｌサイズ，パック詰（１０個入り）",
+            "１パック",
+            "１月",
+            null
+          ]
+        },
+        {
+          "year_sheet": "2002年",
+          "row": 55,
+          "values": [
+            1341,
+            "鶏    卵",
+            "白色卵,Ｌサイズ,パック詰（１0個入り）",
+            "１個約60g",
+            "１kg\n↓\n１パック",
+            null,
+            null,
+            null
+          ]
+        }
+      ],
+      "observations": {
+        "2000-01": {
+          "period": "2000-01",
+          "value": 302.0,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_jan2000_city_a.xls",
+          "evidence_stem": "rps_jan2000_city_a",
+          "sheet": "A001-1",
+          "row": 710,
+          "column_1_based": 11
+        },
+        "2000-08": {
+          "period": "2000-08",
+          "value": 277.0,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_tokyo_sep2000_history.xls",
+          "evidence_stem": "rps_tokyo_sep2000_history",
+          "sheet": "A002",
+          "row": 439,
+          "column_1_based": 10
+        },
+        "2026-08": {
+          "period": "2026-08",
+          "value": 321,
+          "currency": "JPY",
+          "source_unit": "1パック･10個",
+          "source_file": "data/audit/2026-10-05/rps_food_aug2026.xlsx",
+          "evidence_stem": "rps_food_aug2026",
+          "sheet": "B001-1",
+          "row": 70,
+          "column_1_based": 39
+        }
+      },
+      "comparisons": {
+        "2000-01": null,
+        "2000-08": null
+      }
+    },
+    {
+      "code": "4413",
+      "name_en": "Toilet paper",
+      "name_ja": "トイレットペーパー",
+      "eligible": false,
+      "unit_en": null,
+      "unit_ja": null,
+      "note_en": "Roll-pack versus length units, and recycled-paper versus pulp specifications, differ.",
+      "note_ja": "ロール入り袋と長さ当たりの単位、古紙とパルプの基本銘柄が異なります。",
+      "old_specification": {
+        "name": "ちり紙",
+        "definition": "トイレットペーパー､古紙､〔長さ〕「55m」又は「60m」､12ロール入り",
+        "unit": "1袋",
+        "row": 345,
+        "evidence_stem": "rps_specs_2000"
+      },
+      "current_specification": {
+        "name": "トイレットペーパー",
+        "definition": "パルプ１００％，白，８ロール入り（〔長さ〕７５～１００ｍ又は２枚重ね３７．５～５４ｍ）又は１２ロール入り（〔長さ〕５０～６０ｍ又は２枚重ね２５～３０ｍ）",
+        "unit": "１０００ｍ",
+        "row": 321,
+        "evidence_stem": "rps_specs_2026"
+      },
+      "august_2000_specification": {
+        "name": "ちり紙",
+        "definition": "トイレットペーパー､古紙､〔長さ〕「55m」又は「60m」､12ロール入り",
+        "unit": "1袋",
+        "row": 345,
+        "evidence_stem": "rps_specs_jul2000"
+      },
+      "changes": [
+        {
+          "year_sheet": "2022年",
+          "row": 35,
+          "values": [
+            4413,
+            "トイレットペーパー",
+            "パルプ１００％，白，８ロール入り（〔長さ〕７５～１００ｍ又は２枚重ね３７．５～５４ｍ）又は１２ロール入り（〔長さ〕５０～６０ｍ又は２枚重ね２５～３０ｍ）\n\n●　商標指定",
+            "パルプ１００％，白，〔長さ〕５０～６０ｍ又は２枚重ね２５～３０ｍ，１２ロール入り\n\n●　商標指定",
+            "１０００ｍ",
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2020年",
+          "row": 43,
+          "values": [
+            4413,
+            "トイレットペーパー",
+            "パルプ１００％，白，〔長さ〕５０～６０ｍ又は２枚重ね２５～３０ｍ，１２ロール入り\n\n●　商標指定\n",
+            "パルプ１００％，白，〔長さ〕５０ｍ，６０ｍ，２枚重ね２５ｍ又は２枚重ね３０ｍ，１２ロール入り\n\n●　商標指定\n",
+            "１パック\n↓\n１０００ｍ",
+            "10月",
+            null
+          ]
+        },
+        {
+          "year_sheet": "2018年",
+          "row": 8,
+          "values": [
+            4413,
+            "トイレットペーパー",
+            "パルプ１００％，白，〔長さ〕５０ｍ，６０ｍ，２枚重ね２５ｍ又は２枚重ね３０ｍ，１２ロール入り\n\n● 商標指定",
+            "再生紙１００％，白，〔長さ〕５５ｍ，６０ｍ，２枚重ね２７．５ｍ又は２枚重ね３０ｍ，１２ロール入り",
+            "１パック",
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2005年",
+          "row": 14,
+          "values": [
+            4413,
+            "トイレットペーパー",
+            "再生紙１００％，白，〔長さ〕５５ｍ，６０ｍ，２枚重ね２７．５ｍ又は２枚重ね３０ｍ，１２ロール入り",
+            "トイレットペーパー，古紙，〔長さ〕「５５ｍ」又は「６０ｍ」，１２ロール入り",
+            "１袋\n↓\n１パック",
+            null,
+            null,
+            null
+          ]
+        }
+      ],
+      "observations": {
+        "2000-01": {
+          "period": "2000-01",
+          "value": 490.0,
+          "currency": "JPY",
+          "source_unit": "1袋",
+          "source_file": "data/audit/2026-10-05/rps_jan2000_city_b.xls",
+          "evidence_stem": "rps_jan2000_city_b",
+          "sheet": "A001-2",
+          "row": 151,
+          "column_1_based": 18
+        },
+        "2000-08": {
+          "period": "2000-08",
+          "value": 481.0,
+          "currency": "JPY",
+          "source_unit": "1袋",
+          "source_file": "data/audit/2026-10-05/rps_tokyo_sep2000_history.xls",
+          "evidence_stem": "rps_tokyo_sep2000_history",
+          "sheet": "A002",
+          "row": 1039,
+          "column_1_based": 13
+        },
+        "2026-08": {
+          "period": "2026-08",
+          "value": 881,
+          "currency": "JPY",
+          "source_unit": "1,000ｍ",
+          "source_file": "data/audit/2026-10-05/rps_household_aug2026.xlsx",
+          "evidence_stem": "rps_household_aug2026",
+          "sheet": "B001-2",
+          "row": 82,
+          "column_1_based": 39
+        }
+      },
+      "comparisons": {
+        "2000-01": null,
+        "2000-08": null
+      }
+    },
+    {
+      "code": "4441",
+      "name_en": "Laundry detergent",
+      "name_ja": "洗濯用洗剤",
+      "eligible": false,
+      "unit_en": null,
+      "unit_ja": null,
+      "note_en": "Powder in a 1.2 kg box versus liquid detergent per kg; multiple later revisions.",
+      "note_ja": "1.2kg箱入りの粉末と1kg当たりの液体で条件が異なり、その後も複数の改正があります。",
+      "old_specification": {
+        "name": "洗濯用洗剤",
+        "definition": "合成洗剤､綿･麻･レーヨン･合成繊維用､高密度粉末､箱入り(1.2kg入り)",
+        "unit": "1箱",
+        "row": 347,
+        "evidence_stem": "rps_specs_2000"
+      },
+      "current_specification": {
+        "name": "洗濯用洗剤",
+        "definition": "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（８５０～９００ｇ入り）",
+        "unit": "１ｋｇ",
+        "row": 323,
+        "evidence_stem": "rps_specs_2026"
+      },
+      "august_2000_specification": {
+        "name": "洗濯用洗剤",
+        "definition": "合成洗剤､綿･麻･レーヨン･合成繊維用､高密度粉末､箱入り(1.2kg入り)",
+        "unit": "1箱",
+        "row": 347,
+        "evidence_stem": "rps_specs_jul2000"
+      },
+      "changes": [
+        {
+          "year_sheet": "2024年",
+          "row": 34,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（８５０～９００ｇ入り）\n\n●商標指定",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（１，０００～１，１６０ｇ入り）\n\n●商標指定",
+            "１ｋｇ",
+            "８月"
+          ]
+        },
+        {
+          "year_sheet": "2022年",
+          "row": 22,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（１，０００～１，１６０ｇ入り）\n\n●　商標指定",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（６９０～７９０ｇ入り），「アタック　抗菌ＥＸスーパークリアジェル」，「トップ　クリアリキッド」又は「アリエール　バイオサイエンス　ジェル」",
+            "１ｋｇ",
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2020年",
+          "row": 38,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（７２０～７９０ｇ入り），「アタック　抗菌ＥＸスーパークリアジェル」，「トップ　クリアリキッド」又は「アリエール　イオンパワージェル」",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（７２０～８１０ｇ入り），「アタック　高浸透バイオジェル」，「トップ　クリアリキッド」又は「アリエール　イオンパワージェル」",
+            "１ｋｇ",
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2020年",
+          "row": 44,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（６９０～７９０ｇ入り），「アタック　抗菌ＥＸスーパークリアジェル」，「トップ　クリアリキッド」又は「アリエール　バイオサイエンス　ジェル」",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（７２０～７９０ｇ入り），「アタック　抗菌ＥＸスーパークリアジェル」，「トップ　クリアリキッド」又は「アリエール　イオンパワージェル」",
+            "１ｋｇ",
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2018年",
+          "row": 35,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（７２０～８１０ｇ入り），「アタック　高浸透バイオジェル」，「トップ　クリアリキッド」又は「アリエール　イオンパワージェル」",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（７２０～８１０ｇ入り），「アタック　高浸透バイオジェル」，「トップ　クリアリキッド」又は「アリエール　イオンパワージェル　サイエンスプラス」",
+            "１ｋｇ",
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2017年",
+          "row": 59,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（７２０～８１０ｇ入り），「アタック　高浸透バイオジェル」，「トップ　クリアリキッド」又は「アリエール　イオンパワージェル　サイエンスプラス」\n",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（７７０～８５０ｇ入り），「アタック　高浸透バイオジェル」，「トップ　クリアリキッド」又は「アリエール　サイエンスプラス　イオンパワージェル」\n",
+            "１ｋｇ",
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2015年",
+          "row": 57,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（７７０～８５０ｇ入り），「アタック　高浸透バイオジェル」，「トップ　クリアリキッド」又は\n「アリエール　イオンパワージェルサイエンスプラス」",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（８１０～１０００ｇ入り），「アタック　高浸透バイオジェル」，「トップ　クリアリキッド」又は「アリエール　イオンパワージェルサイエンスプラス」",
+            "１ｋｇ",
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2015年",
+          "row": 79,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（７７０～８５０ｇ入り），「アタック　高浸透バイオジェル」，「トップ　クリアリキッド」又は「アリエール　サイエンスプラス　イオンパワージェル」\n",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（７７０～８５０ｇ入り），「アタック　高浸透バイオジェル」，「トップ　クリアリキッド」又は「アリエール　イオンパワージェルサイエンスプラス」\n",
+            "１ｋｇ",
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2014年",
+          "row": 56,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，液体，詰め替え用，袋入り（８１０～１０００ｇ入り），「アタック　高浸透バイオジェル」，「トップ　クリアリキッド」又は「アリエール　イオンパワージェルサイエンスプラス」",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（１．０ｋｇ入り），「アタック　高活性バイオＥＸ」又は「トップ　プラチナクリア」",
+            "１箱\n↓\n１ｋｇ\n",
+            null
+          ]
+        },
+        {
+          "year_sheet": "2011年 ",
+          "row": 26,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（１．０ｋｇ入り），「アタック　高活性バイオＥＸ」又は「トップ　プラチナクリア」",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（１．０ｋｇ入り），「アタック」又は「トップ」",
+            "１箱",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2009年",
+          "row": 14,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（１．０ｋｇ入り），「アタック」又は「トップ」",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（１．０ｋｇ入り），「アタック」",
+            "１箱",
+            null
+          ]
+        },
+        {
+          "year_sheet": "2008年",
+          "row": 62,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（１．０ｋｇ入り），「アタック」",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（１．１ｋｇ入り），「アタック」又は「トップ」",
+            "１箱",
+            null
+          ]
+        },
+        {
+          "year_sheet": "2006年",
+          "row": 76,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（１．１kg入り），「アタック」又は「トップ」",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（１．２kg入り），「アタック」",
+            "１箱",
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2005年",
+          "row": 64,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（１．２ｋｇ入り），「アタック」",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（１．２ｋｇ入り），「アタック」又は「トップ」",
+            "1箱",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "year_sheet": "2004年",
+          "row": 15,
+          "values": [
+            4441,
+            "洗濯用洗剤",
+            "合成洗剤，綿・麻・合成繊維用，粉末，箱入り（1.2ｋｇ入り），「アタック」又は「トップ」",
+            "合成洗剤，綿・麻・レーヨン・合成繊維用，高密度粉末，箱入り（1.2ｋｇ入り）\n商標指定",
+            "１箱",
+            null,
+            null,
+            null
+          ]
+        }
+      ],
+      "observations": {
+        "2000-01": {
+          "period": "2000-01",
+          "value": 454.0,
+          "currency": "JPY",
+          "source_unit": "1箱",
+          "source_file": "data/audit/2026-10-05/rps_jan2000_city_b.xls",
+          "evidence_stem": "rps_jan2000_city_b",
+          "sheet": "A001-2",
+          "row": 262,
+          "column_1_based": 9
+        },
+        "2000-08": {
+          "period": "2000-08",
+          "value": 452.0,
+          "currency": "JPY",
+          "source_unit": "1箱",
+          "source_file": "data/audit/2026-10-05/rps_tokyo_sep2000_history.xls",
+          "evidence_stem": "rps_tokyo_sep2000_history",
+          "sheet": "A002",
+          "row": 1039,
+          "column_1_based": 15
+        },
+        "2026-08": {
+          "period": "2026-08",
+          "value": 567,
+          "currency": "JPY",
+          "source_unit": "1kg",
+          "source_file": "data/audit/2026-10-05/rps_household_aug2026.xlsx",
+          "evidence_stem": "rps_household_aug2026",
+          "sheet": "B001-2",
+          "row": 84,
+          "column_1_based": 39
+        }
+      },
+      "comparisons": {
+        "2000-01": null,
+        "2000-08": null
+      }
+    }
+  ],
+  "default_basket": {
+    "2000-01": {
+      "before_yen": 1351.0,
+      "after_yen": 2098,
+      "difference_yen": 747.0,
+      "change_percent": 55.292376017764624,
+      "quantity_per_item": 1
+    },
+    "2000-08": {
+      "before_yen": 1382.0,
+      "after_yen": 2098,
+      "difference_yen": 716.0,
+      "change_percent": 51.80897250361796,
+      "quantity_per_item": 1
+    }
+  },
+  "sources": [
+    {
+      "name": "rps_food_aug2026",
+      "url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040506177&fileKind=0",
+      "file": "data/audit/2026-10-05/rps_food_aug2026.xlsx",
+      "sha256": "8bcdc55655b5c8f6d993885f9e577b291a26724c480ae3b3b262e1b7c9753127",
+      "retrieved_at_utc": "2026-10-05T00:19:32.396183+00:00"
+    },
+    {
+      "name": "rps_food_sep2026_tokyo",
+      "url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040510345&fileKind=0",
+      "file": "data/audit/2026-10-05/rps_food_sep2026_tokyo.xlsx",
+      "sha256": "b893f9627a670f061c2215742efa946180fc9899bfd3bb8e7495148c910cd404",
+      "retrieved_at_utc": "2026-10-05T02:10:23.505750+00:00"
+    },
+    {
+      "name": "rps_fresh_sep2026_tokyo",
+      "url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040510344&fileKind=0",
+      "file": "data/audit/2026-10-05/rps_fresh_sep2026_tokyo.xlsx",
+      "sha256": "d56ad78ff783b58eb9aad2bb5ed5c296007a25af83863fcac6519e6c892a9b6b",
+      "retrieved_at_utc": "2026-10-05T02:12:09.143949+00:00"
+    },
+    {
+      "name": "rps_household_aug2026",
+      "url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040506178&fileKind=0",
+      "file": "data/audit/2026-10-05/rps_household_aug2026.xlsx",
+      "sha256": "dab391103a59a9f194387a64ea92922fd8c4315840f46b7a65db0f0e07203746",
+      "retrieved_at_utc": "2026-10-05T00:19:32.396183+00:00"
+    },
+    {
+      "name": "rps_household_sep2026_tokyo",
+      "url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040510346&fileKind=0",
+      "file": "data/audit/2026-10-05/rps_household_sep2026_tokyo.xlsx",
+      "sha256": "d09bede0ff55daf6684bf584aefddda006406f314f82c2674f1599adb77191a0",
+      "retrieved_at_utc": "2026-10-05T02:10:23.652358+00:00"
+    },
+    {
+      "name": "rps_jan2000_city_a",
+      "url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000000680376&fileKind=0",
+      "file": "data/audit/2026-10-05/rps_jan2000_city_a.xls",
+      "sha256": "98bd105025a4069ef076cfef97278a8a4301334de35182c21df3458b12292e72",
+      "retrieved_at_utc": "2026-10-05T02:10:23.160204+00:00"
+    },
+    {
+      "name": "rps_jan2000_city_b",
+      "url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000000680377&fileKind=0",
+      "file": "data/audit/2026-10-05/rps_jan2000_city_b.xls",
+      "sha256": "13d499a4793c4f1f80952d0d34cc5473aa4d070ae3e1bc21e46772c7ef319885",
+      "retrieved_at_utc": "2026-10-05T02:10:23.308718+00:00"
+    },
+    {
+      "name": "rps_local_specs_aug2026",
+      "url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040506181&fileKind=1",
+      "file": "data/audit/2026-10-05/rps_local_specs_aug2026.csv",
+      "sha256": "d93db21a3a9037bf8cd0f232baeb6416a1286ceb0cc7a9d9f7322c07ba63a290",
+      "retrieved_at_utc": "2026-10-05T00:19:32.396183+00:00"
+    },
+    {
+      "name": "rps_local_specs_sep2026",
+      "url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040510349&fileKind=1",
+      "file": "data/audit/2026-10-05/rps_local_specs_sep2026.csv",
+      "sha256": "1f0aee6127218debe1082629ffdbbdfd6cb0cce31e70e27d59af7c03d4405822",
+      "retrieved_at_utc": "2026-10-05T02:12:09.309991+00:00"
+    },
+    {
+      "name": "rps_spec_changes",
+      "url": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx",
+      "file": "data/audit/2026-10-05/rps_spec_changes.xlsx",
+      "sha256": "3d539bd904817d2a7e040f7512b71428540f48b737a46dfb4f6623b5d7460d19",
+      "retrieved_at_utc": "2026-10-05T00:13:49.374919+00:00"
+    },
+    {
+      "name": "rps_specs_2000",
+      "url": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+      "file": "data/audit/2026-10-05/rps_specs_2000.xls",
+      "sha256": "f13627ac6ebe259050c60dab4e24370188e480f1257e9d974629b9f61a4cb273",
+      "retrieved_at_utc": "2026-10-05T02:09:27.894399+00:00"
+    },
+    {
+      "name": "rps_specs_2026",
+      "url": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202609.xlsx",
+      "file": "data/audit/2026-10-05/rps_specs_2026.xlsx",
+      "sha256": "388d8afc01ba297555a28c6ee4967e3a2b263e3c13a4697722fb6e834caeea60",
+      "retrieved_at_utc": "2026-10-05T00:13:49.250292+00:00"
+    },
+    {
+      "name": "rps_specs_jul2000",
+      "url": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200007.xls",
+      "file": "data/audit/2026-10-05/rps_specs_jul2000.xls",
+      "sha256": "051b7be1c58f071058e964e686f667ce3a06e4ba4df57fa46296f32f3f37d99a",
+      "retrieved_at_utc": "2026-10-05T02:25:25.783761+00:00"
+    },
+    {
+      "name": "rps_tokyo_sep2000_history",
+      "url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000000680420&fileKind=0",
+      "file": "data/audit/2026-10-05/rps_tokyo_sep2000_history.xls",
+      "sha256": "bd2fca969987d6a94e2d880327d49405fa046f30a8814e19cadad0ff5a1bf9f5",
+      "retrieved_at_utc": "2026-10-05T02:13:27.154592+00:00"
+    }
+  ],
+  "validation": {
+    "raw_hashes_verified": true,
+    "shared_publications_reconciled": true,
+    "full_month_only": true,
+    "unresolved_comparisons_blocked": true
+  },
+  "limitations": [
+    "Endpoint example; intervening 2000–2026 observations have not been backfilled.",
+    "Narrow specification review; does not certify the entire survey catalog.",
+    "Nominal, tax-inclusive surveyed prices; no tax or quality adjustment.",
+    "January-versus-August comparison includes seasonality; August 2000 is also available.",
+    "Fixed illustrative quantities; not official CPI or representative household spending."
+  ]
+}

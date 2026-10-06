@@ -1,0 +1,14 @@
+{
+  "name": "rps_household_aug2026",
+  "requested_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040506178&fileKind=0",
+  "retrieved_at_utc": "2026-10-05T00:19:32.396183+00:00",
+  "status": 200,
+  "final_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040506178&fileKind=0",
+  "content_type": "application/octet-stream",
+  "content_disposition": "attachment; filename*=UTF-8''b001-2.xlsx",
+  "last_modified": null,
+  "etag": null,
+  "bytes": 69547,
+  "sha256": "dab391103a59a9f194387a64ea92922fd8c4315840f46b7a65db0f0e07203746",
+  "file": "data/audit/2026-10-05/rps_household_aug2026.xlsx"
+}

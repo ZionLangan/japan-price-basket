@@ -1,0 +1,14 @@
+{
+  "name": "rps_jan2000_city_b",
+  "requested_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000000680377&fileKind=0",
+  "retrieved_at_utc": "2026-10-05T02:10:23.308718+00:00",
+  "status": 200,
+  "final_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000000680377&fileKind=0",
+  "content_type": "application/octet-stream",
+  "content_disposition": "attachment; filename*=UTF-8''a001-2.xls",
+  "last_modified": null,
+  "etag": null,
+  "bytes": 909312,
+  "sha256": "13d499a4793c4f1f80952d0d34cc5473aa4d070ae3e1bc21e46772c7ef319885",
+  "file": "data/audit/2026-10-05/rps_jan2000_city_b.xls"
+}

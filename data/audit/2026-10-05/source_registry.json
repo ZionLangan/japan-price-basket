@@ -1,0 +1,350 @@
+{
+  "audit_date_jst": "2026-10-05",
+  "credentials_used": false,
+  "comparability_certified": false,
+  "break_policy": "Separate segments; block unresolved basket comparisons",
+  "sources": [
+    {
+      "source_id": "rps_city",
+      "publisher": "Statistics Bureau",
+      "title": "Retail Price Survey, Trend: city prices",
+      "role": "primary_basket",
+      "frequency": "monthly",
+      "coverage_statement": "Database title: January 2000 onward; January 2000/2010 and August 2026 full-month files inspected; September 2026 Tokyo release has partial fresh-food observations",
+      "access": "e-Stat API requires appId; public XLS/XLSX/CSV do not",
+      "evidence_status": "verified_download",
+      "entry_url": "https://www.e-stat.go.jp/dbview?sid=0003421913",
+      "evidence_stems": [
+        "rps_jan2000_city_a",
+        "rps_jan2000_city_b",
+        "rps_tokyo_sep2000_history",
+        "rps_specs_2000",
+        "rps_specs_jul2000",
+        "rps_jan2010_city_a",
+        "rps_jan2010_city_b",
+        "rps_food_aug2026",
+        "rps_household_aug2026",
+        "rps_local_specs_aug2026",
+        "rps_specs_2010",
+        "rps_specs_2020",
+        "rps_specs_2026",
+        "rps_spec_changes",
+        "rps_food_sep2026_tokyo",
+        "rps_household_sep2026_tokyo",
+        "rps_fresh_sep2026_tokyo",
+        "rps_local_specs_sep2026"
+      ],
+      "limitations": [
+        "Specification and reporting-unit breaks",
+        "Local-specification Y flags",
+        "City roster changes",
+        "Missing observations"
+      ]
+    },
+    {
+      "source_id": "rps_uniform",
+      "publisher": "Statistics Bureau",
+      "title": "Trend: nationwide uniform-price items",
+      "role": "eligible_items_only",
+      "frequency": "monthly/annual",
+      "coverage_statement": "Monthly database title: February 2000 onward",
+      "access": "e-Stat API or public files",
+      "evidence_status": "reviewed_catalog",
+      "entry_url": "https://www.e-stat.go.jp/dbview?sid=0003449369",
+      "evidence_stems": [],
+      "limitations": [
+        "Not a national grocery-price average"
+      ]
+    },
+    {
+      "source_id": "rps_tokyo_history",
+      "publisher": "Statistics Bureau",
+      "title": "Tokyo wards historical retail table",
+      "role": "optional_history",
+      "frequency": "annual",
+      "coverage_statement": "1950–2010 workbook inspected",
+      "access": "Public legacy XLS",
+      "evidence_status": "verified_download",
+      "entry_url": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/kubu_chouki.xls",
+      "evidence_stems": [
+        "rps_tokyo_long"
+      ],
+      "limitations": [
+        "Selected items only",
+        "Long-run definition changes"
+      ]
+    },
+    {
+      "source_id": "cpi_dashboard",
+      "publisher": "Statistics Bureau",
+      "title": "CPI via Statistical Dashboard",
+      "role": "official_benchmark",
+      "frequency": "monthly",
+      "coverage_statement": "Current indicator metadata starts January 1970; 200 observations January 2010–August 2026 retrieved",
+      "access": "Public JSON/XML/CSV API; registration not required",
+      "evidence_status": "verified_api",
+      "entry_url": "https://dashboard.e-stat.go.jp/static/api",
+      "evidence_stems": [
+        "dashboard_cpi_meta",
+        "dashboard_cpi_data",
+        "dashboard_data_schema"
+      ],
+      "limitations": [
+        "Index points, not yen",
+        "Base and indicator changes",
+        "Rounded indices versus official change rates"
+      ]
+    },
+    {
+      "source_id": "rps_structural",
+      "publisher": "Statistics Bureau",
+      "title": "Retail Price Survey, Structural",
+      "role": "regional_context",
+      "frequency": "annual",
+      "coverage_statement": "2013 onward; store-type/brand surveying ended December 2021",
+      "access": "e-Stat API/files",
+      "evidence_status": "reviewed_documentation",
+      "entry_url": "https://www.stat.go.jp/data/kouri/kouzou/gaiyou.htm",
+      "evidence_stems": [],
+      "limitations": [
+        "Spatial indices are not time-series yen prices",
+        "Retired price components"
+      ]
+    },
+    {
+      "source_id": "household_expenditure",
+      "publisher": "Statistics Bureau",
+      "title": "Family Income and Expenditure Survey",
+      "role": "preset_quantities",
+      "frequency": "table-specific monthly/quarterly/annual",
+      "coverage_statement": "Relevant annual item index: 2005 onward; older annual tables also exist",
+      "access": "e-Stat API/files",
+      "evidence_status": "reviewed_documentation",
+      "entry_url": "https://www.stat.go.jp/data/kakei/rank/singleyear.html",
+      "evidence_stems": [],
+      "limitations": [
+        "Household population must be fixed",
+        "Unit values depend on purchase mix"
+      ]
+    },
+    {
+      "source_id": "maff_vegetables",
+      "publisher": "MAFF",
+      "title": "Food Price Monitoring: vegetables",
+      "role": "optional_national_retail",
+      "frequency": "weekly",
+      "coverage_statement": "Survey starts April 2010; inspected XLSX weeks November 2017–September 2026",
+      "access": "Public XLSX and older PDFs; dedicated public API not found",
+      "evidence_status": "verified_download",
+      "entry_url": "https://www.maff.go.jp/j/zyukyu/anpo/kouri/k_yasai/h22index.html",
+      "evidence_stems": [
+        "maff_veg_archive_xlsx",
+        "maff_veg_backup",
+        "maff_veg_latest"
+      ],
+      "limitations": [
+        "Explicit pandemic sample discontinuities",
+        "Seasonal/item roster changes",
+        "National normal prices excluding promotions"
+      ]
+    },
+    {
+      "source_id": "maff_processed",
+      "publisher": "MAFF",
+      "title": "Food Price Monitoring: processed foods",
+      "role": "optional_national_retail",
+      "frequency": "monthly currently",
+      "coverage_statement": "Survey starts January 2008; monthly yen prices from October 2018",
+      "access": "Public PDFs/archive",
+      "evidence_status": "verified_download",
+      "entry_url": "https://www.maff.go.jp/j/zyukyu/anpo/kouri/gaiyou.html",
+      "evidence_stems": [
+        "maff_processed_latest",
+        "maff_processed_specs",
+        "maff_processed_past"
+      ],
+      "limitations": [
+        "September/October 2018 non-connectable boundary",
+        "Report versus definition-sheet tuna-can size discrepancy",
+        "PDF parsing"
+      ]
+    },
+    {
+      "source_id": "maff_meat_eggs",
+      "publisher": "MAFF",
+      "title": "Food Price Monitoring: meat and eggs",
+      "role": "optional_national_retail",
+      "frequency": "weekly through April 2012; monthly since May 2012",
+      "coverage_statement": "Survey starts August 2003; latest report and archive index inspected",
+      "access": "Public PDFs",
+      "evidence_status": "verified_download",
+      "entry_url": "https://www.maff.go.jp/j/zyukyu/anpo/kouri/k_gyuniku/index.html",
+      "evidence_stems": [
+        "maff_meat_eggs",
+        "maff_meat_latest"
+      ],
+      "limitations": [
+        "Egg size changed July 2019",
+        "Frequency change",
+        "Full archive not backfilled"
+      ]
+    },
+    {
+      "source_id": "maff_fish",
+      "publisher": "MAFF",
+      "title": "Food Price Monitoring: fish",
+      "role": "optional_national_retail",
+      "frequency": "monthly",
+      "coverage_statement": "October 2018 onward; September 2026 report inspected",
+      "access": "Public PDFs",
+      "evidence_status": "verified_download",
+      "entry_url": "https://www.maff.go.jp/j/zyukyu/anpo/kouri/k_gyuniku/fish/index.html",
+      "evidence_stems": [
+        "maff_fish",
+        "maff_fish_latest"
+      ],
+      "limitations": [
+        "Detailed product definitions need qualification",
+        "No city matrix"
+      ]
+    },
+    {
+      "source_id": "maff_fruit",
+      "publisher": "MAFF",
+      "title": "Food Price Monitoring: fruit",
+      "role": "optional_national_retail",
+      "frequency": "monthly",
+      "coverage_statement": "October 2023 onward; September 2026 report inspected",
+      "access": "Public PDFs",
+      "evidence_status": "verified_download",
+      "entry_url": "https://www.maff.go.jp/j/zyukyu/anpo/kouri/kouri/kajyu.html",
+      "evidence_stems": [
+        "maff_fruit_valid",
+        "maff_fruit_latest"
+      ],
+      "limitations": [
+        "Seasonal missingness",
+        "Short history"
+      ]
+    },
+    {
+      "source_id": "maff_rice_pos",
+      "publisher": "MAFF / private POS panels",
+      "title": "Rice POS summaries",
+      "role": "optional_sales_context",
+      "frequency": "weekly/monthly by report",
+      "coverage_statement": "Current inspected weekly PDF: February 2025–September 2026; broader KSP monitoring described as starting in 2022",
+      "access": "Public government reports; private raw POS data",
+      "evidence_status": "verified_download",
+      "entry_url": "https://www.maff.go.jp/j/nousan/kokumotu/kome_kakaku.html",
+      "evidence_stems": [
+        "maff_rice_portal",
+        "maff_rice_weekly",
+        "maff_rice_monthly"
+      ],
+      "limitations": [
+        "Sales/product mix changes",
+        "Private-data reuse conditions",
+        "Current PDF is overwritten",
+        "Full 2022-onward archive not established"
+      ]
+    },
+    {
+      "source_id": "maff_retired_retail",
+      "publisher": "MAFF",
+      "title": "Older fresh-food/vegetable retail surveys",
+      "role": "historical_only",
+      "frequency": "historical monthly/annual tables",
+      "coverage_statement": "Fresh-food file index 2003–2013; successor 2014–2016 ended",
+      "access": "e-Stat files",
+      "evidence_status": "reviewed_documentation",
+      "entry_url": "https://www.maff.go.jp/j/tokei/kouhyou/seisen_doukou/index.html",
+      "evidence_stems": [
+        "maff_old_retail",
+        "maff_old_overview"
+      ],
+      "limitations": [
+        "Discontinued",
+        "Survey redesign and expansion from 7 to 15 cities"
+      ]
+    },
+    {
+      "source_id": "maff_wholesale",
+      "publisher": "MAFF",
+      "title": "Fruit and vegetable wholesale market survey",
+      "role": "upstream_context",
+      "frequency": "daily/ten-day/monthly/annual",
+      "coverage_statement": "Annual index 2003–2025 plus long-run tables; per-item earliest period not certified",
+      "access": "e-Stat API/files and ministry publications",
+      "evidence_status": "reviewed_catalog",
+      "entry_url": "https://www.maff.go.jp/j/tokei/kouhyou/seika_orosi/",
+      "evidence_stems": [
+        "maff_wholesale"
+      ],
+      "limitations": [
+        "Wholesale stage, not consumer cost",
+        "Unit-value mix",
+        "Revisions"
+      ]
+    },
+    {
+      "source_id": "tokyo_wholesale",
+      "publisher": "Tokyo Central Wholesale Market",
+      "title": "Market statistics",
+      "role": "upstream_context",
+      "frequency": "monthly/annual",
+      "coverage_statement": "Online tables reach 2002; January 2026 structured detail inspected",
+      "access": "Public XLSX",
+      "evidence_status": "verified_download",
+      "entry_url": "https://www.shijou.metro.tokyo.lg.jp/ja/torihiki/geppo",
+      "evidence_stems": [
+        "tokyo_market",
+        "tokyo_wholesale_sample"
+      ],
+      "limitations": [
+        "Wholesale stage",
+        "Quantity/value aggregation",
+        "Historical files republished"
+      ]
+    },
+    {
+      "source_id": "boj_cgpi",
+      "publisher": "Bank of Japan",
+      "title": "Corporate Goods Price Index",
+      "role": "upstream_benchmark",
+      "frequency": "monthly",
+      "coverage_statement": "Verified polished-rice series starts January 2005; 2010–August 2026 subset retrieved",
+      "access": "Public JSON/CSV API",
+      "evidence_status": "verified_api",
+      "entry_url": "https://www.stat-search.boj.or.jp/ssi/docs/info/nme_aphelp.html",
+      "evidence_stems": [
+        "boj_api_manual",
+        "boj_cgpi_metadata",
+        "boj_rice_data"
+      ],
+      "limitations": [
+        "Producer/import index points, not retail yen",
+        "Base changes"
+      ]
+    },
+    {
+      "source_id": "egov_catalog",
+      "publisher": "Digital Agency / e-Gov",
+      "title": "Data Portal metadata catalog",
+      "role": "discovery",
+      "frequency": "publisher-dependent",
+      "coverage_statement": "No independent price history",
+      "access": "Public CKAN metadata API",
+      "evidence_status": "verified_api",
+      "entry_url": "https://data.e-gov.go.jp/data/ja/api_guide",
+      "evidence_stems": [
+        "egov_search"
+      ],
+      "limitations": [
+        "Metadata only",
+        "Search relevance must be checked",
+        "Bundled Python trust failure; system-trusted client succeeded"
+      ]
+    }
+  ]
+}

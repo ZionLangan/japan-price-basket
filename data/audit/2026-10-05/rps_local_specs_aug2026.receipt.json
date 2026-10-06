@@ -1,0 +1,14 @@
+{
+  "name": "rps_local_specs_aug2026",
+  "requested_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040506181&fileKind=1",
+  "retrieved_at_utc": "2026-10-05T00:19:32.396183+00:00",
+  "status": 200,
+  "final_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040506181&fileKind=1",
+  "content_type": "text/csv;charset=UTF-8",
+  "content_disposition": "attachment; filename*=UTF-8''001sankou_202608.csv",
+  "last_modified": null,
+  "etag": null,
+  "bytes": 9105,
+  "sha256": "d93db21a3a9037bf8cd0f232baeb6416a1286ceb0cc7a9d9f7322c07ba63a290",
+  "file": "data/audit/2026-10-05/rps_local_specs_aug2026.csv"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "rps_fresh_sep2026_tokyo",
+  "requested_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040510344&fileKind=0",
+  "retrieved_at_utc": "2026-10-05T02:12:09.143949+00:00",
+  "status": 200,
+  "final_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040510344&fileKind=0",
+  "content_type": "application/octet-stream",
+  "content_disposition": "attachment; filename*=UTF-8''b002-1.xlsx",
+  "last_modified": null,
+  "etag": null,
+  "bytes": 25117,
+  "sha256": "d56ad78ff783b58eb9aad2bb5ed5c296007a25af83863fcac6519e6c892a9b6b",
+  "file": "data/audit/2026-10-05/rps_fresh_sep2026_tokyo.xlsx"
+}

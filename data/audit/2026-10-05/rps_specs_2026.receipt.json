@@ -1,0 +1,14 @@
+{
+  "name": "rps_specs_2026",
+  "requested_url": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202609.xlsx",
+  "retrieved_at_utc": "2026-10-05T00:13:49.250292+00:00",
+  "status": 200,
+  "final_url": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202609.xlsx",
+  "content_type": "application/octet-stream",
+  "content_disposition": null,
+  "last_modified": "Thu, 27 Aug 2026 23:32:46 GMT",
+  "etag": "\"89169fc9acdf8e558870934ee7e7bc9c\"",
+  "bytes": 107868,
+  "sha256": "388d8afc01ba297555a28c6ee4967e3a2b263e3c13a4697722fb6e834caeea60",
+  "file": "data/audit/2026-10-05/rps_specs_2026.xlsx"
+}

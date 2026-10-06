@@ -1,0 +1,14 @@
+{
+  "name": "rps_food_aug2026",
+  "requested_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040506177&fileKind=0",
+  "retrieved_at_utc": "2026-10-05T00:19:32.396183+00:00",
+  "status": 200,
+  "final_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040506177&fileKind=0",
+  "content_type": "application/octet-stream",
+  "content_disposition": "attachment; filename*=UTF-8''b001-1.xlsx",
+  "last_modified": null,
+  "etag": null,
+  "bytes": 149754,
+  "sha256": "8bcdc55655b5c8f6d993885f9e577b291a26724c480ae3b3b262e1b7c9753127",
+  "file": "data/audit/2026-10-05/rps_food_aug2026.xlsx"
+}

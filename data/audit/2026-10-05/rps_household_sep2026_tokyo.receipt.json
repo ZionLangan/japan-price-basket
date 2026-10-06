@@ -1,0 +1,14 @@
+{
+  "name": "rps_household_sep2026_tokyo",
+  "requested_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040510346&fileKind=0",
+  "retrieved_at_utc": "2026-10-05T02:10:23.652358+00:00",
+  "status": 200,
+  "final_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040510346&fileKind=0",
+  "content_type": "application/octet-stream",
+  "content_disposition": "attachment; filename*=UTF-8''b002-3.xlsx",
+  "last_modified": null,
+  "etag": null,
+  "bytes": 26860,
+  "sha256": "d09bede0ff55daf6684bf584aefddda006406f314f82c2674f1599adb77191a0",
+  "file": "data/audit/2026-10-05/rps_household_sep2026_tokyo.xlsx"
+}

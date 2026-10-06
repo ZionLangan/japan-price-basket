@@ -1,0 +1,60 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+
+# Dependencies, build output, reports, and local tooling
+node_modules/
+dist/
+.vite/
+.vitest/
+coverage/
+playwright-report/
+test-results/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+tmp/
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Generated historical releases belong in build artifacts, not ordinary commits.
+/data/raw/
+/data/staging/
+/data/releases/
+/apps/web/public/data/
+
+# Preserve a fixed, curated set of original pilot evidence and audit indexes.
+# New bulk downloads remain local. Never force-add the whole audit directory.
+/data/audit/**
+!/data/audit/2026-10-05/
+!/data/audit/2026-10-05/audit_manifest.json
+!/data/audit/2026-10-05/source_registry.json
+!/data/audit/2026-10-05/sample_observations.json
+!/data/audit/2026-10-05/rps_food_aug2026.*
+!/data/audit/2026-10-05/rps_food_sep2026_tokyo.*
+!/data/audit/2026-10-05/rps_fresh_sep2026_tokyo.*
+!/data/audit/2026-10-05/rps_household_aug2026.*
+!/data/audit/2026-10-05/rps_household_sep2026_tokyo.*
+!/data/audit/2026-10-05/rps_jan2000_city_a.*
+!/data/audit/2026-10-05/rps_jan2000_city_b.*
+!/data/audit/2026-10-05/rps_local_specs_aug2026.*
+!/data/audit/2026-10-05/rps_local_specs_sep2026.*
+!/data/audit/2026-10-05/rps_spec_changes.*
+!/data/audit/2026-10-05/rps_specs_2000.*
+!/data/audit/2026-10-05/rps_specs_2026.*
+!/data/audit/2026-10-05/rps_specs_jul2000.*
+!/data/audit/2026-10-05/rps_tokyo_sep2000_history.*
