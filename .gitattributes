@@ -1,5 +1,6 @@
 # Portable authored text; preserve downloaded evidence byte for byte.
 * text=auto eol=lf
+*.gz binary
 /data/audit/** -text -whitespace
 *.xls binary
 *.xlsx binary

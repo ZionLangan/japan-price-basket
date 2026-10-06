@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-06",
+  "approvedWindow": {"start":"2024-09","end":"2026-08"},
+  "policy": "Exact dated specification signatures create separate segments; no changed signature has approved continuity. Local Y specifications are excluded. Unknown missing values are never carried. Seasonal carry applies only where the monthly calendar is unchanged across the anchor and target.",
+  "products": [
+    {"code":"1021","id":"white-bread","en":"White bread","unit":"kg","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["bread","しょくぱん","パン"]},
+    {"code":"1632","id":"white-sugar","en":"White sugar · 1 kg bag","unit":"kg","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["sugar","さとう","上白糖"]},
+    {"code":"1401","id":"cabbage","en":"Cabbage","unit":"kg","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["きゃべつ"]},
+    {"code":"1405","id":"white-leek","en":"White leek","unit":"kg","quoteQuantity":"1","presets":["0.25","0.5","1"],"aliases":["negi","leek","葱","ねぎ"]},
+    {"code":"1406","id":"lettuce","en":"Head lettuce","unit":"kg","quoteQuantity":"1","presets":["0.25","0.5","1"],"aliases":["lettuce","れたす"]},
+    {"code":"1407","id":"mung-bean-sprouts","en":"Mung bean sprouts","unit":"kg","quoteQuantity":"1","presets":["0.2","0.5","1"],"aliases":["moyashi","bean sprouts"]},
+    {"code":"1409","id":"broccoli","en":"Broccoli","unit":"kg","quoteQuantity":"1","presets":["0.25","0.5","1"],"aliases":["ぶろっこりー"]},
+    {"code":"1411","id":"sweet-potatoes","en":"Sweet potatoes","unit":"kg","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["sweet potato","さつま芋"]},
+    {"code":"1412","id":"potatoes","en":"Potatoes","unit":"kg","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["potato","ばれいしょ","馬鈴薯"]},
+    {"code":"1414","id":"daikon","en":"Daikon radish","unit":"kg","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["だいこん","大根","radish"]},
+    {"code":"1415","id":"carrots","en":"Carrots","unit":"kg","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["carrot","人参"]},
+    {"code":"1416","id":"burdock","en":"Burdock root","unit":"kg","quoteQuantity":"1","presets":["0.25","0.5","1"],"aliases":["gobo","ごぼう"]},
+    {"code":"1417","id":"onions","en":"Onions · excluding red onions","unit":"kg","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["onion","玉ねぎ","たまねぎ"]},
+    {"code":"1436","id":"tomatoes","en":"Tomatoes · excluding cherry tomatoes","unit":"kg","quoteQuantity":"1","presets":["0.25","0.5","1"],"aliases":["tomato","とまと"]},
+    {"code":"1434","id":"cucumbers","en":"Cucumbers","unit":"kg","quoteQuantity":"1","presets":["0.25","0.5","1"],"aliases":["cucumber","きゅうり"]},
+    {"code":"1511","id":"satsuma-mandarins","en":"Satsuma mandarins · seasonal","unit":"kg","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["mikan","orange","みかん","蜜柑"],"surveyMonths":[1,2,3,9,10,11,12]},
+    {"code":"1572","id":"japanese-cherries","en":"Japanese cherries · seasonal","unit":"kg","quoteQuantity":"1","presets":["0.25","0.5","1"],"aliases":["cherry","cherries","さくらんぼ"],"surveyMonths":[6,7]},
+    {"code":"4401","id":"cling-film","en":"Cling film · 22 cm × 50 m roll","unit":"package","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["wrap","plastic wrap","ラップ"]},
+    {"code":"4431","id":"dishwashing-liquid","en":"Dishwashing liquid · specified refill","unit":"package","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["dish soap","detergent","食器用洗剤","台所用洗剤"]},
+    {"code":"4441","id":"liquid-laundry-detergent","en":"Liquid laundry detergent","unit":"kg","quoteQuantity":"1","presets":["0.5","1","2"],"aliases":["laundry","cleaner","washing","洗濯用洗剤","液体洗剤"]}
+  ]
+}
