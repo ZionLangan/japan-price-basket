@@ -1,12 +1,15 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import type { CityData, Locale, Product } from '../../../packages/domain/src/contracts';
-import { searchProducts } from '../../../packages/domain/src/domain';
+import { monthNumber, searchProducts } from '../../../packages/domain/src/domain';
 import type { DashboardText } from './dashboardMessages';
 
 export function ProductSearch({
   products,
   selected,
   city,
+  month,
+  historyStart,
+  historyEnd,
   locale,
   t,
   onAdd,
@@ -14,6 +17,9 @@ export function ProductSearch({
   products: Product[];
   selected: string[];
   city?: CityData;
+  month: string;
+  historyStart: string;
+  historyEnd: string;
   locale: Locale;
   t: DashboardText;
   onAdd: (product: Product) => void;
@@ -144,6 +150,15 @@ export function ProductSearch({
               const observations = city?.series[p.id]?.filter(
                 (r) => r.status === 'observed',
               ).length;
+              const segment = p.segments.find((s) => s.start <= month && s.end >= month);
+              const first = p.segments[0].start;
+              const last = p.segments.at(-1)!.end;
+              const limited = first > historyStart || last < historyEnd;
+              const interrupted = p.segments.some(
+                (segment, index) =>
+                  index > 0 &&
+                  monthNumber(segment.start) > monthNumber(p.segments[index - 1].end) + 1,
+              );
               return (
                 <div
                   key={p.id}
@@ -159,7 +174,9 @@ export function ProductSearch({
                   <div>
                     <strong>{p.names[locale]}</strong>
                     <span className="hint">
-                      {p.quoteLabel[locale]} · {p.code}
+                      {segment?.quoteLabel?.[locale] ?? p.quoteLabel[locale]} · {p.code}
+                      {limited ? ` · ${first} – ${last}` : ''}
+                      {interrupted ? ` · ${t.interruptedPeriods}` : ''}
                       {observations === 0 ? ` · ${t.noCityPrices}` : ''}
                     </span>
                   </div>

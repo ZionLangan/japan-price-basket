@@ -170,7 +170,7 @@ test('inspection retains absolute prices but explains why a specification break 
   page,
 }) => {
   await load(page);
-  await addOnly(page, 'dish soap', /^Add: Dishwashing/);
+  await addOnly(page, 'dish soap', /^Add: Dishwashing liquid · specified refill$/);
   const chart = page.locator('.price-chart');
   await chart.focus();
   await chart.press('End');

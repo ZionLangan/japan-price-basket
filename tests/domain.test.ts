@@ -59,6 +59,26 @@ const synthetic = (
 });
 
 describe('reviewed real monthly data', () => {
+  it('reconciles the independently audited January 2000 Tokyo basket and exact ten-kg rice quote', () => {
+    const results = evaluate({ ...basket, start: '2000-01' }, release, city());
+    expect(results).toHaveLength(320);
+    expect(results[0].items.map((item) => item.cost)).toEqual(['422', '218', '160', '280', '271']);
+    expect(results[0].cost).toBe('1351');
+    expect(results.at(-1)?.cost).toBe('2098');
+    expect(Number(results.at(-1)?.change)).toBeCloseTo(55.2923760178);
+    const rice = evaluate(
+      {
+        ...basket,
+        start: '2000-01',
+        end: '2000-01',
+        items: [{ productId: 'koshihikari-rice', quantity: '1', unit: 'kg' }],
+      },
+      release,
+      city(),
+    );
+    expect(rice[0].items[0].price).toBe('5922');
+    expect(rice[0].cost).toBe('592.2');
+  });
   it('reconciles the newly reviewed December 2020 staple endpoint without filling missing cities', () => {
     const results = evaluate({ ...basket, start: '2020-12' }, release, city());
     expect(results).toHaveLength(69);
@@ -164,6 +184,70 @@ describe('reviewed real monthly data', () => {
 });
 
 describe('decimal quantities and search', () => {
+  it('uses dated source quantities for monthly totals, index and annual changes', () => {
+    // Synthetic prices isolate quote normalization; they are never public data.
+    const first = {
+      ...syntheticProduct.segments[0],
+      start: '2025-01',
+      end: '2025-12',
+      quoteQuantity: '10',
+      quoteUnit: 'kg' as const,
+    };
+    const second = {
+      ...first,
+      id: 'synthetic-five-kg',
+      start: '2026-01',
+      end: '2026-12',
+      quoteQuantity: '5',
+      continuityFromPrevious: true,
+    };
+    const product = { ...syntheticProduct, segments: [first, second] };
+    const localRelease = { ...release, products: [product] };
+    const localCity = {
+      ...city(),
+      series: {
+        [product.id]: [
+          synthetic('2025-01', 'observed', '1000'),
+          { ...synthetic('2026-01', 'observed', '600'), segmentId: second.id },
+        ],
+      },
+    };
+    const results = evaluate(
+      { ...basket, start: '2025-01', end: '2026-01', items: [basket.items[0]] },
+      localRelease,
+      localCity,
+    );
+    expect(results[0].cost).toBe('100');
+    expect(results.at(-1)).toMatchObject({ cost: '120', index: '120', change: '20', yoy: '20' });
+    expect(
+      quantityCost('100', '500', 'g', product, { ...first, quoteQuantity: '100', quoteUnit: 'g' }),
+    ).toBe('500');
+    expect(() => quantityCost('100', '1', 'kg', product, { ...first, quoteUnit: 'count' })).toThrow(
+      'invalidUnit',
+    );
+    const unresolved = {
+      ...product,
+      segments: [first, { ...second, continuityFromPrevious: false }],
+    };
+    const blocked = evaluate(
+      { ...basket, start: '2025-01', end: '2026-01', items: [basket.items[0]] },
+      { ...localRelease, products: [unresolved] },
+      localCity,
+    );
+    expect(blocked.at(-1)).toMatchObject({ cost: '120', index: null, change: null, yoy: null });
+  });
+  it('distinguishes an inactive historical form from a city not surveyed', () => {
+    expect(resolvePrice(syntheticProduct, [], '2000-01', false)).toMatchObject({
+      status: 'unavailable',
+      reason: 'variant-inactive',
+      price: null,
+    });
+    expect(resolvePrice(syntheticProduct, [], '2025-01', false)).toMatchObject({
+      status: 'unavailable',
+      reason: 'not-surveyed',
+      price: null,
+    });
+  });
   it('prices source packages by their exact declared mass, volume and count', () => {
     const rice = release.products.find((p) => p.id === 'koshihikari-rice')!;
     const milk = release.products.find((p) => p.id === 'carton-milk')!;

@@ -22,17 +22,33 @@ export const ProductSchema = z.object({
   presets: z.array(PositiveDecimal).min(1),
   segments: z
     .array(
-      z.object({
-        id: z.string(),
-        start: Month,
-        end: Month,
-        definition: z.string(),
-        detail: z.string(),
-        sourceUrl: z.string().url(),
-        surveyMonths: z.array(z.number().int().min(1).max(12)),
-        // A break is unresolved unless the review explicitly admits continuity.
-        continuityFromPrevious: z.boolean(),
-      }),
+      z
+        .object({
+          id: z.string(),
+          start: Month,
+          end: Month,
+          definition: z.string(),
+          detail: z.string(),
+          sourceUrl: z.string().url(),
+          surveyMonths: z.array(z.number().int().min(1).max(12)),
+          quoteQuantity: PositiveDecimal.optional(),
+          quoteUnit: Unit.optional(),
+          quoteLabel: Names.optional(),
+          sourceUnit: z.string().optional(),
+          specificationUnit: z.string().optional(),
+          specificationName: z.string().optional(),
+          // A break is unresolved unless the review explicitly admits continuity.
+          continuityFromPrevious: z.boolean(),
+          continuityReason: z.string().optional(),
+          continuityEvidence: z.array(z.string().url()).optional(),
+          reviewHash: z
+            .string()
+            .regex(/^[a-f0-9]{64}$/)
+            .optional(),
+        })
+        .refine((segment) => Boolean(segment.quoteQuantity) === Boolean(segment.quoteUnit), {
+          message: 'Segment quoted quantity and unit must be provided together',
+        }),
     )
     .min(1),
 });
@@ -55,6 +71,7 @@ export const ObservationSchema = z
     sourceId: z.string(),
     raw: z.union([z.string(), z.number(), z.null()]),
     sourceRow: z.number().int().positive(),
+    sourceColumn: z.number().int().positive().optional(),
     sourceSheet: z.string(),
     sourceUnit: z.string(),
     sourceRevision: z.string().nullable(),
@@ -85,9 +102,10 @@ export const ReleaseSchema = z.object({
     z.object({
       id: z.string(),
       names: Names,
+      historical: z.boolean().optional(),
       start: Month,
       end: Month,
-      file: z.string().regex(/^cities\/\d{5}\.json$/),
+      file: z.string().regex(/^cities\/\d{5}(?:-(?:pre|transition)\d{6})?\.json$/),
       sha256: z.string().regex(/^[a-f0-9]{64}$/),
     }),
   ),

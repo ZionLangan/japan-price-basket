@@ -165,13 +165,13 @@ export function LiveBasket({
                     ×
                   </button>
                 </div>
-                <p>
-                  {t.quote}: {p.quoteLabel[locale]}
-                </p>
                 {p.segments.map((s, index) => (
                   <div key={s.id}>
                     <p className="hint">
                       {s.start} – {s.end} · {p.code}
+                    </p>
+                    <p>
+                      {t.quote}: {s.quoteLabel?.[locale] ?? p.quoteLabel[locale]}
                     </p>
                     {index > 0 && !s.continuityFromPrevious && (
                       <p className="notice">{t.breakWarning}</p>

@@ -123,7 +123,7 @@ export const en = {
   method3:
     'A fixed basket’s price change is not Japan’s official inflation rate. City specifications and sampled shops can differ; this tool does not rank cities by cost of living.',
   method4:
-    'Product forms and package changes may break comparability. Original definitions and dates are preserved. Earlier archive coverage back to 2000 is still under review and is not joined to this monthly prototype.',
+    'Product forms and package changes may break comparability. Original definitions and dates are preserved. Historical forms and predecessor city areas remain separate; exact unit conversion does not establish comparable quality.',
   method5:
     'The published sample changed in January 2025. Kashiwa, Fujisawa and Toyohashi have no observations in this build before that month.',
   release: 'Dataset version',
@@ -259,7 +259,7 @@ export const ja: typeof en = {
   method3:
     'この固定した買い物かごの価格変化は、日本の公式なインフレ率ではありません。都市ごとに銘柄や調査店舗が異なるため、生活費による都市の順位付けには使いません。',
   method4:
-    '商品の形態や包装の変更で比較できなくなる場合があります。出典の定義と期間を保持しています。2000年からの過去の資料は確認中で、この月次プロトタイプの履歴には接続していません。',
+    '商品の形態や包装の変更で比較できなくなる場合があります。出典の定義と期間を保持しています。過去の異なる商品形態や合併前の調査区域は別に扱い、単位を換算しても品質の同等性は仮定しません。',
   method5:
     '2025年1月に公表対象の都市が変更されました。柏市・藤沢市・豊橋市について、この版には同月より前の実測値がありません。',
   release: 'データセットの版',

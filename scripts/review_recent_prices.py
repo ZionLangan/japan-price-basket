@@ -25,6 +25,60 @@ def normalized(text):
     return re.sub(r"\s+", "", unicodedata.normalize("NFKC", str(text or "")))
 
 
+def specification_hash(spec):
+    """Fingerprint the reviewed meanings of every original specification column."""
+    return hashlib.sha256(canonical({
+        key: normalized(spec.get(key))
+        for key in ["name", "definition", "detail", "unit", "months"]
+    })).hexdigest()
+
+
+def survey_months(spec):
+    """Read an explicit month list/range; unknown calendar wording fails review."""
+    text = normalized(spec.get("months")).replace("～", "~")
+    if not text:
+        return list(range(1, 13))
+    result = set()
+    for token in re.split(r"[,、､]", text):
+        match = re.fullmatch(r"(\d{1,2})(?:月)?(?:~(\d{1,2}))?月", token)
+        if not match:
+            raise ValueError(f"Unreviewed seasonal schedule: {spec.get('months')!r}")
+        first, last = int(match[1]), int(match[2] or match[1])
+        if not 1 <= first <= last <= 12:
+            raise ValueError(f"Invalid seasonal schedule: {spec.get('months')!r}")
+        result.update(range(first, last + 1))
+    return sorted(result)
+
+
+def reviewed_specification(mapping, month):
+    admitted = [s for s in mapping.get("reviewedSpecifications", [])
+                if s["start"] <= month <= s["end"]]
+    if len(admitted) > 1:
+        raise ValueError(f"Overlapping specification approvals {mapping['id']}, {month}")
+    return admitted[0] if admitted else None
+
+
+def validate_reviewed_specification(mapping, row, spec, month):
+    approval = reviewed_specification(mapping, month)
+    if approval is None:
+        raise ValueError(f"Inactive or unreviewed variant {mapping['id']}, {month}")
+    if specification_hash(spec) != approval["specificationHash"]:
+        raise ValueError(f"Unreviewed specification {mapping['id']}, {month}")
+    if normalized(row["unit"]) not in {normalized(v) for v in approval["sourceUnits"]}:
+        raise ValueError(f"Unreviewed quote unit {mapping['id']}, {month}: {row['unit']}")
+    if survey_months(spec) != approval["surveyMonths"]:
+        raise ValueError(f"Unreviewed seasonal schedule {mapping['id']}, {month}")
+    if approval["quoteUnit"] != mapping["unit"]:
+        raise ValueError(f"Incompatible quote dimension {mapping['id']}, {month}")
+    quantity = str(approval["quoteQuantity"])
+    if not re.fullmatch(r"(?:0|[1-9]\d*)(?:\.\d{1,6})?", quantity) or not 0 < float(quantity) <= 10000:
+        raise ValueError(f"Invalid reviewed quantity {mapping['id']}, {month}")
+    if approval["continuityFromPrevious"] and not (
+            approval.get("continuityReason") and approval.get("continuityEvidence")):
+        raise ValueError(f"Unevidenced continuity {mapping['id']}, {month}")
+    return approval
+
+
 def review_identity(mapping, row, spec, month):
     """Admit only reviewed item names and product forms, including dated aliases."""
     source_name = normalized(row["name"])
@@ -44,6 +98,9 @@ def review_identity(mapping, row, spec, month):
     for term in mapping.get("requiredSpecificationTerms", []):
         if normalized(term) not in definition:
             raise ValueError(f"Unreviewed product form {mapping['code']}, {month}: {term}")
+    for alternatives in mapping.get("requiredSpecificationTermGroups", []):
+        if not any(normalized(term) in definition for term in alternatives):
+            raise ValueError(f"Unreviewed product form {mapping['code']}, {month}: {alternatives}")
 
 
 def make_fixture(staging, review):
@@ -58,129 +115,138 @@ def make_fixture(staging, review):
         year, month = (year + 1, 1) if month == 12 else (year, month + 1)
     if [s["month"] for s in snapshots] != expected:
         raise ValueError("Missing, duplicate, or unordered monthly snapshot")
-    english = ["Sapporo", "Hakodate", "Asahikawa", "Aomori", "Hachinohe", "Morioka",
-               "Sendai", "Akita", "Yamagata", "Fukushima", "Koriyama", "Mito", "Hitachi",
-               "Utsunomiya", "Oyama", "Maebashi", "Saitama", "Kumagaya", "Kawaguchi",
-               "Tokorozawa", "Chiba", "Kashiwa", "Urayasu", "Tokyo special wards",
-               "Hachioji", "Tachikawa", "Fuchu", "Yokohama", "Kawasaki", "Sagamihara",
-               "Fujisawa", "Niigata", "Nagaoka", "Toyama", "Kanazawa", "Fukui", "Kofu",
-               "Nagano", "Matsumoto", "Gifu", "Shizuoka", "Hamamatsu", "Fuji", "Nagoya",
-               "Toyohashi", "Tsu", "Matsusaka", "Otsu", "Kyoto", "Osaka", "Sakai",
-               "Hirakata", "Higashiosaka", "Kobe", "Himeji", "Nishinomiya", "Itami",
-               "Nara", "Wakayama", "Tottori", "Matsue", "Okayama", "Hiroshima",
-               "Fukuyama", "Yamaguchi", "Ube", "Tokushima", "Takamatsu", "Matsuyama",
-               "Imabari", "Kochi", "Fukuoka", "Kitakyushu", "Saga", "Nagasaki",
-               "Sasebo", "Kumamoto", "Oita", "Miyazaki", "Kagoshima", "Naha"]
+    mappings = review["products"]
+    if len({p["id"] for p in mappings}) != len(mappings):
+        raise ValueError("Duplicate reviewed variant ID")
+    # One actual source item belongs to exactly one reviewed variant that month.
+    # Inactive variants are absent, rather than manufactured null observations.
+    codes = {p["code"] for p in mappings}
+    for snapshot in snapshots:
+        for code in codes:
+            matching = [p for p in mappings if p["code"] == code
+                        and reviewed_specification(p, snapshot["month"])]
+            if len(matching) != 1:
+                raise ValueError(f"Missing or overlapping variant review {code}, {snapshot['month']}")
     cities = []
-    for c, label in zip(staging["cities"], english, strict=True):
-        first = next(s["month"] for s in snapshots if c["id"] in {r["id"] for r in s["cities"]})
-        cities.append({"id": c["id"], "names": {"ja": c["ja"], "en": label}, "start": first, "end": end})
+    for city in staging["cities"]:
+        covered = [s["month"] for s in snapshots
+                   if city["id"] in {r["id"] for r in s["cities"]}]
+        names = city.get("names") or {"ja": city["ja"], "en": city.get("en")}
+        if not covered or not names.get("en") or not names.get("ja"):
+            raise ValueError(f"Unreviewed city identity {city['id']}")
+        cities.append({"id": city["id"], "names": names, "start": covered[0],
+                       "end": covered[-1], "historical": bool(city.get("historical", False))})
+    if len({c["id"] for c in cities}) != len(cities):
+        raise ValueError("Duplicate city scope")
     series = {c["id"]: {} for c in cities}
     products, sources, report = [], [], []
-    for s in snapshots:
-        for source in s["sources"]:
-            raw = ROOT / "data/raw/recent" / source["sha256"]
-            if hashlib.sha256(raw.read_bytes()).hexdigest() != source["sha256"]:
-                raise ValueError("Source hash failed")
-            sources.append(source)
-        raw_spec = ROOT / "data/raw/recent" / s["specSource"]["sha256"]
-        if hashlib.sha256(raw_spec.read_bytes()).hexdigest() != s["specSource"]["sha256"]:
-            raise ValueError("Specification hash failed")
-        sources.append({**s["specSource"], "id": s["month"] + "-specifications", "category": "specifications"})
-    for mapping in review["products"]:
+    checked_hashes = set()
+    for snapshot in snapshots:
+        for source in [*snapshot["sources"], snapshot["specSource"]]:
+            if source["sha256"] not in checked_hashes:
+                raw = ROOT / "data/raw/recent" / source["sha256"]
+                if hashlib.sha256(raw.read_bytes()).hexdigest() != source["sha256"]:
+                    raise ValueError("Source hash failed")
+                checked_hashes.add(source["sha256"])
+        sources.extend(snapshot["sources"])
+        sources.append({**snapshot["specSource"], "id": snapshot["month"] + "-specifications",
+                        "category": "specifications"})
+    missing_tokens = set(review["reviewedMissingTokens"])
+    for mapping in mappings:
         code = mapping["code"]
-        segments, signatures = [], []
-        all_rows = []
-        for s in snapshots:
-            rows = [r for r in s["prices"] if r["code"] == code]
-            if len(rows) != 1 or code not in s["specs"]:
-                raise ValueError(f"Missing or duplicate item {code}, {s['month']}")
-            row, spec = rows[0], s["specs"][code]
-            review_identity(mapping, row, spec, s["month"])
-            if code in {"1001", "1303", "1341"}:
-                expected_source, expected_spec, quantity_term = {
-                    "1001": ("1袋・5kg", "1袋", "5kg入り"),
-                    "1303": ("1本・1000mL", "1本", "1000mL入り"),
-                    "1341": ("1パック・10個", "1パック", "10個入り"),
-                }[code]
-                if (normalized(row["unit"]).replace("･", "・").replace(",", "") != expected_source
-                        or normalized(spec["unit"]) != expected_spec
-                        or quantity_term not in normalized(spec["definition"]).replace(",", "")):
-                    raise ValueError(f"Unreviewed quoted quantity {code}: {row['unit']}")
-            elif mapping["unit"] == "kg":
-                expected = "1袋・1kg" if code == "1632" else "1kg"
-                # e-Stat uses U+FF65 in the sugar package unit; normalization
-                # yields a middle dot. The reviewed bag contains exactly 1 kg.
-                if normalized(row["unit"]).replace("･", "・") != expected:
-                    raise ValueError(f"Unreviewed quote unit {code}: {row['unit']}")
-                if normalized(spec["unit"]) != ("1袋" if code == "1632" else "1kg"):
-                    raise ValueError(f"Unreviewed specification unit {code}")
-            elif code == "4401" and normalized(row["unit"]) != "1本":
-                raise ValueError(f"Unreviewed package {code}: {row['unit']}")
-            elif code == "4431":
-                quantity = normalized(row["unit"]).replace("･", "・")
-                reviewed = {f"1本・{v}mL" for v in mapping["reviewedRefillVolumesML"]}
-                if quantity not in reviewed or quantity.split("・")[1] not in normalized(spec["definition"]):
-                    raise ValueError(f"Unreviewed package {code}: {row['unit']}")
-            schedule = mapping.get("surveyMonths", list(range(1, 13)))
-            expected_schedule = {"1511": "1月~3月,9月~12月", "1572": "6月~7月"}.get(code, "")
-            if normalized(spec["months"]).replace("～", "~").replace("、", ",") != expected_schedule:
-                raise ValueError(f"Unreviewed seasonal schedule {code}: {spec['months']}")
-            signature = tuple(normalized(spec[k]) for k in ["name", "definition", "detail", "unit", "months"])
-            if not signatures or signature != signatures[-1]:
-                if segments:
-                    segments[-1]["end"] = all_rows[-1][0]["month"]
-                segments.append({"id": f"{mapping['id']}:{s['month']}", "start": s["month"], "end": end,
-                                 "definition": spec["definition"] or "", "detail": spec["detail"] or "",
-                                 "sourceUrl": s["specSource"]["url"], "surveyMonths": schedule,
-                                 "continuityFromPrevious": False})
-            signatures.append(signature)
-            all_rows.append((s, row, segments[-1]["id"]))
+        segments, all_rows = [], []
+        last_approval = None
+        for snapshot in snapshots:
+            period = snapshot["month"]
+            approval = reviewed_specification(mapping, period)
+            if approval is None:
+                continue
+            rows = [r for r in snapshot["prices"] if r["code"] == code]
+            if len(rows) != 1 or code not in snapshot["specs"]:
+                raise ValueError(f"Missing or duplicate item {code}, {period}")
+            row, spec = rows[0], snapshot["specs"][code]
+            review_identity(mapping, row, spec, period)
+            validate_reviewed_specification(mapping, row, spec, period)
+            if approval is not last_approval:
+                segments.append({
+                    "id": f"{mapping['id']}:{period}", "start": period, "end": period,
+                    "definition": spec["definition"] or "", "detail": spec["detail"] or "",
+                    "specificationName": spec["name"], "specificationUnit": str(spec["unit"] or ""),
+                    "sourceUrl": snapshot["specSource"]["url"], "surveyMonths": approval["surveyMonths"],
+                    "quoteQuantity": approval["quoteQuantity"], "quoteUnit": approval["quoteUnit"],
+                    "quoteLabel": approval["quoteLabel"], "sourceUnit": str(row["unit"]),
+                    "continuityFromPrevious": bool(segments) and approval["continuityFromPrevious"],
+                    "continuityReason": approval["continuityReason"],
+                    "continuityEvidence": approval["continuityEvidence"],
+                    "reviewHash": approval["specificationHash"],
+                })
+                last_approval = approval
+            segments[-1]["end"] = period
+            all_rows.append((snapshot, row, segments[-1]))
+        if not all_rows:
+            raise ValueError(f"Reviewed variant has no admitted months: {mapping['id']}")
         units = ["kg", "g"] if mapping["unit"] == "kg" else ["L", "mL"] if mapping["unit"] == "L" else [mapping["unit"]]
-        products.append({"id": mapping["id"], "familyId": mapping["id"], "variantId": mapping["id"],
-                         "code": code, "names": {"en": mapping["en"], "ja": all_rows[-1][1]["name"]},
-                         "aliases": mapping["aliases"], "category": "food" if int(code) < 3000 else "household",
-                         "unit": mapping["unit"], "quoteQuantity": mapping["quoteQuantity"],
-                         "quoteLabel": {"en": mapping.get("quoteLabelEn", (
-                             f"{mapping['quoteQuantity']} {mapping['unit']}" if mapping["unit"] in {"kg", "L"}
-                             else "1 roll" if code == "4401" else "1 specified refill")),
-                                        "ja": ("1本（期間ごとの指定容量）" if code == "4431" else all_rows[-1][1]["unit"])},
-                         "units": units, "presets": mapping["presets"], "segments": segments})
+        latest = segments[-1]
+        products.append({
+            "id": mapping["id"], "familyId": mapping.get("familyId", mapping["id"]),
+            "variantId": mapping["id"], "code": code,
+            "names": {"en": mapping["en"], "ja": mapping.get("ja", all_rows[-1][1]["name"])},
+            "aliases": mapping["aliases"], "category": "food" if int(code) < 3000 else "household",
+            "unit": mapping["unit"], "quoteQuantity": latest["quoteQuantity"],
+            "quoteLabel": latest["quoteLabel"], "units": units,
+            "presets": mapping["presets"], "segments": segments,
+        })
         counts = Counter()
         for city in cities:
             observations = []
-            for s, row, segment_id in all_rows:
+            for snapshot, row, segment in all_rows:
+                if not city["start"] <= snapshot["month"] <= city["end"]:
+                    continue
                 raw = row["values"].get(city["id"])
                 status, price = "unavailable", None
                 if city["id"] not in row["values"]:
                     status = "not-surveyed"
                 elif isinstance(raw, (int, float)) and not isinstance(raw, bool) and raw > 0:
                     status, price = "observed", str(int(raw)) if raw == int(raw) else str(raw)
-                elif "Y" in str(raw):
+                elif isinstance(raw, (int, float, bool)):
+                    raise ValueError(f"Invalid numeric price {code}, {city['id']}, {snapshot['month']}: {raw!r}")
+                elif re.fullmatch(r"Y(?:\s*\d+(?:\.\d+)?)?", str(raw).strip()):
                     status = "local-spec"
-                elif normalized(raw) in ("...", "…") and int(s["month"][5:]) not in schedule:
-                    # All selected seasonal items have observations in each
-                    # admitted city during this window; checked below.
-                    status = "seasonal"
-                elif normalized(raw) not in {"...", "…", "-"}:
-                    raise ValueError(f"Unexpected price token {code}, {city['id']}, {s['month']}: {raw!r}")
-                observations.append({"month": s["month"], "price": price, "status": status,
-                                     "segmentId": segment_id, "sourceId": row["sourceId"], "raw": raw,
-                                     "sourceRow": row["row"], "sourceSheet": row["sheet"],
-                                     "sourceUnit": row["unit"],
-                                     "sourceRevision": None if row["revision"] is None else str(row["revision"])})
-            if mapping.get("surveyMonths") and not any(o["status"] == "observed" for o in observations):
-                for o in observations:
-                    if o["status"] == "seasonal":
-                        o["status"] = "not-surveyed"
+                elif normalized(raw) in missing_tokens:
+                    # No dated legend establishes the older two-dot token's
+                    # cause. A seasonal calendar alone cannot redefine it.
+                    if (normalized(raw) in {"...", "…"}
+                            and int(snapshot["month"][5:]) not in segment["surveyMonths"]):
+                        status = "seasonal"
+                else:
+                    raise ValueError(f"Unexpected price token {code}, {city['id']}, {snapshot['month']}: {raw!r}")
+                location = row.get("locations", {}).get(city["id"], {})
+                observation = {
+                    "month": snapshot["month"], "price": price, "status": status,
+                    "segmentId": segment["id"], "sourceId": row["sourceId"], "raw": raw,
+                    "sourceRow": location.get("row", row["row"]), "sourceSheet": row["sheet"],
+                    "sourceUnit": row["unit"],
+                    "sourceRevision": None if row["revision"] is None else str(row["revision"]),
+                }
+                if "column" in location:
+                    observation["sourceColumn"] = location["column"]
+                observations.append(observation)
+            if any(len(s["surveyMonths"]) < 12 for s in segments) and not any(
+                    o["status"] == "observed" for o in observations):
+                for observation in observations:
+                    if observation["status"] == "seasonal":
+                        observation["status"] = "not-surveyed"
             series[city["id"]][mapping["id"]] = observations
             counts.update(o["status"] for o in observations)
-        report.append({"id": mapping["id"], "code": code, "segments": segments, "counts": dict(counts)})
-    fixture = {"schemaVersion": 1, "policyVersion": "1.0", "start": start, "end": end,
-               "builtAt": max(s["retrievedAt"] for s in sources),
-               "sourceName": {"en": "Statistics Bureau of Japan · Retail Price Survey (Trend)",
-                              "ja": "総務省統計局 · 小売物価統計調査（動向編）"},
-               "cities": cities, "products": products, "sources": sources, "series": series}
+        report.append({"id": mapping["id"], "code": code, "activeMonths": len(all_rows),
+                       "segments": segments, "counts": dict(counts)})
+    fixture = {
+        "schemaVersion": 1, "policyVersion": "1.0", "start": start, "end": end,
+        "builtAt": max(s["retrievedAt"] for s in sources),
+        "sourceName": {"en": "Statistics Bureau of Japan · Retail Price Survey (Trend)",
+                       "ja": "総務省統計局 · 小売物価統計調査（動向編）"},
+        "cities": cities, "products": products, "sources": sources, "series": series,
+    }
     return fixture, report
 
 

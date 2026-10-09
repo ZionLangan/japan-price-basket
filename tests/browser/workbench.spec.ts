@@ -24,12 +24,13 @@ test('one basket recalculates charts immediately and persists without a save ste
     if (!r.url().startsWith('http://127.0.0.1:4173/')) requests.push(r.url());
   });
   await load(page);
-  await expect(page.locator('#city option')).toHaveCount(81);
+  await expect(page.locator('#city optgroup').first().locator('option')).toHaveCount(81);
+  await expect(page.locator('#city optgroup').last().locator('option')).not.toHaveCount(0);
   await expectRange(page, '2024-09', '2026-08');
   const before = await page.locator('.price-chart').innerHTML();
   await page.locator('#qty-white-bread').fill('0.5');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥1,815');
-  expect(await page.locator('.price-chart').innerHTML()).not.toBe(before);
+  await expect.poll(() => page.locator('.price-chart').innerHTML()).not.toBe(before);
   await add(page, 'たまねぎ', /^Add: Onions/);
   await page.locator('#qty-onions').fill('0.5');
   await page.locator('#unit-onions').selectOption('g');
@@ -62,7 +63,11 @@ test('search supports keyboard selection, categories, no results and Escape', as
   await expect(page.getByText('No matching reviewed products.', { exact: false })).toBeVisible();
   await page.locator('#search').fill('');
   await page.locator('#category').selectOption('household');
-  await expect(page.getByRole('listbox').getByRole('option')).toHaveCount(3);
+  // Current and historical household forms are all searchable.
+  await expect(page.getByRole('listbox').getByRole('option')).toHaveCount(7);
+  await expect(
+    page.getByRole('listbox').getByRole('option', { name: /Powder laundry/i }),
+  ).toBeVisible();
   await page.locator('#search').focus();
   await page.locator('#search').press('Escape');
   await expect(page.locator('#search')).toHaveAttribute('aria-expanded', 'false');
@@ -120,7 +125,7 @@ test('real specification breaks split chart lines and block comparisons until ba
 }) => {
   await load(page);
   await page.getByRole('button', { name: 'Clear basket', exact: true }).click();
-  await add(page, 'dish soap', /^Add: Dishwashing/);
+  await add(page, 'dish soap', /^Add: Dishwashing liquid · specified refill$/);
   await expect(page.getByTestId('basket-change')).toHaveText('—');
   await expect(page.locator('.quality-summary')).toContainText('Comparison unavailable');
   await expect(page.locator('.price-chart circle')).toHaveCount(24);
@@ -131,7 +136,12 @@ test('real specification breaks split chart lines and block comparisons until ba
   await expect(page.getByTestId('basket-change')).toHaveText('—');
   await page.locator('#city').selectOption('14205');
   await page.getByRole('tab', { name: 'Monthly data', exact: true }).click();
-  await expect(page.locator('.monthly-table tbody tr').first()).toContainText('city not surveyed');
+  await expect(page.locator('.monthly-table tbody tr').first()).toContainText(
+    'This product form was not surveyed',
+  );
+  await expect(
+    page.locator('.monthly-table tbody tr').filter({ hasText: '2024-09' }),
+  ).toContainText('city not surveyed');
 });
 
 test('invalid quantities and dates prevent misleading charts while preserving the last valid basket', async ({

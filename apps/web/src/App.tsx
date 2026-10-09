@@ -130,6 +130,19 @@ function Workbench({ release }: { release: Release }) {
   const [retry, setRetry] = useState(0);
   const t = dashboardMessages[locale];
   const selectedCity = release.cities.find((c) => c.id === basket.cityId)!;
+  const missingCityIntervals: string[] = [];
+  if (selectedCity.start > basket.start) {
+    const end =
+      selectedCity.start > basket.end
+        ? basket.end
+        : months(basket.start, selectedCity.start).at(-2)!;
+    missingCityIntervals.push(`${basket.start} – ${end}`);
+  }
+  if (selectedCity.end < basket.end) {
+    const start =
+      selectedCity.end < basket.start ? basket.start : months(selectedCity.end, basket.end)[1];
+    missingCityIntervals.push(`${start} – ${basket.end}`);
+  }
   const inputError = basket.items.some((i) => !PositiveDecimal.safeParse(i.quantity).success)
     ? t.invalidQuantity
     : basket.start > basket.end
@@ -224,10 +237,19 @@ function Workbench({ release }: { release: Release }) {
             value={basket.cityId}
             onChange={(e) => setBasket((b) => ({ ...b, cityId: e.target.value }))}
           >
-            {release.cities.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.names[locale]}
-              </option>
+            {[false, true].map((historical) => (
+              <optgroup
+                key={String(historical)}
+                label={historical ? t.historicalCities : t.currentCities}
+              >
+                {release.cities
+                  .filter((c) => Boolean(c.historical) === historical)
+                  .map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.names[locale]}
+                    </option>
+                  ))}
+              </optgroup>
             ))}
           </select>
         </div>
@@ -287,6 +309,9 @@ function Workbench({ release }: { release: Release }) {
         products={release.products}
         selected={basket.items.map((i) => i.productId)}
         city={ready ? cityData : undefined}
+        month={basket.end}
+        historyStart={release.start}
+        historyEnd={release.end}
         locale={locale}
         t={t}
         onAdd={(p) => {
@@ -378,7 +403,8 @@ function Workbench({ release }: { release: Release }) {
           </div>
           {(lastIssues.length > 0 ||
             breakItems.length > 0 ||
-            selectedCity.start > basket.start) && (
+            selectedCity.start > basket.start ||
+            selectedCity.end < basket.end) && (
             <details className="quality-summary">
               <summary>
                 {breakItems.length
@@ -406,10 +432,10 @@ function Workbench({ release }: { release: Release }) {
                     .join(' · ')}
                 </p>
               )}
-              {selectedCity.start > basket.start && (
+              {(selectedCity.start > basket.start || selectedCity.end < basket.end) && (
                 <p>
                   {t.coverage}: {selectedCity.start} – {selectedCity.end} · {t['not-surveyed']}:{' '}
-                  {release.start} – {months(release.start, selectedCity.start).at(-2)}
+                  {missingCityIntervals.join(' · ')}
                 </p>
               )}
               {lastIssues.map((note) => (

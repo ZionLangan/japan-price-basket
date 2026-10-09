@@ -16,6 +16,7 @@ export type ItemValue = {
   sourceId: string;
   sourceUnit: string;
   sourceRow: number;
+  sourceColumn: number | null;
   sourceSheet: string;
 };
 export type Result = {
@@ -48,17 +49,26 @@ const measures: Record<string, { dimension: string; factor: string }> = {
   pair: { dimension: 'pair', factor: '1' },
   cut: { dimension: 'cut', factor: '1' },
 };
-export function quantityCost(price: string, quantity: string, unit: string, product: Product) {
+export function quantityCost(
+  price: string,
+  quantity: string,
+  unit: string,
+  product: Product,
+  segment?: Product['segments'][number],
+) {
+  const quoteUnit = segment?.quoteUnit ?? product.unit;
+  const quoteQuantity = segment?.quoteQuantity ?? product.quoteQuantity;
   if (
     !product.units.includes(unit as Product['unit']) ||
     !measures[unit] ||
-    measures[unit].dimension !== measures[product.unit].dimension
+    measures[unit].dimension !== measures[product.unit].dimension ||
+    measures[quoteUnit].dimension !== measures[product.unit].dimension
   )
     throw new Error('invalidUnit');
   return new Decimal(price)
     .mul(quantity)
     .mul(measures[unit].factor)
-    .div(new Decimal(product.quoteQuantity).mul(measures[product.unit].factor))
+    .div(new Decimal(quoteQuantity).mul(measures[quoteUnit].factor))
     .toString();
 }
 export function convertQuantity(quantity: string, from: string, to: string) {
@@ -78,13 +88,14 @@ export function resolvePrice(
     month,
     price: null,
     status: 'unavailable' as const,
-    reason: row?.status ?? 'not-surveyed',
+    reason: !segment ? 'variant-inactive' : (row?.status ?? 'not-surveyed'),
     anchor: null,
     age: 0,
     segmentId: segment?.id ?? '',
     sourceId: row?.sourceId ?? '',
     sourceUnit: row?.sourceUnit ?? '',
     sourceRow: row?.sourceRow ?? 0,
+    sourceColumn: row?.sourceColumn ?? null,
     sourceSheet: row?.sourceSheet ?? '',
   };
   if (!segment || !row || row.segmentId !== segment.id) return absent;
@@ -142,6 +153,7 @@ export function resolvePrice(
     sourceId: anchor.sourceId,
     sourceUnit: anchor.sourceUnit,
     sourceRow: anchor.sourceRow,
+    sourceColumn: anchor.sourceColumn ?? null,
     sourceSheet: anchor.sourceSheet,
   };
 }
@@ -177,7 +189,13 @@ export function evaluate(
         cost:
           value.price === null
             ? null
-            : quantityCost(value.price, item.quantity, item.unit, products[i]),
+            : quantityCost(
+                value.price,
+                item.quantity,
+                item.unit,
+                products[i],
+                products[i].segments.find((s) => s.id === value.segmentId),
+              ),
       };
     });
     const status: Status =
@@ -238,7 +256,13 @@ export function evaluate(
         cost:
           value.price === null
             ? null
-            : quantityCost(value.price, item.quantity, item.unit, products[i]),
+            : quantityCost(
+                value.price,
+                item.quantity,
+                item.unit,
+                products[i],
+                products[i].segments.find((s) => s.id === value.segmentId),
+              ),
       };
     });
     if (priorItems.some((i) => i.cost === null) || !priorItems.length) continue;

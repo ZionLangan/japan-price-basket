@@ -2,15 +2,22 @@
   "schemaVersion": 1,
   "reviewedAt": "2026-10-10",
   "approvedWindow": {
-    "start": "2020-12",
+    "start": "2000-01",
     "end": "2026-08"
   },
-  "policy": "Exact dated specification signatures create separate segments; no changed signature has approved continuity. Local Y specifications are excluded. Unknown missing values are never carried. Seasonal carry applies only where the monthly calendar is unchanged across the anchor and target.",
+  "policy": "Dated exact specification fingerprints, physical quotes and source units require explicit review. Incompatible forms/dimensions use separate stable variants. Evidence permits only listed orthographic/reporting-unit continuity; all other boundaries block comparisons. Local Y remains excluded; unknown gap causes are unavailable, never temporary estimates. Seasonal carry requires an unchanged dated calendar and actual anchor.",
+  "reviewedMissingTokens": [
+    "",
+    "..",
+    "...",
+    "…",
+    "-"
+  ],
   "products": [
     {
       "code": "1001",
       "id": "koshihikari-rice",
-      "en": "Koshihikari rice · 5 kg bag",
+      "en": "Koshihikari rice",
       "unit": "kg",
       "quoteQuantity": "5",
       "presets": [
@@ -25,8 +32,169 @@
         "米",
         "こめ"
       ],
-      "sourceName": "うるち米(単一原料米，「コシヒカリ」)",
-      "specName": "うるち米"
+      "ja": "コシヒカリ（うるち米）",
+      "familyId": "koshihikari-rice",
+      "sourceNameSegments": [
+        {
+          "name": "うるち米(単一品種, 「コシヒカリ」)",
+          "specName": "うるち米",
+          "start": "2010-01",
+          "end": "2010-06"
+        },
+        {
+          "name": "うるち米(単一原料米, 「コシヒカリ」)",
+          "specName": "うるち米",
+          "start": "2010-07",
+          "end": "2025-12"
+        },
+        {
+          "name": "うるち米(単一原料米，「コシヒカリ」)",
+          "specName": "うるち米",
+          "start": "2026-01",
+          "end": "2026-08"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "871725d42a5df93ee37da0e5a13ea9390caea1d046ca25e3ffb3f162e11e6c1e",
+          "quoteQuantity": "10",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "10 kg",
+            "ja": "10 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(10kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2002-01",
+          "end": "2004-12",
+          "specificationHash": "7ca470a8f3d99b022cc839c86187920dd6a1837a0548fc1da154a1410194bce1",
+          "quoteQuantity": "5",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "5 kg bag",
+            "ja": "5 kg（1袋）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･5kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200201.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2009-10",
+          "specificationHash": "46b73875f904561a77e8c9f219ed90f60a5ae555124087db47fe0f8c49e2785a",
+          "quoteQuantity": "5",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "5 kg bag",
+            "ja": "5 kg（1袋）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･5kg)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "NFKC width/punctuation rewrite only; product selection, physical quote and survey calendar are unchanged. Original strings are preserved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200201.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2009-11",
+          "end": "2026-08",
+          "specificationHash": "a6a710e830f45fb9258c64f7af1db1e40c2a23174edf2bb7ae4086ecfeee7502",
+          "quoteQuantity": "5",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "5 kg bag",
+            "ja": "5 kg（1袋）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･5kg)",
+            "1袋･5kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200911.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
+      ]
     },
     {
       "code": "1303",
@@ -46,10 +214,153 @@
       ],
       "sourceNameSegments": [
         {
-          "start": "2020-12",
-          "end": "2021-12",
           "name": "牛乳(店頭売り, 紙容器入り)",
-          "specName": "牛乳"
+          "specName": "牛乳",
+          "start": "2010-01",
+          "end": "2021-12"
+        }
+      ],
+      "familyId": "carton-milk",
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2002-06",
+          "specificationHash": "777b06009476b12a7635bf46b97515feb7c2870c9b831ee917d6fa0d7125657d",
+          "quoteQuantity": "1",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1 L",
+            "ja": "1 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･1000ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2002-07",
+          "end": "2004-12",
+          "specificationHash": "7164ba3a092be271b77f23b516256429dcb51ac248882c18c04ebccfe62f51fd",
+          "quoteQuantity": "1",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1 L",
+            "ja": "1 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･1000mL)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2025-12",
+          "specificationHash": "302f4b4797e746e9d981d093e7f880aa39a62abc7cd98e803fc9f25ef8a260e9",
+          "quoteQuantity": "1",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1 L",
+            "ja": "1 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･1000mL)",
+            "(1本･1,000mL)",
+            "1本･1,000mL"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "NFKC width/punctuation rewrite only; product selection, physical quote and survey calendar are unchanged. Original strings are preserved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2026-01",
+          "end": "2026-08",
+          "specificationHash": "6b72741054271693e0be0a255f5ffdfdefd31cfd3baf4815f04fe4b5696e7d9f",
+          "quoteQuantity": "1",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1 L",
+            "ja": "1 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本･1,000mL"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202601.xlsx",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
         }
       ]
     },
@@ -74,6 +385,46 @@
       "requiredSpecificationTerms": [
         "白色卵",
         "サイズ混合"
+      ],
+      "ja": "白色卵（サイズ混合・10個）",
+      "familyId": "eggs",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2018-01",
+          "end": "2026-08",
+          "specificationHash": "b12829831222d92c9c1137fd96d25813e49c87b9c389955af86611fb81f78d25",
+          "quoteQuantity": "10",
+          "quoteUnit": "count",
+          "quoteLabel": {
+            "en": "10 eggs · mixed sizes",
+            "ja": "10個（サイズ混合）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1パック･10個"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201801.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     },
     {
@@ -91,6 +442,44 @@
         "bread",
         "しょくぱん",
         "パン"
+      ],
+      "familyId": "white-bread",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2026-08",
+          "specificationHash": "ebe3690f17bda895579d069c318045d597c6dcbbf37405c6f0572ea30924c19b",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
       ]
     },
     {
@@ -108,6 +497,81 @@
         "sugar",
         "さとう",
         "上白糖"
+      ],
+      "familyId": "white-sugar",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "78f6f5f7b56f4b1a9f5cf1f5aee362d39f27f3487326f32b258c83fbdfb45255",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg bag",
+            "ja": "1 kg（1袋）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2026-08",
+          "specificationHash": "a53a37c61ab679cafacdc082a6aa1e2b4a3cdc1237accddc4d6c46436a67d0e9",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg bag",
+            "ja": "1 kg（1袋）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･1kg)",
+            "(1袋)",
+            "(1袋・1kg)",
+            "1袋･1kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "NFKC width/punctuation rewrite only; product selection, physical quote and survey calendar are unchanged. Original strings are preserved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     },
     {
@@ -123,6 +587,44 @@
       ],
       "aliases": [
         "きゃべつ"
+      ],
+      "familyId": "cabbage",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2026-08",
+          "specificationHash": "b2c1b4cc09268ee1afd545acfea0697714cc5b2082cb44d1c355ec3692ffc34f",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
       ]
     },
     {
@@ -139,6 +641,81 @@
       "aliases": [
         "moyashi",
         "bean sprouts"
+      ],
+      "ja": "緑豆もやし",
+      "familyId": "bean-sprouts",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2011-07",
+          "end": "2013-12",
+          "specificationHash": "7be5451e8478e2ff8cd7af0d0c4aa5835cc3df6f8d4680492cd6f1efb158391e",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "100g"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201107.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2014-01",
+          "end": "2026-08",
+          "specificationHash": "516996e5654d609b8643a0b321c55c02ec61c8dc923fa5e4d15696949a4e423f",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Only the reported mass unit changes from 100 g to 1 kg. The mung-bean/root-exclusion definition and calendar are identical; exact dated mass conversion is applied.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201401.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201107.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     },
     {
@@ -154,6 +731,44 @@
       ],
       "aliases": [
         "ぶろっこりー"
+      ],
+      "familyId": "broccoli",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2026-08",
+          "specificationHash": "a8fb03e4de1b5238a3e414d49dd7069853035bb84ab0fd3584b828b51e76b338",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
       ]
     },
     {
@@ -170,6 +785,78 @@
       "aliases": [
         "sweet potato",
         "さつま芋"
+      ],
+      "familyId": "sweet-potatoes",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "specificationHash": "e56fdae94ef2a48df76e5524f5adcc6365911d124c6618c0a019ae41dd86e1cb",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2010-01",
+          "end": "2026-08",
+          "specificationHash": "3df9aaa71a8732b76c0aef1484533d3cf2fe078a499c8aa55b0bec500975df29",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Official item-name rename: かんしょ to さつまいも; the definition and 1 kg quote remain unchanged.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     },
     {
@@ -187,6 +874,78 @@
         "potato",
         "ばれいしょ",
         "馬鈴薯"
+      ],
+      "familyId": "potatoes",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "specificationHash": "cf2cf95301fc85a4b67c4a75fe54364ff00696f30205560e377bc175b8dd8a4a",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2010-01",
+          "end": "2026-08",
+          "specificationHash": "c8ca34a9d188526c7a5d9ff5a33b9c536aa0915a3bbcc50bd24798445545ea89",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Official item-name rename: ばれいしょ to じゃがいも; the definition and 1 kg quote remain unchanged.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     },
     {
@@ -204,6 +963,44 @@
         "だいこん",
         "大根",
         "radish"
+      ],
+      "familyId": "daikon",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2026-08",
+          "specificationHash": "f68881172661e65eef2a91449d99302ea48203becdcd464bb10bca95ffb9ae7b",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
       ]
     },
     {
@@ -220,12 +1017,50 @@
       "aliases": [
         "carrot",
         "人参"
+      ],
+      "familyId": "carrots",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2026-08",
+          "specificationHash": "6b3aff9884724c00065ea51b13e2332a0e0168a6b8c9035ad6e51163b04cbb3a",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
       ]
     },
     {
       "code": "1417",
       "id": "onions",
-      "en": "Onions · excluding red onions",
+      "en": "Onions",
       "unit": "kg",
       "quoteQuantity": "1",
       "presets": [
@@ -237,12 +1072,155 @@
         "onion",
         "玉ねぎ",
         "たまねぎ"
+      ],
+      "familyId": "onions",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2000-12",
+          "specificationHash": "b753573503b1a3ed167a3b69be001d8f2aad169110fd8efc514dc5120339b3bd",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2001-01",
+          "end": "2010-01",
+          "specificationHash": "6d13ba65782170c04634501a715a9cc6fdff5d7e79aea2604367205a527e66db",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200101.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2010-02",
+          "end": "2014-12",
+          "specificationHash": "be68645d9b68d0fbc6f78c74698ac60e7c2af9de56112f04c4b012c1afaa06a2",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201002.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200101.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2015-01",
+          "end": "2026-08",
+          "specificationHash": "4f3e7c6cdf3e038e0dd7bb951a5658aae54a4ad978c24455f10667288e019042",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Only the spelling of the excluded red-onion term changes from 赤玉ねぎ to 赤たまねぎ; the 1 kg quote remains unchanged.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201002.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     },
     {
       "code": "1436",
       "id": "tomatoes",
-      "en": "Tomatoes · excluding cherry tomatoes",
+      "en": "Tomatoes",
       "unit": "kg",
       "quoteQuantity": "1",
       "presets": [
@@ -253,6 +1231,79 @@
       "aliases": [
         "tomato",
         "とまと"
+      ],
+      "familyId": "tomatoes",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2017-12",
+          "specificationHash": "18938430c9b2dbb387fd78ce97f81c0632fb7309531e9ec66c297148768769f2",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2018-01",
+          "end": "2026-08",
+          "specificationHash": "247bea8c5be4469d039da0bcc977d78f841ba3440505788cd1d3d80b61a9514e",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201801.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     },
     {
@@ -269,6 +1320,44 @@
       "aliases": [
         "cucumber",
         "きゅうり"
+      ],
+      "familyId": "cucumbers",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2026-08",
+          "specificationHash": "5c8f5b8a4ce02a4776f5d569196c800f3c4903d3277f74b3244272762d91f83e",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
       ]
     },
     {
@@ -299,6 +1388,72 @@
       ],
       "requiredSpecificationTerms": [
         "温州みかん"
+      ],
+      "ja": "温州みかん（季節品）",
+      "familyId": "mandarins",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2007-07",
+          "end": "2011-08",
+          "specificationHash": "85d0b8e0514a353a3c2a1b6a257ffd55d8ec76db1393e736ec2b98c8ed18157d",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200707.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2011-09",
+          "end": "2026-08",
+          "specificationHash": "b4aec6bed0c2d1edb283251d9f37cfe188c4fd67943f1c9d3bcbef4362e84630",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201109.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200707.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     },
     {
@@ -320,6 +1475,84 @@
       "surveyMonths": [
         6,
         7
+      ],
+      "familyId": "japanese-cherries",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2011-05",
+          "specificationHash": "f15feb96ee7ca17e77a6bc46422141a5c6b077c1f092aaef78f6dc0d0b664a49",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            6,
+            7
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2011-06",
+          "end": "2013-12",
+          "specificationHash": "b29c21b9a6b5987fcfb93a300b562ca7f0dfc14bc26f4509822689e7da92272e",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            6,
+            7
+          ],
+          "sourceUnits": [
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "国内産 and 国産品 both specify domestic cherries; the 100 g quote and June–July calendar remain unchanged.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201106.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2014-01",
+          "end": "2026-08",
+          "specificationHash": "a89d2dbfd88739a33911955d506718b1ec71297f9dc695c2bed8b5971a73fb02",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            6,
+            7
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Only the reported mass unit changes from 100 g to 1 kg. The domestic definition and June–July calendar are identical; exact dated mass conversion is applied.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201401.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201106.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     },
     {
@@ -340,6 +1573,81 @@
       ],
       "requiredSpecificationTerms": [
         "幅22cm×長さ50m"
+      ],
+      "ja": "ラップ（22cm×50m）",
+      "familyId": "cling-film",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2016-07",
+          "end": "2018-01",
+          "specificationHash": "bb38123fa001b2aaeab4d81b38067d4ee2af32decdacb895d4e4ef6584406210",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 roll · 22 cm × 50 m",
+            "ja": "1本（22 cm × 50 m）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201607.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201002.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2018-02",
+          "end": "2026-08",
+          "specificationHash": "fbd7a7701e7284b57d8a3f7c2a9b1c2f3f9e0e19362cfa1839a9c78ca489920d",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 roll · 22 cm × 50 m",
+            "ja": "1本（22 cm × 50 m）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Closing quotation mark corrected; material, 22 cm × 50 m dimensions, permitted brands and one-roll quote are unchanged.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201802.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201607.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     },
     {
@@ -364,9 +1672,479 @@
         "370",
         "700"
       ],
-      "requiredSpecificationTerms": [
-        "液体",
-        "詰め替え用"
+      "ja": "食器用洗剤（指定の詰め替え容器）",
+      "requiredSpecificationTermGroups": [
+        [
+          "液体",
+          "液状"
+        ],
+        [
+          "詰め替え用",
+          "つめかえ用"
+        ]
+      ],
+      "familyId": "dishwashing-liquid",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2001-07",
+          "end": "2003-06",
+          "specificationHash": "cf04b882eac02fe6ec9b42b7ed7d7c59fa5c8a328d5e4e40a3261bf59c8d497e",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 450 mL",
+            "ja": "1本（450 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･450mL)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200107.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2003-07",
+          "end": "2004-12",
+          "specificationHash": "82e32974b87fe70991212f9189be15d002a96c76c78513a1695464cb298e94d5",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 450 mL",
+            "ja": "1本（450 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･450mL)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200307.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200107.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2005-06",
+          "specificationHash": "5c2558aac95f764a44a1118899dee5271a5cf43b795543b1670c48f2d8f76867",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 450 mL",
+            "ja": "1本（450 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･450mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "NFKC width/punctuation rewrite only; product selection, physical quote and survey calendar are unchanged. Original strings are preserved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200307.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2005-07",
+          "end": "2006-10",
+          "specificationHash": "0d535f890f3b39ee298200f2b75cf35a7effb6f5767409116739f07185ca21ac",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 450 mL",
+            "ja": "1本（450 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･450mL)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200507.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2006-11",
+          "end": "2008-01",
+          "specificationHash": "053867c44ee840c66e0a1e00b6618141005d456f69af82407a2033d959f60ccd",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 400 mL",
+            "ja": "1本（400 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･400mL)",
+            "(1本)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200611.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200507.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2008-02",
+          "end": "2009-09",
+          "specificationHash": "eb16f8eaeb28ed50394187363dda44586b8305a9f460f09f6bdb8c2aad8c1073",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 415 mL",
+            "ja": "1本（415 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本)",
+            "(1本・415mL)",
+            "(1本･415mL)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200802.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200611.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2009-10",
+          "end": "2012-09",
+          "specificationHash": "32beb737a77609c24bd207ee7e2650d9121b3d5b214027404065c1fd87475f97",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 415 mL",
+            "ja": "1本（415 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･415mL)",
+            "1本･415mL"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200910.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200802.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2012-10",
+          "end": "2013-08",
+          "specificationHash": "ff5cd12052f9277c9f1f27774261d44b1bdd0e9d1f9ec85cc1475b9778776c0f",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 395 mL",
+            "ja": "1本（395 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本･395mL"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201210.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200910.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2014-10",
+          "end": "2015-08",
+          "specificationHash": "a5659bde134018562c2f871d459747dfa5fea2a277e3ecc86dfa42c5a4cb67f7",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 315 mL",
+            "ja": "1本（315 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201410.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201309.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2016-10",
+          "end": "2017-03",
+          "specificationHash": "4bb0d6cc4d2d87bf28b15d2b553683a69274008a13b3952722c6935f9f2d3920",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 440 mL",
+            "ja": "1本（440 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201610.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201509.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2018-01",
+          "end": "2023-09",
+          "specificationHash": "bd7c2ac525f88f1ec66ce249391571272e107ed812c971cf269815a5a076bb1e",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 385 mL",
+            "ja": "1本（385 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本･385mL"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201801.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201704.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2023-10",
+          "end": "2025-09",
+          "specificationHash": "27faae725651ce9a56f3563b851f81525781184a050b76be2a50b5428647197b",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 370 mL",
+            "ja": "1本（370 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本･370mL"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202310.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201801.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2025-10",
+          "end": "2026-08",
+          "specificationHash": "e510a5ef15e13c4b5fdeba57e2c97f381d0889b1c29634d6570dd82befda3b4b",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 refill · 700 mL",
+            "ja": "1本（700 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本･700mL"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202510.xlsx",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202310.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     },
     {
@@ -390,6 +2168,1297 @@
       "requiredSpecificationTerms": [
         "液体",
         "詰め替え用"
+      ],
+      "ja": "液体洗濯用洗剤",
+      "familyId": "laundry-detergent",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2014-03",
+          "end": "2015-03",
+          "specificationHash": "3406397c9bc0edb3748da895fba27507469addaeb2f5cb28f0d03f4cca110975",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201403.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201106.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2015-04",
+          "end": "2015-08",
+          "specificationHash": "f4a972caa217b16de879d15899783ef9975f319e0232c5dbbf29458c8e8b38c1",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201504.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201403.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2015-09",
+          "end": "2017-10",
+          "specificationHash": "a6f3917a736671fed6292455b9e490359989b88cebc1e5b226fe5912fa479f19",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201509.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201504.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2017-11",
+          "end": "2018-08",
+          "specificationHash": "eac74c2c21d75b15b68325264410369582a5fbe7bbd8db4d0492859b47a34bb1",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201711.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201509.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2018-09",
+          "end": "2020-08",
+          "specificationHash": "37d0d600015af55521e6b752b8cc736b6ef97da4e04ba8315c5d4dba0739f27a",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201810.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201711.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2020-09",
+          "end": "2020-09",
+          "specificationHash": "012a80e2b13eb943d706ea356317f5033607703e9f204655ace9132ccb7be0b8",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202009.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201810.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2020-10",
+          "end": "2022-06",
+          "specificationHash": "5a3bea8b70787a1ac4207cf0bf7c8ba50dd4e6f0ccb61d322988f75fac57f7fa",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202010.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202009.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2022-07",
+          "end": "2024-07",
+          "specificationHash": "65a34f1ef2138ac29d461f6ad08e4c6cd8ce4e8fefb6a20029aa865fb3091e5a",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202207.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202010.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2024-08",
+          "end": "2026-08",
+          "specificationHash": "1864fcd83d79f7de6e2499cbb7b99c05ffefcf4f72e08acb5da301bdfd332510",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202408.xlsx",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/202207.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1341",
+      "id": "eggs-by-weight",
+      "en": "Eggs · priced by weight",
+      "ja": "鶏卵（重量単位）",
+      "unit": "kg",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.5",
+        "1",
+        "2"
+      ],
+      "aliases": [
+        "egg",
+        "eggs",
+        "たまご",
+        "卵",
+        "重量"
+      ],
+      "requiredSpecificationTerms": [
+        "約60g"
+      ],
+      "familyId": "eggs",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2002-06",
+          "specificationHash": "6665a92d5f44c5dbce83900d22d5b6638ed2078045c9a1fd232e402a9ac5cb24",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1341",
+      "id": "large-size-eggs",
+      "en": "White eggs · L-size 10 pack",
+      "ja": "白色卵（Lサイズ・10個）",
+      "unit": "count",
+      "quoteQuantity": "1",
+      "presets": [
+        "6",
+        "10",
+        "20"
+      ],
+      "aliases": [
+        "egg",
+        "eggs",
+        "L size",
+        "たまご",
+        "卵",
+        "Lサイズ"
+      ],
+      "requiredSpecificationTerms": [
+        "白色卵",
+        "Lサイズ"
+      ],
+      "familyId": "eggs",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2002-07",
+          "end": "2004-12",
+          "specificationHash": "5342ff6e961f3c627d79ec3089d3cea4345a6c1986deb86ad55f02671433967f",
+          "quoteQuantity": "10",
+          "quoteUnit": "count",
+          "quoteLabel": {
+            "en": "10 eggs · L size",
+            "ja": "10個（Lサイズ）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1パック)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2017-12",
+          "specificationHash": "30d0c8feca27c8cd7ba5927b82a1d976c8acfa4ed9a683512feb0bb215b5e098",
+          "quoteQuantity": "10",
+          "quoteUnit": "count",
+          "quoteLabel": {
+            "en": "10 eggs · L size",
+            "ja": "10個（Lサイズ）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1パック)",
+            "(1パック・10個)",
+            "(1パック･10個)",
+            "1パック･10個"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "NFKC width/punctuation rewrite only; product selection, physical quote and survey calendar are unchanged. Original strings are preserved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1407",
+      "id": "non-soy-bean-sprouts",
+      "en": "Bean sprouts · excluding soybean sprouts",
+      "ja": "もやし（大豆もやしを除く）",
+      "unit": "kg",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.2",
+        "0.5",
+        "1"
+      ],
+      "aliases": [
+        "moyashi",
+        "bean sprouts",
+        "もやし"
+      ],
+      "requiredSpecificationTerms": [
+        "だいずもやしを除く"
+      ],
+      "familyId": "bean-sprouts",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2011-06",
+          "specificationHash": "eb484f6953be70f8f8cf7fc706e14d15394f08e8270901cca79000f2eb11ad56",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1511",
+      "id": "mandarins-unspecified",
+      "en": "Mandarins · unspecified variety",
+      "ja": "みかん（品種指定なし・100～120g）",
+      "unit": "kg",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.5",
+        "1",
+        "2"
+      ],
+      "aliases": [
+        "mikan",
+        "mandarin",
+        "orange",
+        "みかん",
+        "蜜柑"
+      ],
+      "requiredSpecificationTerms": [
+        "100～120g"
+      ],
+      "familyId": "mandarins",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "7545da4ae9e189cc7d2970cd0e9f797a01ce90f26a9fcc62c8bf8bf642f9cd15",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2007-06",
+          "specificationHash": "4ec21b86d6d73873e93819169e62ec9a8585f9d35b47c9dc32c0eda28c1f7a67",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "NFKC width/punctuation rewrite only; product selection, physical quote and survey calendar are unchanged. Original strings are preserved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "4401",
+      "id": "cling-film-30cm-20m",
+      "en": "Cling film · 30 cm × 20 m roll",
+      "ja": "ラップ（30cm×20m）",
+      "unit": "package",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.5",
+        "1",
+        "2"
+      ],
+      "aliases": [
+        "wrap",
+        "plastic wrap",
+        "ラップ"
+      ],
+      "requiredSpecificationTerms": [],
+      "familyId": "cling-film",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2002-06",
+          "specificationHash": "fdbb5715fdf32cd223cc96bf80f72519495c7d2f29bec4d7629757d6d155d7c3",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 roll · 30 cm × 20 m",
+            "ja": "1本（30 cm × 20 m）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･roll)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2002-07",
+          "end": "2004-12",
+          "specificationHash": "3fb02120ec1d334c63ac8b1760ad497c6ce412ea16c281a6f2198e7a227b6d85",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 roll · 30 cm × 20 m",
+            "ja": "1本（30 cm × 20 m）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･roll)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2010-01",
+          "specificationHash": "05c840509322c4700b692a53aec49c499df21db529e392c9ba61570f45cf0443",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 roll · 30 cm × 20 m",
+            "ja": "1本（30 cm × 20 m）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･roll)",
+            "(1本)",
+            "1本"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "NFKC width/punctuation rewrite only; product selection, physical quote and survey calendar are unchanged. Original strings are preserved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2010-02",
+          "end": "2016-06",
+          "specificationHash": "803cc4c3cc9e7471b3f2a178655c418d9aa59ab6436b2928673402f2516343a3",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 roll · 30 cm × 20 m",
+            "ja": "1本（30 cm × 20 m）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201002.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "4431",
+      "id": "dishwashing-liquid-bottle",
+      "en": "Dishwashing liquid · 600 mL bottle",
+      "ja": "食器用洗剤（600mLボトル）",
+      "unit": "package",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.5",
+        "1",
+        "2"
+      ],
+      "aliases": [
+        "dish soap",
+        "detergent",
+        "食器用洗剤",
+        "台所用洗剤"
+      ],
+      "requiredSpecificationTerms": [
+        "600ml入り"
+      ],
+      "familyId": "dishwashing-liquid",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-06",
+          "specificationHash": "70f24b286c03169092ebd04378b788fa1e6728dfc94c0d72bdc63e7464bbebe0",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 bottle · 600 mL",
+            "ja": "1本（600 mL）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･600ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "4431",
+      "id": "dishwashing-liquid-per-litre",
+      "en": "Dishwashing liquid · priced by litre",
+      "ja": "食器用洗剤（容量当たり・指定の詰め替え品）",
+      "unit": "L",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "aliases": [
+        "dish soap",
+        "detergent",
+        "食器用洗剤",
+        "台所用洗剤"
+      ],
+      "requiredSpecificationTerms": [
+        "液体",
+        "詰め替え用"
+      ],
+      "familyId": "dishwashing-liquid",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2013-09",
+          "end": "2014-09",
+          "specificationHash": "cb020f9ba99f7f54d7e9bb2b3ccc9e6c505ea9ee8f68af77ba069b9e2a8be63d",
+          "quoteQuantity": "1",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1 L",
+            "ja": "1 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1,000mL"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201309.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201210.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2015-09",
+          "end": "2016-09",
+          "specificationHash": "f8f5a09f1c834d2a83d7906e3e6782e39a99a75953c2fc2ee7868b318bf2c600",
+          "quoteQuantity": "1",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1 L",
+            "ja": "1 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1,000mL"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201509.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201410.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2017-04",
+          "end": "2017-12",
+          "specificationHash": "4889c831d79aa93c3f6d26445bfa7efec6b0940efa53b2a20b0e0986a0f763e9",
+          "quoteQuantity": "1",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1 L",
+            "ja": "1 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1,000mL"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201704.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201610.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "4441",
+      "id": "powder-laundry-detergent",
+      "en": "Powder laundry detergent",
+      "ja": "粉末洗濯用洗剤",
+      "unit": "kg",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.5",
+        "1",
+        "2"
+      ],
+      "aliases": [
+        "laundry",
+        "detergent",
+        "washing",
+        "powder",
+        "洗濯用洗剤",
+        "粉末洗剤"
+      ],
+      "requiredSpecificationTerms": [
+        "粉末",
+        "箱入り"
+      ],
+      "familyId": "laundry-detergent",
+      "sourceNameSegments": [],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2003-12",
+          "specificationHash": "4baf971358a89de7d338bf12df68a56fe0fe158eaca1093d22e8e1e5d925ecee",
+          "quoteQuantity": "1.2",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1.2 kg box",
+            "ja": "1.2 kg（1箱）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1箱･1.2kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2004-01",
+          "end": "2004-12",
+          "specificationHash": "43d8ac9373dd38aa326ec88cbe06fd9b0abdde7390d8ad939f091f940811765e",
+          "quoteQuantity": "1.2",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1.2 kg box",
+            "ja": "1.2 kg（1箱）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1箱･1.2kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200401.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2005-06",
+          "specificationHash": "2184e88ed553863d0280db4c42659b0d04eee5e3d0da91e121d4ed1b2ff80c4a",
+          "quoteQuantity": "1.2",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1.2 kg box",
+            "ja": "1.2 kg（1箱）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1箱･1.2kg)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "NFKC width/punctuation rewrite only; product selection, physical quote and survey calendar are unchanged. Original strings are preserved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200401.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2005-07",
+          "end": "2006-10",
+          "specificationHash": "c7bb44153f1a31bc06ab3a0267ed373ffc866cd512aaabcf48b19dd81841a763",
+          "quoteQuantity": "1.2",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1.2 kg box",
+            "ja": "1.2 kg（1箱）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1箱･1.2kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200507.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2006-11",
+          "end": "2008-06",
+          "specificationHash": "5a182404220b415eff47c70e5681b11c5439efde512312b3c18d6607a68c925b",
+          "quoteQuantity": "1.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1.1 kg box",
+            "ja": "1.1 kg（1箱）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1箱･1.1kg)",
+            "(1箱)",
+            "(1箱・1.1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200611.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200507.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2008-07",
+          "end": "2009-03",
+          "specificationHash": "e02a7b3c09781241cca3c82db91dbf4c1f64ecb8e4f23b89d4fd95d6dd82b967",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg box",
+            "ja": "1 kg（1箱）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1箱・1.0kg)",
+            "(1箱･1.0kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200807.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200611.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2009-04",
+          "end": "2011-05",
+          "specificationHash": "fa13fd1e428174817b9336ecb73e5ab45a24c5f2581a2c44e8e53fccdbcbe7e2",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg box",
+            "ja": "1 kg（1箱）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1箱･1.0kg)",
+            "1箱･1.0kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200904.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200807.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
+        {
+          "start": "2011-06",
+          "end": "2014-02",
+          "specificationHash": "ee810244582ad83e907e40a934cdb6a4c97374debb6756e3b8fbd425ca1276d3",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg box",
+            "ja": "1 kg（1箱）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1箱･1.0kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201106.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200904.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        }
       ]
     }
   ]

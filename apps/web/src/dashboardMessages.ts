@@ -15,6 +15,8 @@ const english = {
   details: 'Details',
   empty: 'Search above to add products, or reset the basket to use grocery staples.',
   city: 'City',
+  currentCities: 'Current survey cities',
+  historicalCities: 'Historical city areas',
   dataSource: 'Data source',
   independent: 'Independent project using official statistics. Not a government website.',
   tabCost: 'Basket price',
@@ -62,7 +64,10 @@ const english = {
   chartDetails: 'Selected month details',
   baselineUnavailable:
     'The baseline has no usable price. Percentage changes and index are unavailable.',
-  catalogLimit: '20 reviewed products · more products and older history are under review.',
+  catalogLimit:
+    'Reviewed groceries and household goods. Historical forms appear as separate products; their survey periods and specifications are preserved.',
+  'variant-inactive': 'This product form was not surveyed in this period',
+  interruptedPeriods: 'Interrupted survey periods',
   noCityPrices: 'No observed prices in this city',
 };
 const japanese: typeof english = {
@@ -80,6 +85,8 @@ const japanese: typeof english = {
   details: '銘柄',
   empty: '上の商品検索から追加してください。買い物かごを初期化すると基本食材の例を表示します。',
   city: '都市',
+  currentCities: '現在の調査都市',
+  historicalCities: '過去の調査区域',
   dataSource: '出典',
   independent: '公式統計を利用した個人プロジェクトです。政府のウェブサイトではありません。',
   tabCost: 'かごの価格',
@@ -124,7 +131,10 @@ const japanese: typeof english = {
   indexUnit: '指数・基準月 = 100',
   chartDetails: '選択月の詳しい値',
   baselineUnavailable: '基準月の価格が利用できないため、変化率と指数を算出できません。',
-  catalogLimit: '確認済みの20品目を収録。商品の追加と過去の履歴は確認中です。',
+  catalogLimit:
+    '確認済みの食品・日用品を収録。過去の異なる商品形態は別の商品として表示し、調査期間と銘柄を保持しています。',
+  'variant-inactive': 'この期間はこの商品形態が調査されていません',
+  interruptedPeriods: '調査期間に中断あり',
   noCityPrices: 'この都市の実測値はありません',
 };
 
