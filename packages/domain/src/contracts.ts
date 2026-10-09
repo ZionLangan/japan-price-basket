@@ -112,7 +112,7 @@ export const CityDataSchema = z.object({
 export const ReleaseSchema = z.object({
   schemaVersion: z.literal(1),
   releaseId: z.string(),
-  policyVersion: z.enum(['1.0', '1.1']),
+  policyVersion: z.enum(['1.0', '1.1', '1.2']),
   start: Month,
   end: Month,
   builtAt: z.string(),

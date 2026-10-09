@@ -87,7 +87,7 @@ class HistoricalReviewContracts(unittest.TestCase):
                     cell = (row["sourceId"], row["sourceSheet"], row["sourceRow"], row["sourceColumn"])
                     self.assertNotIn(cell, cells, "A native cell was duplicated under multiple variants")
                     cells.add(cell)
-        self.assertEqual(len(cells), 495360)
+        self.assertEqual(len(cells), 2180448)
         self.assertTrue(all(p.get("selectable") is False for p in fixture["products"]
                             if p["code"] in {"4431", "4441"}))
 
@@ -212,6 +212,37 @@ class HistoricalReviewContracts(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "Unexpected price token"):
                 make_fixture(staging, review)
 
+    def test_policy_12_offseason_inference_keeps_native_dots_and_scheduled_gaps(self):
+        staging, review = self.staging()
+        review["policyVersion"] = "1.2"
+        snapshot = staging["snapshots"][0]
+        snapshot["specs"]["1341"]["months"] = "1月"
+        snapshot["prices"][0]["values"]["00001-pre202101"] = ".."
+        approval = review["products"][0]["reviewedSpecifications"][0]
+        approval["end"] = "2021-01"
+        approval["specificationHash"] = specification_hash(snapshot["specs"]["1341"])
+        approval["surveyMonths"] = [1]
+        # This city actually surveys the synthetic item in January. December
+        # may be marked off-season, but calculations cannot fill it backwards.
+        review["products"] = review["products"][:1]
+        staging["cities"] = staging["cities"][:1]
+        later = staging["snapshots"][1]
+        later["cities"] = snapshot["cities"]
+        later["specs"] = copy.deepcopy(snapshot["specs"])
+        later["prices"] = copy.deepcopy(snapshot["prices"])
+        later["prices"][0]["values"]["00001-pre202101"] = 123
+        with patch("pathlib.Path.read_bytes", return_value=SYNTHETIC_BYTES):
+            fixture, _ = make_fixture(staging, review)
+            row = fixture["series"]["00001-pre202101"]["synthetic-eggs-weight"][0]
+            self.assertEqual((row["raw"], row["price"], row["status"]), ("..", None, "seasonal"))
+            snapshot["specs"]["1341"]["months"] = "12月"
+            later["specs"] = copy.deepcopy(snapshot["specs"])
+            approval["specificationHash"] = specification_hash(snapshot["specs"]["1341"])
+            approval["surveyMonths"] = [12]
+            fixture, _ = make_fixture(staging, review)
+            row = fixture["series"]["00001-pre202101"]["synthetic-eggs-weight"][0]
+            self.assertEqual((row["raw"], row["price"], row["status"]), ("..", None, "unavailable"))
+
     def test_egg_market_gap_exception_cannot_leak_to_an_unreviewed_product(self):
         staging, review = self.staging()
         review["products"][0]["missingPriceEstimate"] = {
@@ -219,6 +250,33 @@ class HistoricalReviewContracts(unittest.TestCase):
         with patch("pathlib.Path.read_bytes", return_value=SYNTHETIC_BYTES):
             with self.assertRaisesRegex(ValueError, "Unreviewed missing-price estimate rule"):
                 make_fixture(staging, review)
+
+    def test_policy_12_food_gaps_require_the_bounded_explicit_rule(self):
+        staging, review = self.staging()
+        review["policyVersion"] = "1.2"
+        rule = {"maxMonths": 2, "tokens": ["-"], "allowEquivalentSegments": True}
+        review["products"][0]["missingPriceEstimate"] = rule
+        with patch("pathlib.Path.read_bytes", return_value=SYNTHETIC_BYTES):
+            fixture, _ = make_fixture(staging, review)
+            self.assertEqual(fixture["products"][0]["missingPriceEstimate"], rule)
+            review["products"][0]["missingPriceEstimate"]["tokens"] = ["..."]
+            with self.assertRaisesRegex(ValueError, "Unreviewed missing-price estimate rule"):
+                make_fixture(staging, review)
+
+    def test_later_survey_start_keeps_prior_month_absent_but_not_a_missing_parse(self):
+        staging, review = self.staging()
+        # A deliberately synthetic new survey item has no first-month row or
+        # approval. Existing, present rows still require exactly one approval.
+        staging["snapshots"][0]["prices"] = []
+        staging["snapshots"][0]["specs"] = {}
+        review["products"] = [review["products"][1]]
+        with patch("pathlib.Path.read_bytes", return_value=SYNTHETIC_BYTES):
+            fixture, _ = make_fixture(staging, review)
+            self.assertEqual(fixture["series"]["00001-pre202101"]["synthetic-eggs-count"], [])
+            bad = copy.deepcopy(review)
+            bad["products"][0]["reviewedSpecifications"][0]["start"] = "2020-12"
+            with self.assertRaisesRegex(ValueError, "Missing or overlapping variant review"):
+                make_fixture(staging, bad)
 
     def test_nonpositive_prices_booleans_and_changed_evidence_fail(self):
         for raw in [0, -1, False, True]:

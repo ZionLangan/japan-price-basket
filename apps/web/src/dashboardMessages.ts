@@ -46,7 +46,7 @@ const english = {
   fiveYears: '5Y',
   original: 'Survey definition',
   package: 'pack',
-  count: 'eggs',
+  count: 'items',
   series: 'Product',
   latestItems: 'Cost by product',
   contribution: 'Change since baseline',
@@ -55,7 +55,7 @@ const english = {
   estimatedEndpoint: 'Includes estimates',
   graphObserved: 'Observed',
   graphEstimated: 'Estimated',
-  graphBreaks: 'Gaps and specification changes stay separate.',
+  graphBreaks: 'Unresolved gaps and definition changes stay separate.',
   chartInstructions:
     'Hover to inspect · click or tap to pin · arrow keys to explore · Esc to close',
   chartHint: 'Hover or tap a month to inspect.',
@@ -65,7 +65,11 @@ const english = {
   baselineUnavailable:
     'The baseline has no usable price. Percentage changes and index are unavailable.',
   catalogLimit:
-    'Search offers products usable throughout the selected city and dates. Other source records remain archived. Egg conversions and short gap estimates are labeled.',
+    'Search offers products usable throughout the selected city and dates. Coverage varies by product and city; other source records remain archived.',
+  definitionNote:
+    'Reviewed minor changes in size, brand or grade can join a generic product history. Dated quantities are converted where supported. These comparisons include definition changes and are not quality-adjusted inflation.',
+  carryNote:
+    'Missing market prices may use the last observation for up to two months. Seasonal goods may retain it during months excluded by the survey calendar, up to 11 months. Dashed values are estimates, not observed off-season prices or a seasonally adjusted series.',
   'variant-inactive': 'This product form was not surveyed in this period',
   interruptedPeriods: 'Interrupted survey periods',
   noCityPrices: 'No observed prices in this city',
@@ -146,7 +150,7 @@ const japanese: typeof english = {
   estimatedEndpoint: '推定値を含みます',
   graphObserved: '実測',
   graphEstimated: '推定',
-  graphBreaks: '欠測と銘柄変更の境界は線で結びません。',
+  graphBreaks: '解決していない欠測と銘柄変更の境界は線で結びません。',
   chartInstructions: 'カーソルで確認・クリック／タップで固定・矢印キーで移動・Escで閉じる',
   chartHint: '月にカーソルを合わせるかタップして値を確認。',
   pinned: '固定中・再タップで閉じる',
@@ -154,7 +158,11 @@ const japanese: typeof english = {
   chartDetails: '選択月の詳しい値',
   baselineUnavailable: '基準月の価格が利用できないため、変化率と指数を算出できません。',
   catalogLimit:
-    '指定した都市・全期間で利用できる商品を検索できます。その他の元データは保持しています。卵の換算と短期欠測の推定は明示しています。',
+    '指定した都市・全期間で利用できる商品を検索できます。収録期間は商品・都市によって異なり、その他の元データも保持しています。',
+  definitionNote:
+    '確認済みの軽微なサイズ・ブランド・等級の変更は、同じ種類の商品としてつないでいます。根拠のある容量換算を行いますが、銘柄変更の影響を含むため、品質調整済みの物価上昇率ではありません。',
+  carryNote:
+    '一時的な市場欠測は直前の実測値を最長2か月、季節商品は確認済みの調査暦で対象外となる月に最長11か月引き継ぎます。破線は推定値であり、休止期間の実測価格や季節調整済みの系列ではありません。',
   'variant-inactive': 'この期間はこの商品形態が調査されていません',
   interruptedPeriods: '調査期間に中断あり',
   noCityPrices: 'この都市の実測値はありません',

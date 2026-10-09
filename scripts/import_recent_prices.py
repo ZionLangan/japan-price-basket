@@ -85,12 +85,13 @@ def _download(url, key):
     return data, info
 
 
-def read_prices(data, month, city_resolver=None):
+def read_prices(data, month, city_resolver=None, selected_codes=None):
     if not data.startswith(b"PK\x03\x04"):
         if not data.startswith(b"\xd0\xcf\x11\xe0") or city_resolver is None:
             raise ValueError(f"Unsupported legacy price workbook for {month}; city-code/layout review required")
         from scripts.legacy_prices import read_legacy_prices
-        cities, prices = read_legacy_prices(data, month, REVIEW_CODES)
+        cities, prices = read_legacy_prices(
+            data, month, REVIEW_CODES if selected_codes is None else selected_codes)
         return resolve_city_rows(cities, prices, month, city_resolver)
     book = openpyxl.load_workbook(io.BytesIO(data), read_only=True, data_only=True)
     sheet = book.worksheets[0]
@@ -105,6 +106,8 @@ def read_prices(data, month, city_resolver=None):
     for row_number, row in enumerate(rows, 1):
         c = row[9] if len(row) > 9 else None
         if not isinstance(c, (str, int)) or not re.fullmatch(r"\d{4}", str(c)):
+            continue
+        if selected_codes is not None and str(c) not in selected_codes:
             continue
         if row[8] != f"{int(month[:4])}年{int(month[5:])}月":
             raise ValueError(f"Unexpected period at row {row_number}: {row[8]}")

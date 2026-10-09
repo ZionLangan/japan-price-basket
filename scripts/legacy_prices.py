@@ -115,8 +115,20 @@ def printed_unit(rows, start, end, column, code, city_column):
         if ")" in unicodedata.normalize("NFKC", joined):
             english_count = re.match(r"^[（(]\s*\d+(?:\.\d+)?\s*(?:packs?|pieces?|rolls?|bags?|bottles?|boxes|box|eggs?)\b",
                                      unicodedata.normalize("NFKC", joined), re.I)
-            candidates.append((joined, locations, index < english_start and not english_count))
+            # In the January 2000 rice columns the Japanese quantity wraps
+            # onto the same row as the shared English Cities label.
+            candidates.append((joined, locations, index <= english_start and not english_count))
     primary = [candidate for candidate in candidates if candidate[2]]
+    # Some old headers print their sole physical quantity beneath Cities.
+    # Preserve it verbatim; admitting its meaning is the later catalog review.
+    if not primary and len(candidates) == 1:
+        primary = candidates
+    # These two printed food headers split package count and its contents into
+    # adjacent parentheticals. Both fragments and their cells are evidence.
+    if len(primary) == 2 and code in {"1161", "1331"}:
+        first, second = primary
+        if second[1][0]["row"] == first[1][-1]["row"] + 1:
+            primary = [(first[0] + second[0], first[1] + second[1], True)]
     if len(primary) != 1:
         raise ValueError(f"Ambiguous printed quote unit {code}: {[x[0] for x in candidates]}")
     unit, locations, _ = primary[0]

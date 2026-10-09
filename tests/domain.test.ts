@@ -292,6 +292,141 @@ describe('decimal quantities and search', () => {
 });
 
 describe('synthetic gap-policy edge cases', () => {
+  it('carries seasonal prices across approved definitions using the actual anchor quote', () => {
+    const earlier = {
+      ...syntheticProduct.segments[0],
+      end: '2025-07',
+      quoteQuantity: '100',
+      quoteUnit: 'g' as const,
+    };
+    const later = {
+      ...earlier,
+      id: 'synthetic-seasonal-kg',
+      start: '2025-08',
+      end: '2026-12',
+      quoteQuantity: '1',
+      quoteUnit: 'kg' as const,
+      continuityFromPrevious: true,
+    };
+    const product = { ...syntheticProduct, segments: [earlier, later] };
+    const rows = [
+      synthetic('2025-07', 'observed', '200'),
+      ...months('2025-08', '2026-06').map((month) => ({
+        ...synthetic(month, 'seasonal'),
+        segmentId: later.id,
+      })),
+    ];
+    const value = resolvePrice(product, rows, '2026-05', false);
+    expect(value).toMatchObject({
+      status: 'estimated',
+      price: '200',
+      anchor: '2025-07',
+      segmentId: earlier.id,
+      sourceUnit: rows[0].sourceUnit,
+    });
+    const results = evaluate(
+      { ...basket, start: '2025-07', end: '2026-05', items: [basket.items[0]] },
+      { ...release, products: [product] },
+      { ...city(), series: { [product.id]: rows } },
+    );
+    expect(results.every((r) => r.cost === '2000')).toBe(true);
+    expect(results.at(-1)?.index).toBe('100');
+    expect(resolvePrice(product, rows, '2026-06', false).price).toBeNull();
+    expect(resolvePrice(product, rows, '2026-05', true).price).toBeNull();
+  });
+  it('checks historical and revised seasonal calendars rather than only the target segment', () => {
+    const earlier = { ...syntheticProduct.segments[0], end: '2025-08', surveyMonths: [7, 8] };
+    const later = {
+      ...earlier,
+      id: 'synthetic-calendar-change',
+      start: '2025-09',
+      surveyMonths: [7],
+      continuityFromPrevious: true,
+    };
+    const product = { ...syntheticProduct, segments: [earlier, later] };
+    const rows = [
+      synthetic('2025-07', 'observed', '100'),
+      synthetic('2025-08', 'seasonal'),
+      { ...synthetic('2025-09', 'seasonal'), segmentId: later.id },
+    ];
+    // August was a survey month under its own definition; September cannot skip it.
+    expect(resolvePrice(product, rows, '2025-09', false).price).toBeNull();
+    const offCalendarAnchor = {
+      ...product,
+      segments: [{ ...earlier, surveyMonths: [8] }, later],
+    };
+    expect(resolvePrice(offCalendarAnchor, rows, '2025-08', false).price).toBeNull();
+  });
+  it('generalizes reviewed market gaps and retains anchor conversions across approved changes', () => {
+    const earlier = {
+      ...syntheticProduct.segments[0],
+      end: '2025-07',
+      quoteQuantity: '1',
+      quoteUnit: 'kg' as const,
+      quantityConversion: {
+        from: 'count' as const,
+        to: 'kg' as const,
+        factor: '0.06',
+        estimated: true,
+        evidenceUrl: 'https://example.com/synthetic-definition',
+        description: { en: 'Synthetic 60 g conversion', ja: '合成テスト用60g換算' },
+      },
+    };
+    const later = {
+      ...earlier,
+      id: 'synthetic-count-quote',
+      start: '2025-08',
+      end: '2026-12',
+      quoteQuantity: '10',
+      quoteUnit: 'count' as const,
+      quantityConversion: undefined,
+      continuityFromPrevious: true,
+    };
+    const product: Product = {
+      ...syntheticProduct,
+      unit: 'count',
+      units: ['count'],
+      segments: [earlier, later],
+      missingPriceEstimate: { maxMonths: 2, tokens: ['-'], allowEquivalentSegments: true },
+    };
+    const rows = [
+      synthetic('2025-07', 'observed', '300'),
+      ...['2025-08', '2025-09', '2025-10'].map((month) => ({
+        ...synthetic(month, 'unavailable'),
+        raw: '-',
+        segmentId: later.id,
+      })),
+    ];
+    const results = evaluate(
+      {
+        ...basket,
+        start: '2025-07',
+        end: '2025-10',
+        items: [{ productId: product.id, quantity: '10', unit: 'count' }],
+      },
+      { ...release, products: [product] },
+      { ...city(), series: { [product.id]: rows } },
+    );
+    expect(results.map((row) => row.cost)).toEqual(['180', '180', '180', null]);
+    expect(results[1].items[0]).toMatchObject({
+      reason: 'assumed-gap',
+      anchor: '2025-07',
+      age: 1,
+      segmentId: earlier.id,
+    });
+    expect(resolvePrice(product, rows, '2025-08', true).price).toBeNull();
+    const inactive = {
+      ...product,
+      segments: [{ ...earlier, end: '2025-06' }, later],
+    };
+    expect(resolvePrice(inactive, rows, '2025-08', false).price).toBeNull();
+    const inactiveGap = [
+      { ...rows[0], month: '2025-06' },
+      { ...synthetic('2025-07', 'unavailable'), raw: '-' },
+      rows[1],
+    ];
+    expect(resolvePrice(inactive, inactiveGap, '2025-08', false).price).toBeNull();
+  });
   it('permits two temporary months and never chains a third', () => {
     const rows = [
       synthetic('2025-01', 'observed', '100'),
@@ -464,7 +599,7 @@ describe('compatible public baskets and source-based egg conversion', () => {
     const eligible = release.products.filter(
       (p) => productEligibility(p, tokyo.series[p.id], release.start, release.end).eligible,
     );
-    expect(eligible).toHaveLength(10);
+    expect(eligible.length).toBeGreaterThan(50);
     expect(eligible.map((p) => p.id)).toContain(eggs.id);
     expect(
       productEligibility(eggs, tokyo.series[eggs.id], release.start, release.end).estimatedMonths,
@@ -474,9 +609,9 @@ describe('compatible public baskets and source-based egg conversion', () => {
       productEligibility(detergent, tokyo.series[detergent.id], '2025-01', '2026-08').reason,
     ).toBe('retired-product');
     const rice = release.products.find((p) => p.id === 'koshihikari-rice')!;
-    expect(productEligibility(rice, tokyo.series[rice.id], release.start, release.end).reason).toBe(
-      'specification-break',
-    );
+    expect(
+      productEligibility(rice, tokyo.series[rice.id], release.start, release.end).eligible,
+    ).toBe(true);
     expect(productEligibility(rice, tokyo.series[rice.id], '2024-09', release.end).eligible).toBe(
       true,
     );

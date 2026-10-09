@@ -8,8 +8,9 @@ it('validates all 320 source months, distinct historical identities and exact ob
   expect(release.end).toBe('2026-08');
   expect(release.cities.filter((c) => !c.historical)).toHaveLength(81);
   expect(release.cities.some((c) => c.historical)).toBe(true);
-  expect(release.products).toHaveLength(26);
-  expect(release.products.filter((p) => p.selectable !== false)).toHaveLength(21);
+  expect(release.policyVersion).toBe('1.2');
+  expect(release.products).toHaveLength(104);
+  expect(release.products.filter((p) => p.selectable !== false)).toHaveLength(99);
   expect(
     release.products
       .filter((p) => p.selectable === false)
@@ -17,7 +18,7 @@ it('validates all 320 source months, distinct historical identities and exact ob
   ).toBe(true);
   expect(new Set(release.cities.map((c) => c.id)).size).toBe(release.cities.length);
   expect(new Set(release.products.map((p) => p.id)).size).toBe(release.products.length);
-  expect(new Set(release.products.map((p) => p.code)).size).toBe(20);
+  expect(new Set(release.products.map((p) => p.code)).size).toBe(89);
   const sourceIds = new Set(release.sources.map((s) => s.id));
   expect(sourceIds.size).toBe(release.sources.length);
   const calendar = months(release.start, release.end);
@@ -73,7 +74,7 @@ it('validates all 320 source months, distinct historical identities and exact ob
     }
   }
   expect(failures.slice(0, 50)).toEqual([]);
-}, 30000);
+}, 90000);
 it('keeps missing source tokens and never treats a blank price as zero', () => {
   const rows = fixture.series['01202']['broccoli'];
   const row = rows.find((observation: { month: string }) => observation.month === '2024-09')!;

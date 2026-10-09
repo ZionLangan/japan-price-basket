@@ -132,7 +132,7 @@ test('unified eggs use labeled estimates in January 2000 without offering separa
   await expect(page.locator('#qty-large-size-eggs')).toHaveCount(0);
 });
 
-test('a saved incompatible product remains visible until its dates are repaired explicitly', async ({
+test('saved rice now compares across reviewed packaging changes while preserving its quantity', async ({
   page,
 }) => {
   await page.addInitScript(() => {
@@ -159,8 +159,11 @@ test('a saved incompatible product remains visible until its dates are repaired 
   });
   await page.goto('/');
   await expect(page.locator('#qty-koshihikari-rice')).toHaveValue('1');
-  await expect(page.getByTestId('basket-change')).toHaveText('—');
-  await expect(page.locator('.basket-row')).toContainText('Change the dates or remove');
+  await expect(page.getByTestId('basket-change')).not.toHaveText('—');
+  const chart = page.locator('.price-chart');
+  await chart.focus();
+  await chart.press('Home');
+  await expect(page.getByTestId('chart-tooltip')).toContainText('¥592');
   await selectMonth(page, 'start', '2010-01');
   await expect(page.getByTestId('basket-change')).not.toHaveText('—');
   await page.reload();

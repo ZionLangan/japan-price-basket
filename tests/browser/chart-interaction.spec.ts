@@ -168,14 +168,13 @@ test('seasonal inspection retains its actual anchor when observed-only would bre
   await expect(page.getByTestId('chart-active-point')).toBeVisible();
 });
 
-test('an incompatible range change retains the working basket and its inspected prices', async ({
+test('approved generic rice history expands the chart and retains native inspected prices', async ({
   page,
 }) => {
   await load(page);
   await addOnly(page, 'rice', /^Add: Koshihikari rice/);
   await page.locator('#start-year').selectOption('2000');
-  await expectRange(page, '2024-09', '2026-08');
-  await expect(page.getByTestId('compatibility-notice')).toContainText('Koshihikari rice');
+  await expectRange(page, '2000-09', '2026-08');
   const chart = page.locator('.price-chart');
   await chart.focus();
   await chart.press('End');

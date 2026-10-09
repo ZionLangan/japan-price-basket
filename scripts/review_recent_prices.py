@@ -6,6 +6,7 @@ ordinary release files and downloaded workbooks stay outside Git.
 """
 
 import argparse
+import copy
 import gzip
 import hashlib
 import json
@@ -126,6 +127,32 @@ def review_identity(mapping, row, spec, month):
             raise ValueError(f"Unreviewed product form {mapping['code']}, {month}: {alternatives}")
 
 
+def merge_reviews(base, expansion):
+    """Apply the explicit food-only expansion without rewriting older approvals."""
+    if expansion["approvedWindow"] != base["approvedWindow"] or expansion.get("policyVersion") != "1.2":
+        raise ValueError("Food expansion window/policy differs from the approved source archive")
+    review = copy.deepcopy(base)
+    current = {product["id"]: product for product in review["products"]}
+    updates = expansion.get("existingProductUpdates", [])
+    if len({p["id"] for p in updates}) != len(updates):
+        raise ValueError("Duplicate existing-food update")
+    for product in updates:
+        previous = current.get(product["id"])
+        if (previous is None or previous["code"] != product["code"]
+                or not 1000 <= int(product["code"]) < 2100
+                or previous["unit"] != product["unit"]):
+            raise ValueError("Food expansion changes a stable product identity or dimension")
+        current[product["id"]] = copy.deepcopy(product)
+    added = expansion["products"]
+    if any(product["id"] in current or not 1000 <= int(product["code"]) < 2100 for product in added):
+        raise ValueError("Expansion contains a duplicate identity or non-food item")
+    review["products"] = [current[p["id"]] for p in base["products"]] + copy.deepcopy(added)
+    review["policyVersion"] = "1.2"
+    review["reviewedAt"] = expansion["reviewedAt"]
+    review["policy"] = expansion["policy"]
+    return review
+
+
 def make_fixture(staging, review):
     snapshots = staging["snapshots"]
     start, end = snapshots[0]["month"], snapshots[-1]["month"]
@@ -148,7 +175,8 @@ def make_fixture(staging, review):
         for code in codes:
             matching = [p for p in mappings if p["code"] == code
                         and reviewed_specification(p, snapshot["month"])]
-            if len(matching) != 1:
+            present = any(row["code"] == code for row in snapshot["prices"])
+            if len(matching) > 1 or present != bool(matching):
                 raise ValueError(f"Missing or overlapping variant review {code}, {snapshot['month']}")
     cities = []
     for city in staging["cities"]:
@@ -178,7 +206,8 @@ def make_fixture(staging, review):
     for mapping in mappings:
         code = mapping["code"]
         if mapping.get("missingPriceEstimate") is not None and not (
-                code == "1341" and mapping["id"] == "mixed-size-eggs"
+                (code == "1341" and mapping["id"] == "mixed-size-eggs"
+                 or review.get("policyVersion") == "1.2" and 1000 <= int(code) < 2100)
                 and mapping["missingPriceEstimate"] == {
                     "maxMonths": 2, "tokens": ["-"], "allowEquivalentSegments": True}):
             raise ValueError(f"Unreviewed missing-price estimate rule {mapping['id']}")
@@ -246,9 +275,11 @@ def make_fixture(staging, review):
                 elif re.fullmatch(r"Y(?:\s*\d+(?:\.\d+)?)?", str(raw).strip()):
                     status = "local-spec"
                 elif normalized(raw) in missing_tokens:
-                    # No dated legend establishes the older two-dot token's
-                    # cause. A seasonal calendar alone cannot redefine it.
-                    if (normalized(raw) in {"...", "…"}
+                    # Policy 1.2 permits a disclosed off-season inference from
+                    # the item's explicit dated calendar and a real dot-marked
+                    # city cell. The native token and null price stay intact.
+                    seasonal_tokens = {"...", "…", ".."} if review.get("policyVersion") == "1.2" else {"...", "…"}
+                    if (normalized(raw) in seasonal_tokens
                             and int(snapshot["month"][5:]) not in segment["surveyMonths"]):
                         status = "seasonal"
                 else:
@@ -286,9 +317,14 @@ def make_fixture(staging, review):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--export-reviewed", action="store_true")
+    parser.add_argument("--staging", type=Path, default=ROOT / "data/staging/recent.json")
+    parser.add_argument("--review", type=Path, default=ROOT / "data/catalog-review.json")
+    parser.add_argument("--expansion", type=Path, help="Explicit food-only additional review")
     args = parser.parse_args()
-    staging = json.loads((ROOT / "data/staging/recent.json").read_text(encoding="utf-8"))
-    review = json.loads((ROOT / "data/catalog-review.json").read_text(encoding="utf-8"))
+    staging = json.loads(args.staging.read_text(encoding="utf-8"))
+    review = json.loads(args.review.read_text(encoding="utf-8"))
+    if args.expansion:
+        review = merge_reviews(review, json.loads(args.expansion.read_text(encoding="utf-8")))
     fixture, report = make_fixture(staging, review)
     report_path = ROOT / "data/staging/review-report.json"
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

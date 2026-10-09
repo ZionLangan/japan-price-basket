@@ -1,5 +1,5 @@
 {
-  "policy_version": "1.1",
+  "policy_version": "1.2",
   "updated_at": "2026-10-10",
   "primary_source": "Statistics Bureau Retail Price Survey Trend Survey",
   "ingestion_start_month": "2000-01",
@@ -8,18 +8,37 @@
     "max_anchor_age_calendar_months": 2,
     "requires_reviewed_missing_reason": true
   },
+  "reviewed_market_gap": {
+    "max_anchor_age_calendar_months": 2,
+    "allowed_tokens": ["-"],
+    "requires_explicit_owner_authorized_short_gap_assumption": true,
+    "raw_token_remains_unavailable": true,
+    "claim_precise_historical_missing_reason": false,
+    "requires_product_missing_price_estimate_rule": true,
+    "allow_approved_equivalent_segments": true,
+    "anchor_native_quote_used_for_calculation": true
+  },
   "seasonal_gap": {
     "enabled": true,
     "max_anchor_age_calendar_months": 11,
     "requires_effective_dated_survey_calendar": true,
     "requires_anchor_in_preceding_survey_season": true,
+    "allow_approved_equivalent_segments": true,
+    "requires_dated_calendars_for_all_intervening_months": true,
+    "known_unsurveyed_tokens_may_identify_off_season": ["..", "...", "…"],
+    "off_season_token_inference_requires_actual_published_city_cell": true,
+    "off_season_token_inference_allowed_in_scheduled_months": false,
+    "preserve_original_unsurveyed_token": true,
     "allowed_only_in_scheduled_off_season": true,
     "stop_when_new_season_complete_month_is_published": true
   },
   "carry_forward": {
     "anchor_must_be_actual_observation": true,
     "require_same_city_scope": true,
-    "require_same_specification_segment": true,
+    "require_same_specification_segment": false,
+    "require_reviewed_continuity_when_segment_changes": true,
+    "require_active_segment_for_every_intervening_month": true,
+    "use_anchor_native_quote_and_conversion": true,
     "require_complete_published_month": true,
     "allow_before_first_observation": false,
     "allow_after_discontinuation": false,
@@ -31,7 +50,24 @@
     "require_reviewed_continuity_between_endpoints": true,
     "allow_estimated_endpoints_with_explicit_label": true,
     "allow_replacement_variant_bridge": false,
+    "allow_reviewed_minor_definition_changes": true,
     "require_positive_baseline_cost": true
+  },
+  "generic_food_history": {
+    "authorized_by": "Owner request on 2026-10-10: prioritize long-term food price trends, permit modest definition changes, quantity conversion and disclosed seasonal smoothing",
+    "target": "All officially published food histories from January 2000 through the latest complete month in all actual surveyed city scopes wherever evidence permits",
+    "reviewable_continuity": [
+      "Wording, punctuation and spelling changes",
+      "Supported quantity and package-size conversions",
+      "Modest brand, grade or size changes within the same generic kind of food"
+    ],
+    "retain_dated_original_definitions": true,
+    "quantity_conversion_requires_documented_factor": true,
+    "estimated_conversion_requires_explicit_label": true,
+    "unknown_package_weight_midpoints_allowed": false,
+    "unreviewed_species_recipe_or_product_form_replacement_allowed": false,
+    "quality_adjusted_inflation_claim_allowed": false,
+    "seasonally_adjusted_series_claim_allowed": false
   },
   "point_statuses": [
     "observed",
@@ -41,11 +77,7 @@
     "pending",
     "estimated_quantity_conversion"
   ],
-  "basket_statuses": [
-    "observed",
-    "estimated",
-    "unavailable"
-  ],
+  "basket_statuses": ["observed", "estimated", "unavailable"],
   "unavailable_price_value": null,
   "decimal_wire_format": "string",
   "search_fields": [
@@ -60,21 +92,14 @@
     "explicit_source_brands",
     "official_item_code"
   ],
-  "normalization": [
-    "NFKC",
-    "English case folding",
-    "whitespace normalization"
-  ],
+  "normalization": ["NFKC", "English case folding", "whitespace normalization"],
   "catalog_admission_requires_resolved_local_specifications": true,
   "source_prices_overwritten_by_estimates": false,
   "public_catalog": {
     "require_complete_usable_selected_city_period": true,
     "require_reviewed_comparison_continuity": true,
     "guard_changes_that_invalidate_current_basket": true,
-    "excluded_source_codes": [
-      "4431",
-      "4441"
-    ]
+    "excluded_source_codes": ["4431", "4441"]
   },
   "product_exceptions": {
     "mixed-size-eggs": {
@@ -91,9 +116,7 @@
         "source_url": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
       },
       "missing_price_estimate": {
-        "tokens": [
-          "-"
-        ],
+        "tokens": ["-"],
         "max_anchor_age_calendar_months": 2,
         "allow_approved_equivalent_segments": true,
         "anchor_quote_used_for_calculation": true,

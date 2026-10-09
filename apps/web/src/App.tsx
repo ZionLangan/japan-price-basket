@@ -428,6 +428,7 @@ function Workbench({ release }: { release: Release }) {
         </a>
         <p>{t.method1}</p>
         <p>{t.method3}</p>
+        <p>{t.definitionNote}</p>
         <p>{t.quantityNote}</p>
         <p>{t.carryNote}</p>
         <p>{t.catalogLimit}</p>

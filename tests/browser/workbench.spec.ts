@@ -120,7 +120,7 @@ test('seasonal prices retain actual anchors and observed-only never drops goods'
   await expect(page.locator('#qty-satsuma-mandarins')).not.toHaveValue('');
 });
 
-test('date changes cannot introduce an unresolved specification break into a working basket', async ({
+test('reviewed rice package changes support the full history with exact dated quantities', async ({
   page,
 }) => {
   await load(page);
@@ -132,13 +132,12 @@ test('date changes cannot introduce an unresolved specification break into a wor
   await selectMonth(page, 'start', '2025-10');
   await expect(page.getByTestId('basket-change')).not.toHaveText('—');
   await page.locator('.range-presets button').filter({ hasText: /^All$/ }).click();
-  await expectRange(page, '2025-10', '2026-08');
-  await expect(page.getByTestId('compatibility-notice')).toContainText('Dates unchanged');
+  await expectRange(page, '2000-01', '2026-08');
   await expect(page.getByTestId('basket-change')).not.toHaveText('—');
   await page.locator('#city').selectOption('14205');
   await page.getByRole('tab', { name: 'Monthly data', exact: true }).click();
   await expect(page.locator('table caption')).toContainText('Fujisawa');
-  await expect(page.locator('.monthly-table tbody tr').first()).toContainText('2025-10');
+  await expect(page.locator('.monthly-table tbody tr').first()).toContainText('2025-01');
   await expect(page.getByTestId('latest-cost')).not.toHaveText('—');
 });
 
@@ -303,7 +302,7 @@ test('bilingual layouts reflow at narrow widths, large text and reduced motion',
 
 test('source disclosure, search and all chart tabs pass automated access checks in both languages', async ({
   page,
-}) => {
+}, info) => {
   await load(page);
   for (const language of ['English', '日本語']) {
     await page.getByRole('button', { name: language, exact: true }).click();
@@ -321,6 +320,23 @@ test('source disclosure, search and all chart tabs pass automated access checks 
     await expect(page.locator('#source-information')).toContainText(
       language === 'English' ? 'Not a government website' : '政府のウェブサイトではありません',
     );
+    await expect(page.locator('#source-information')).toContainText(
+      language === 'English'
+        ? 'not quality-adjusted inflation'
+        : '品質調整済みの物価上昇率ではありません',
+    );
+    await expect(page.locator('#source-information')).toContainText(
+      language === 'English' ? 'seasonally adjusted series' : '季節調整済みの系列ではありません',
+    );
+    const bounds = await page.locator('#source-information').boundingBox();
+    const viewport = page.viewportSize()!;
+    expect(bounds!.x).toBeGreaterThanOrEqual(0);
+    expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(viewport.width);
+    expect(bounds!.y).toBeGreaterThanOrEqual(0);
+    expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(viewport.height);
+    await page.screenshot({
+      path: `test-results/${info.project.name}-policy-source-${language === 'English' ? 'en' : 'ja'}.png`,
+    });
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     await page.keyboard.press('Escape');
     await expect(page.locator('#source-information')).not.toBeVisible();

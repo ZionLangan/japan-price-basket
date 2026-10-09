@@ -91,6 +91,13 @@ class OriginalPrintedPrices(unittest.TestCase):
         self.assertEqual(rice["values"]["11204"], 6112)
         self.assertEqual(rice["locations"]["13100"], {"row": 39, "column": 9})
 
+    def test_expanded_food_selection_retains_wrapped_rice_and_lower_bottle_headers(self):
+        _, rows = read_prices(self.food_bytes, "2000-01", resolve_legacy_city,
+                              {"1002", "2033", "2034"})
+        units = {row["code"]: row["unit"] for row in rows}
+        self.assertEqual(units, {"1002": "(10kg)", "2033": "(1本･700ml)",
+                                 "2034": "(1本･640ml)"})
+
 
 class LegacyHeaderSafeguards(unittest.TestCase):
     def test_catalog_nested_rice_quotes_and_moving_file_parts_are_resolved(self):
@@ -137,6 +144,18 @@ class LegacyHeaderSafeguards(unittest.TestCase):
     def test_missing_printed_city_row_cannot_be_filled_with_another_city(self):
         with self.assertRaisesRegex(ValueError, "city-number sequence"):
             parse_printed(synthetic_printed(city_numbers=(1, 3)), "2002-07", {"1341", "1303"})
+
+    def test_adjacent_package_contents_remain_native_header_evidence(self):
+        sheet = SyntheticSheet([
+            ["", "(1161)"], ["", "Synthetic bonito"],
+            ["都市", "(1パック)"], ["", "（3g×5袋）"],
+            ["Cities", "Bonito flakes"], ["", "平成14年７月"],
+            ["1 札幌", 100.0], ["2 東京都区部", 200.0],
+        ])
+        _, rows = parse_printed(sheet, "2002-07", {"1161"})
+        self.assertEqual(rows[0]["unit"], "(1パック)（3g×5袋）")
+        self.assertEqual(rows[0]["unitLocations"], [{"row": 3, "column": 2},
+                                                  {"row": 4, "column": 2}])
 
     def test_partial_print_page_uses_the_city_header_not_first_product_position(self):
         original = synthetic_printed()

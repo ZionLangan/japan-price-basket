@@ -92,7 +92,9 @@ export function resolvePrice(
   month: string,
   observedOnly: boolean,
 ): Omit<ItemValue, 'cost' | 'productId'> {
-  const segment = product.segments.find((s) => s.start <= month && s.end >= month);
+  const activeSegment = (period: string) =>
+    product.segments.find((s) => s.start <= period && s.end >= period);
+  const segment = activeSegment(month);
   const row = rows.find((r) => r.month === month);
   const absent = {
     month,
@@ -128,12 +130,9 @@ export function resolvePrice(
         r.month < month &&
         r.status === 'observed' &&
         r.price !== null &&
-        product.segments.some(
-          (s) => s.id === r.segmentId && s.start <= r.month && s.end >= r.month,
-        ) &&
+        activeSegment(r.month)?.id === r.segmentId &&
         (r.segmentId === segment.id ||
-          (assumedGap &&
-            assumption?.allowEquivalentSegments &&
+          ((!assumedGap || assumption?.allowEquivalentSegments) &&
             !hasBreak(product, r.month, month))),
     )
     .sort((a, b) => b.month.localeCompare(a.month))[0];
@@ -142,6 +141,17 @@ export function resolvePrice(
   const intervening = months(anchor.month, month)
     .slice(1)
     .map((m) => rows.find((r) => r.month === m));
+  // Approved definition changes may join generic goods, but inactive months and
+  // unresolved changes cannot supply an estimate. Keep the anchor's native quote.
+  if (
+    intervening.some(
+      (r) =>
+        !r ||
+        activeSegment(r.month)?.id !== r.segmentId ||
+        hasBreak(product, anchor.month, r.month),
+    )
+  )
+    return absent;
   if (assumedGap && assumption) {
     if (
       age > assumption.maxMonths ||
@@ -156,21 +166,18 @@ export function resolvePrice(
     )
       return absent;
   } else if (row.status === 'temporary') {
-    if (
-      age > 2 ||
-      intervening.some((r) => !r || r.status !== 'temporary' || r.segmentId !== segment.id)
-    )
-      return absent;
+    if (age > 2 || intervening.some((r) => !r || r.status !== 'temporary')) return absent;
   } else {
-    // Cannot carry through a new survey season, an unknown gap, or another segment.
+    // Use each month's dated calendar, including at approved definition changes.
+    // A fresh season requires a new actual price; unknown gaps remain unavailable.
     if (
       age > 11 ||
+      !activeSegment(anchor.month)?.surveyMonths.includes(Number(anchor.month.slice(5))) ||
       intervening.some(
         (r) =>
           !r ||
           r.status !== 'seasonal' ||
-          r.segmentId !== segment.id ||
-          segment.surveyMonths.includes(Number(r.month.slice(5))),
+          activeSegment(r.month)!.surveyMonths.includes(Number(r.month.slice(5))),
       )
     )
       return absent;
