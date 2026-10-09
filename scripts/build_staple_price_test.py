@@ -233,9 +233,9 @@ def main():
                                "Fixed illustrative quantities; not official CPI or representative household spending."]}
     OUT.mkdir(exist_ok=True)
     serialized = json.dumps(payload, ensure_ascii=False, indent=2)
-    (OUT / "staple-price-test.json").write_text(serialized+"\n", encoding="utf-8")
+    (OUT / "staple-price-test.json").write_text(serialized+"\n", encoding="utf-8", newline="\n")
     template = (OUT / "staple-price-test.template.html").read_text(encoding="utf-8")
-    (OUT / "staple-price-test.html").write_text(template.replace("__PILOT_DATA__", serialized.replace("</", "<\\/")), encoding="utf-8")
+    (OUT / "staple-price-test.html").write_text(template.replace("__PILOT_DATA__", serialized.replace("</", "<\\/")), encoding="utf-8", newline="\n")
     print(json.dumps({"default_basket": totals, "items": [{"code": i["code"], "name": i["name_en"],
                     "before": i["observations"]["2000-01"]["value"], "after": i["observations"]["2026-08"]["value"],
                     "comparison": i["comparisons"]["2000-01"]} for i in items]}, ensure_ascii=False))
