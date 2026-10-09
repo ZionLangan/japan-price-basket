@@ -52,3 +52,58 @@ test('genuine later starts remain guarded and scheduled off-seasons keep actual 
   await expect(page.getByTestId('chart-tooltip')).toContainText('Estimated');
   await expect(page.getByTestId('chart-tooltip')).toContainText('2000-05');
 });
+
+test('full food catalog exposes drained corn history with a fixed gram quantity', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
+  await page.getByRole('button', { name: 'Clear basket', exact: true }).click();
+  await page.locator('#search').fill('1491');
+  await page.getByRole('option', { name: /^Add: Canned vegetables/ }).click();
+  await page.locator('#unit-canned-vegetables').selectOption('g');
+  await page.locator('#qty-canned-vegetables').fill('130');
+  await page.getByRole('tab', { name: 'Monthly data', exact: true }).click();
+  const rows = page.locator('.monthly-table tbody tr');
+  await expect(rows.filter({ hasText: '2014-08' })).toContainText('¥142');
+  await expect(rows.filter({ hasText: '2014-09' })).toContainText('¥136');
+  await page
+    .getByRole('button', {
+      name: 'Specification and history: Canned vegetables / corn',
+      exact: true,
+    })
+    .click();
+  await expect(page.locator('#definition-canned-vegetables')).toContainText('drained corn');
+  await page.getByRole('button', { name: 'Close product details', exact: true }).click();
+  await page.getByRole('button', { name: '日本語', exact: true }).click();
+  await page.locator('#search').fill('ほんだし');
+  await page.getByRole('option', { name: /^追加: 風味調味料/ }).click();
+  await expect(page.locator('#qty-bonito-dashi')).toBeVisible();
+});
+
+test('conflicting source captions stay estimated and explain the dated conversion in both languages', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
+  await page.getByRole('button', { name: 'Clear basket', exact: true }).click();
+  await page.locator('#search').fill('1331');
+  await page.getByRole('option', { name: /^Add: Processed cheese/ }).click();
+  await page.locator('#unit-processed-cheese').selectOption('g');
+  await page.locator('#qty-processed-cheese').fill('225');
+  await page.getByRole('tab', { name: 'Basket price', exact: true }).click();
+  await page.locator('.price-chart').focus();
+  await page.locator('.price-chart').press('Home');
+  await expect(page.getByTestId('chart-tooltip')).toContainText('2000-01');
+  await expect(page.getByTestId('chart-tooltip')).toContainText('Estimated quantity conversion');
+  await page
+    .getByRole('button', { name: 'Specification and history: Processed cheese', exact: true })
+    .click();
+  await expect(page.locator('#definition-processed-cheese .notice').nth(1)).toContainText(
+    'captions disagree',
+  );
+  await page.getByRole('button', { name: 'Close product details', exact: true }).click();
+  await page.getByRole('button', { name: '日本語', exact: true }).click();
+  await page.getByRole('button', { name: '銘柄・履歴: プロセスチーズ', exact: true }).click();
+  await expect(page.locator('#definition-processed-cheese')).toContainText('数量表記');
+});

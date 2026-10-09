@@ -221,7 +221,7 @@ test('unit presets and rapid city switching keep the correct city and quantities
 }) => {
   await load(page);
   await selectMonth(page, 'start', '2026-01');
-  await add(page, 'milk', /^Add: Milk/);
+  await add(page, 'milk', /^Add: Milk · 1 L carton$/);
   await page.locator('#qty-carton-milk').fill('0.5');
   await page.locator('#unit-carton-milk').selectOption('mL');
   await expect(page.locator('#qty-carton-milk')).toHaveValue('500');

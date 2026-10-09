@@ -9,8 +9,8 @@ it('validates all 320 source months, distinct historical identities and exact ob
   expect(release.cities.filter((c) => !c.historical)).toHaveLength(81);
   expect(release.cities.some((c) => c.historical)).toBe(true);
   expect(release.policyVersion).toBe('1.2');
-  expect(release.products).toHaveLength(104);
-  expect(release.products.filter((p) => p.selectable !== false)).toHaveLength(99);
+  expect(release.products).toHaveLength(311);
+  expect(release.products.filter((p) => p.selectable !== false)).toHaveLength(306);
   expect(
     release.products
       .filter((p) => p.selectable === false)
@@ -18,7 +18,13 @@ it('validates all 320 source months, distinct historical identities and exact ob
   ).toBe(true);
   expect(new Set(release.cities.map((c) => c.id)).size).toBe(release.cities.length);
   expect(new Set(release.products.map((p) => p.id)).size).toBe(release.products.length);
-  expect(new Set(release.products.map((p) => p.code)).size).toBe(89);
+  expect(new Set(release.products.map((p) => p.code)).size).toBe(277);
+  const foods = release.products.filter((p) => p.category === 'food');
+  expect(new Set(foods.map((p) => p.code)).size).toBe(274);
+  expect(
+    new Set(foods.filter((p) => p.segments.some((s) => s.end === release.end)).map((p) => p.code))
+      .size,
+  ).toBe(218);
   const sourceIds = new Set(release.sources.map((s) => s.id));
   expect(sourceIds.size).toBe(release.sources.length);
   const calendar = months(release.start, release.end);

@@ -54,6 +54,7 @@ export const ProductSchema = z.object({
               estimated: z.boolean(),
               evidenceUrl: z.string().url(),
               description: Names,
+              basis: z.literal('dated-specification-over-conflicting-price-caption').optional(),
             })
             .optional(),
           // A break is unresolved unless the review explicitly admits continuity.

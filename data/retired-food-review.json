@@ -1,0 +1,6177 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-10",
+  "policyVersion": "1.2",
+  "approvedWindow": {
+    "start": "2000-01",
+    "end": "2026-08"
+  },
+  "policy": "Owner-authorized generic food continuity across modest changes; exact dated mass/volume/count normalization. Real product-form replacements and unresolved pack dimensions retain separate histories. Original observations are untouched. Missing data and geography are governed by the separate publication policy.",
+  "reviewedMissingTokens": [
+    "",
+    "..",
+    "...",
+    "…",
+    "-"
+  ],
+  "ownerAuthorization": "Owner generic-food comparison decision, 2026-10-10",
+  "candidateSourceCodes": [
+    "1003",
+    "1005",
+    "1007",
+    "1011",
+    "1043",
+    "1061",
+    "1104",
+    "1105",
+    "1109",
+    "1121",
+    "1122",
+    "1145",
+    "1162",
+    "1163",
+    "1171",
+    "1202",
+    "1212",
+    "1231",
+    "1241",
+    "1251",
+    "1291",
+    "1301",
+    "1418",
+    "1431",
+    "1439",
+    "1440",
+    "1441",
+    "1451",
+    "1452",
+    "1484",
+    "1501",
+    "1512",
+    "1513",
+    "1514",
+    "1516",
+    "1562",
+    "1591",
+    "1592",
+    "1593",
+    "1651",
+    "1731",
+    "1742",
+    "1762",
+    "1841",
+    "1901",
+    "1912",
+    "1914",
+    "1961",
+    "1971",
+    "1972",
+    "2001",
+    "2002",
+    "2025",
+    "2031",
+    "2032",
+    "2034"
+  ],
+  "products": [
+    {
+      "code": "1003",
+      "id": "mixed-origin-rice",
+      "en": "Rice, mixed-origin",
+      "ja": "うるち米（複数原料米）",
+      "unit": "kg",
+      "aliases": [
+        "rice",
+        "米",
+        "こめ"
+      ],
+      "familyId": "mixed-origin-rice",
+      "quoteQuantity": "5",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "name": "うるち米",
+          "specName": "うるち米"
+        },
+        {
+          "start": "2010-01",
+          "end": "2011-12",
+          "name": "うるち米(複数原料米)",
+          "specName": "うるち米"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "a2ec8f4ec1816460ef5781e2c9628fed7ab44df04d3765825c01d210987e4dd7",
+          "quoteQuantity": "10",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "10 kg",
+            "ja": "10 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(10kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2002-01",
+          "end": "2004-12",
+          "specificationHash": "1eb3dffd61967d987ff7be77118144e374750d24690bf831fcd76754de4aee26",
+          "quoteQuantity": "5",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "5 kg",
+            "ja": "5 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･5kg)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200201.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2011-12",
+          "specificationHash": "c8612bb9d1dc8a35f957baf2b197948832a85c682a3a2d37d1689fcbef1aa5b0",
+          "quoteQuantity": "5",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "5 kg",
+            "ja": "5 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･5kg)",
+            "1袋･5kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1005",
+      "id": "designated-standard-rice",
+      "en": "Rice, designated standard grade",
+      "ja": "うるち米（指定標準米）",
+      "unit": "kg",
+      "aliases": [
+        "rice",
+        "米",
+        "こめ"
+      ],
+      "familyId": "designated-standard-rice",
+      "quoteQuantity": "5",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2004-03",
+          "name": "うるち米",
+          "specName": "うるち米"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "3e02ff66d18c6442322131632ef285415d3229cd963f5fc1df2f1e2f0382ba42",
+          "quoteQuantity": "10",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "10 kg",
+            "ja": "10 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(10kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2002-01",
+          "end": "2004-03",
+          "specificationHash": "8cc60a2e5ffbfaf95bc3250607b3615be66751f72ca30b93ea9bf73d35f7b0e8",
+          "quoteQuantity": "5",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "5 kg",
+            "ja": "5 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･5kg)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200201.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1007",
+      "id": "imported-rice",
+      "en": "Imported rice",
+      "ja": "うるち米（外国産）",
+      "unit": "kg",
+      "aliases": [
+        "rice",
+        "米",
+        "こめ"
+      ],
+      "familyId": "imported-rice",
+      "quoteQuantity": "10",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "うるち米",
+          "specName": "うるち米"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "71de0d7b8bf2b531ea9d89175c2a42d4438c6ad1084c1c0dcd695723b3afbc8a",
+          "quoteQuantity": "10",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "10 kg",
+            "ja": "10 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(10kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1011",
+      "id": "glutinous-rice",
+      "en": "Glutinous rice",
+      "ja": "もち米",
+      "unit": "kg",
+      "aliases": [
+        "rice",
+        "mochi",
+        "餅米"
+      ],
+      "familyId": "glutinous-rice",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index. Some historical price-table captions disagree with the dated basic definition. The reviewed conversion follows that definition and is marked estimated for affected months; both original texts are retained.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。 過去の一部の価格表で数量表記が時期別の基本銘柄と一致しません。確認した換算は基本銘柄を採用し、該当月を推計として表示します。両方の原文を保存しています。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "name": "も ち 米",
+          "specName": "もち米"
+        },
+        {
+          "start": "2010-01",
+          "end": "2021-12",
+          "name": "もち米",
+          "specName": "もち米"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "9a0b448215ea2516e804397be48d2586e9968d7825d5c8600b265a2ec3fa1509",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2002-01",
+          "end": "2002-01",
+          "specificationHash": "662cebcad3428debb9299b2cf466512e6c01e2016ca11f584cec64225e0c9693",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･5kg)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200201.xls"
+          ],
+          "quantityConversion": {
+            "from": "kg",
+            "to": "kg",
+            "factor": "1",
+            "estimated": true,
+            "basis": "dated-specification-over-conflicting-price-caption",
+            "evidenceUrl": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200201.xls",
+            "description": {
+              "en": "Some historical price-table captions disagree with the dated basic definition. The reviewed conversion follows that definition and is marked estimated for affected months; both original texts are retained.",
+              "ja": "過去の一部の価格表で数量表記が時期別の基本銘柄と一致しません。確認した換算は基本銘柄を採用し、該当月を推計として表示します。両方の原文を保存しています。"
+            }
+          },
+          "quantityConversionHash": "8991f7120d81362624684a8b7adea4834b23082207314771294fc0d16b2799e8"
+        },
+        {
+          "start": "2002-02",
+          "end": "2004-06",
+          "specificationHash": "662cebcad3428debb9299b2cf466512e6c01e2016ca11f584cec64225e0c9693",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･1kg)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200201.xls"
+          ]
+        },
+        {
+          "start": "2004-07",
+          "end": "2013-06",
+          "specificationHash": "ac58da869a0115bbb26e62a2c6b0f447578b0bd77097ee5243ee5cee5997fd32",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200407.xls"
+          ]
+        },
+        {
+          "start": "2013-07",
+          "end": "2021-12",
+          "specificationHash": "d3849b83315a343189f2d55a7f0b7cc07aeb08483328d178920e339e72dff18f",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201307.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1043",
+      "id": "imported-spaghetti",
+      "en": "Imported spaghetti",
+      "ja": "スパゲッティ（輸入品）",
+      "unit": "kg",
+      "aliases": [
+        "pasta",
+        "パスタ"
+      ],
+      "familyId": "imported-spaghetti",
+      "quoteQuantity": "0.45",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "name": "ｽﾊﾟｹﾞｯﾃｨ",
+          "specName": "スパゲッティ"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "b8a1570e9dac63395172fef39e207b47380ebf1ecfcf94620694245ec646fb47",
+          "quoteQuantity": "0.45",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "450 g",
+            "ja": "450 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･450g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1061",
+      "id": "okinawa-soba",
+      "en": "Boiled Okinawa soba",
+      "ja": "ゆで沖縄そば",
+      "unit": "kg",
+      "aliases": [
+        "noodles",
+        "沖縄そば"
+      ],
+      "familyId": "okinawa-soba",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2007-07",
+          "end": "2009-12",
+          "name": "ゆ　で",
+          "specName": "ゆで沖縄そば"
+        },
+        {
+          "start": "2010-01",
+          "end": "2021-12",
+          "name": "ゆで沖縄そば",
+          "specName": "ゆで沖縄そば"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2007-07",
+          "end": "2021-12",
+          "specificationHash": "0626fe3a61d8e6982daa5c738531cd5d4784729441a3a3192f055583e23563f7",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200707.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1104",
+      "id": "fresh-bonito",
+      "en": "Fresh bonito",
+      "ja": "かつお（生）",
+      "unit": "kg",
+      "aliases": [
+        "fish",
+        "カツオ",
+        "鰹"
+      ],
+      "familyId": "fresh-bonito",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2014-12",
+          "name": "かつお",
+          "specName": "かつお"
+        },
+        {
+          "start": "2015-01",
+          "end": "2016-12",
+          "name": "かつお(生)",
+          "specName": "かつお"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2011-06",
+          "specificationHash": "22e80ec816690810128a1b892179c1ec8273a1c59779afaa04be45c46914066e",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2011-07",
+          "end": "2014-12",
+          "specificationHash": "4fe9f9276d2e245ce290d25294d6b3076a25f4c64871db0cfd28ef437a9738f9",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "sourceUnits": [
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201107.xls"
+          ]
+        },
+        {
+          "start": "2015-01",
+          "end": "2016-12",
+          "specificationHash": "c494b2f76977f289a555e40a3391247cccb97606bfd4d88a5ffcc525544c1fcf",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "sourceUnits": [
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1105",
+      "id": "flounder",
+      "en": "Flounder",
+      "ja": "かれい",
+      "unit": "kg",
+      "aliases": [
+        "fish",
+        "カレイ",
+        "鰈"
+      ],
+      "familyId": "flounder",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2016-12",
+          "name": "かれい",
+          "specName": "かれい"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "e2fd175a7b7ca3c4ef4b18bb9e4f84a5e63e36d332b5d54a859d30b8a1eac870",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2006-12",
+          "specificationHash": "101abb8a6e07a64dae95d2c2414e67b36e4c27944ea0afa57e20373894e4d7b1",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        },
+        {
+          "start": "2007-01",
+          "end": "2016-12",
+          "specificationHash": "248ce64af2ec330f23f26c26e3f83251147960956be4c325b368eb08b4d51033",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200701.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1109",
+      "id": "salted-cod",
+      "en": "Lightly salted cod",
+      "ja": "たら（甘塩）",
+      "unit": "kg",
+      "aliases": [
+        "fish",
+        "タラ",
+        "鱈"
+      ],
+      "familyId": "salted-cod",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "た　ら",
+          "specName": "たら"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "b95da2ff4ac6f48b9fe2b6e26eae9e810af33cf00d86754fedd9c34fae76ace7",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1121",
+      "id": "hamadai",
+      "en": "Hamadai / flame snapper",
+      "ja": "はまだい",
+      "unit": "kg",
+      "aliases": [
+        "fish",
+        "アカマチ"
+      ],
+      "familyId": "hamadai",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2007-07",
+          "end": "2011-12",
+          "name": "はまだい",
+          "specName": "はまだい"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2007-07",
+          "end": "2011-12",
+          "specificationHash": "8600396287ec96de6ac9b3294c6490d29b4ab0b02036e30f99ebcbfa1ce3792d",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200707.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1122",
+      "id": "takasago",
+      "en": "Takasago / fusilier",
+      "ja": "たかさご",
+      "unit": "kg",
+      "aliases": [
+        "fish",
+        "グルクン"
+      ],
+      "familyId": "takasago",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2007-07",
+          "end": "2011-12",
+          "name": "たかさご",
+          "specName": "たかさご"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2007-07",
+          "end": "2011-12",
+          "specificationHash": "75dc936d72090f34d9a18f6cba33dd0e2e55877d77f10e3176a8684f89b8ee37",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200707.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1145",
+      "id": "whole-dried-sardines",
+      "en": "Whole dried sardines",
+      "ja": "丸干しいわし",
+      "unit": "kg",
+      "aliases": [
+        "fish",
+        "鰯",
+        "イワシ"
+      ],
+      "familyId": "whole-dried-sardines",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "name": "丸干し",
+          "specName": "丸干しいわし"
+        },
+        {
+          "start": "2010-01",
+          "end": "2011-12",
+          "name": "丸干しいわし",
+          "specName": "丸干しいわし"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "1b8fd8abe3b41bed1324fe3f778a5dddbae08b6cd6c83cfe106e8611beb55034",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2007-06",
+          "specificationHash": "2c58f548c49faa903e9237fbcb7652f78e802fa9ce11952dcf8d0941475b3266",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        },
+        {
+          "start": "2007-07",
+          "end": "2011-12",
+          "specificationHash": "107b6ae554252965b750262a1518fdfd207116b4c50139215d17e16298aede7d",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200707.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1162",
+      "id": "smoked-squid",
+      "en": "Smoked squid",
+      "ja": "いかくん製",
+      "unit": "kg",
+      "aliases": [
+        "fish",
+        "イカ",
+        "燻製"
+      ],
+      "familyId": "smoked-squid",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "いかくん製",
+          "specName": "いかくん製"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "054ca36722d4654bcfb79878a6e48f8db9b1e8bcfe52bd687542cadb62a757a7",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1163",
+      "id": "squid-shiokara",
+      "en": "Squid shiokara",
+      "ja": "いかの塩辛",
+      "unit": "kg",
+      "aliases": [
+        "fish",
+        "しおから",
+        "塩辛"
+      ],
+      "familyId": "squid-shiokara",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "name": "塩   辛",
+          "specName": "塩辛"
+        },
+        {
+          "start": "2010-01",
+          "end": "2021-12",
+          "name": "塩辛",
+          "specName": "塩辛"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "f68368b29481d4436653329576685b04711e1ca30643f3f64566c954bdee131b",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2021-12",
+          "specificationHash": "e2903b277ad4c0f32807d820033e778cc87f069dd48edd929c8f5e01d7b87076",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1171",
+      "id": "canned-salmon",
+      "en": "Canned salmon",
+      "ja": "さけ缶詰",
+      "unit": "kg",
+      "aliases": [
+        "fish",
+        "canned",
+        "鮭"
+      ],
+      "familyId": "canned-salmon",
+      "quoteQuantity": "0.18",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "さけ缶詰",
+          "specName": "さけ缶詰"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "ed7ffd6f0afe3de248dd7e7c0e1cc62b27d5d13703f717240949b2da64fb1f9b",
+          "quoteQuantity": "0.18",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "180 g",
+            "ja": "180 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･180g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1202",
+      "id": "beef-shoulder",
+      "en": "Beef shoulder",
+      "ja": "牛肉（肩）",
+      "unit": "kg",
+      "aliases": [
+        "meat",
+        "ぎゅうにく",
+        "ビーフ"
+      ],
+      "familyId": "beef-shoulder",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2006-12",
+          "name": "牛   肉",
+          "specName": "牛肉"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2006-12",
+          "specificationHash": "884f7c49af91c75879ccad7e1da008399c2212c9fb5b5509da4acd25b5aa15a2",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1212",
+      "id": "pork-thigh",
+      "en": "Pork thigh",
+      "ja": "豚肉（もも）",
+      "unit": "kg",
+      "aliases": [
+        "meat",
+        "ぶたにく",
+        "ポーク"
+      ],
+      "familyId": "pork-thigh",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "name": "豚   肉",
+          "specName": "豚肉"
+        },
+        {
+          "start": "2010-01",
+          "end": "2015-04",
+          "name": "豚肉(もも肉)",
+          "specName": "豚肉"
+        },
+        {
+          "start": "2015-05",
+          "end": "2021-12",
+          "name": "豚肉(もも)",
+          "specName": "豚肉"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2006-12",
+          "specificationHash": "8b9fd20132aba4db395f766d90f9d7c98e3c1dcecbd7482c483e5d9a659eca92",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2007-01",
+          "end": "2013-03",
+          "specificationHash": "1262e0cc5b919b74b76c9cc43e6dd5eeeac478f09056af8ecab88ffec8c622b4",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200701.xls"
+          ]
+        },
+        {
+          "start": "2013-04",
+          "end": "2014-12",
+          "specificationHash": "874f6e53ab7c121823bbca1d3c5a4be6d9de9c54fc1db64ade7e1cd239d3141a",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201304.xls"
+          ]
+        },
+        {
+          "start": "2015-01",
+          "end": "2021-12",
+          "specificationHash": "59f527e3ea6c3b6e979ab90d29a8d6e318a60276ae407e7ba6a249c5131fc98c",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1231",
+      "id": "lamb",
+      "en": "Lamb",
+      "ja": "羊肉（ラム）",
+      "unit": "kg",
+      "aliases": [
+        "meat",
+        "lamb",
+        "ラム肉"
+      ],
+      "familyId": "lamb",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2000-08",
+          "name": "羊        肉（輸 入 品）",
+          "specName": "羊肉"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2000-08",
+          "specificationHash": "63db8fc6e8a83b813e43a54d2a6f3441a08caeaf7773fb740efd35ac65d15ce5",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "100g"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1241",
+      "id": "pork-liver",
+      "en": "Pork liver",
+      "ja": "豚レバー",
+      "unit": "kg",
+      "aliases": [
+        "meat",
+        "liver",
+        "レバー"
+      ],
+      "familyId": "pork-liver",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2016-12",
+          "name": "レバー",
+          "specName": "レバー"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2016-12",
+          "specificationHash": "3b31710a08ab958685cd6a71da2520035a01f08f6c4c6f407097d8eb6c41cf4b",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1251",
+      "id": "pressed-ham",
+      "en": "Pressed ham",
+      "ja": "プレスハム",
+      "unit": "kg",
+      "aliases": [
+        "meat",
+        "ham",
+        "ハム"
+      ],
+      "familyId": "pressed-ham",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "ハ   ム",
+          "specName": "ハム"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "cec30ea9b75336e180b04293c30a1ad4910bca807aa8174d35ecfc38869966db",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1291",
+      "id": "canned-pork",
+      "en": "Canned pork",
+      "ja": "ポーク缶詰",
+      "unit": "kg",
+      "aliases": [
+        "meat",
+        "canned",
+        "スパム"
+      ],
+      "familyId": "canned-pork",
+      "quoteQuantity": "0.34",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2007-07",
+          "end": "2021-12",
+          "name": "ポーク缶詰",
+          "specName": "ポーク缶詰"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2007-07",
+          "end": "2011-12",
+          "specificationHash": "60522a72585e995313019b518ea3d18a41a04aa15419504af665f95dd85a0a28",
+          "quoteQuantity": "0.34",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "340 g",
+            "ja": "340 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･340g)",
+            "(1缶)",
+            "(1缶・340g)",
+            "1缶･340g"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200707.xls"
+          ]
+        },
+        {
+          "start": "2012-01",
+          "end": "2021-12",
+          "specificationHash": "4673f43b3e5bb4adfd15a02afb2a7dfafa377fff860234720221214f35e316cc",
+          "quoteQuantity": "0.34",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "340 g",
+            "ja": "340 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1缶･340g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201201.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1301",
+      "id": "delivered-milk",
+      "en": "Delivered bottled milk",
+      "ja": "牛乳（配達）",
+      "unit": "L",
+      "aliases": [
+        "dairy",
+        "milk",
+        "ミルク"
+      ],
+      "familyId": "delivered-milk",
+      "quoteQuantity": "0.18",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "name": "牛   乳",
+          "specName": "牛乳"
+        },
+        {
+          "start": "2010-01",
+          "end": "2021-12",
+          "name": "牛乳(配達, 瓶入り)",
+          "specName": "牛乳"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2002-06",
+          "specificationHash": "2e80fb14af908f19f72e0b5d2e5b7d96f5caed01292e49c229eef5025c1a13ee",
+          "quoteQuantity": "0.2",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "200 mL",
+            "ja": "200 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･200ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2002-07",
+          "end": "2004-12",
+          "specificationHash": "d128cdc67c98e62da0119024c8cce0326c8bda642a9e127f1cfe886e08f8a9de",
+          "quoteQuantity": "0.2",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "200 mL",
+            "ja": "200 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･200mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2009-02",
+          "specificationHash": "b434d5ba9761c13309c53eb7b9a515203353aa09a45b335303f258d03ccdc768",
+          "quoteQuantity": "0.2",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "200 mL",
+            "ja": "200 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･200mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        },
+        {
+          "start": "2009-03",
+          "end": "2021-12",
+          "specificationHash": "be463f69a601093ab7ab27fdaf2e056bfbe45d1421243900179942976c835c6f",
+          "quoteQuantity": "0.18",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "180 mL",
+            "ja": "180 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･180mL)",
+            "1本･180mL"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200903.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1418",
+      "id": "turnips",
+      "en": "Turnips",
+      "ja": "かぶ",
+      "unit": "kg",
+      "aliases": [
+        "vegetable",
+        "蕪",
+        "カブ"
+      ],
+      "familyId": "turnips",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "か   ぶ",
+          "specName": "かぶ"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "2f81ef57c9b503c848bebddda563377eec2c853daec70e1568307793f8c42f1c",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1431",
+      "id": "snow-peas",
+      "en": "Snow peas",
+      "ja": "さやえんどう",
+      "unit": "kg",
+      "aliases": [
+        "vegetable",
+        "絹さや",
+        "エンドウ"
+      ],
+      "familyId": "snow-peas",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "さ   や",
+          "specName": "さやえんどう"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "aea59f57ba4ac5ec999a38ae0b8fdc580118cb6a9997c54362974522c50c02c3",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1439",
+      "id": "bitter-melon-regional",
+      "en": "Bitter melon, regional series",
+      "ja": "にがうり（地域品目）",
+      "unit": "kg",
+      "aliases": [
+        "vegetable",
+        "goya",
+        "ゴーヤ",
+        "苦瓜"
+      ],
+      "familyId": "bitter-melon-regional",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2007-07",
+          "end": "2014-12",
+          "name": "にがうり",
+          "specName": "にがうり"
+        },
+        {
+          "start": "2015-01",
+          "end": "2016-12",
+          "name": "にがうり(沖縄)",
+          "specName": "にがうり"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2007-07",
+          "end": "2016-12",
+          "specificationHash": "c7bc6a6607fab3f172e087468e0edc47773a25c3b2ef64fd688efc74e85d15e4",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200707.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1440",
+      "id": "winter-melon",
+      "en": "Winter melon",
+      "ja": "とうが",
+      "unit": "kg",
+      "aliases": [
+        "vegetable",
+        "冬瓜",
+        "とうがん"
+      ],
+      "familyId": "winter-melon",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2007-07",
+          "end": "2021-12",
+          "name": "とうが",
+          "specName": "とうが"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2007-07",
+          "end": "2021-12",
+          "specificationHash": "daec399a861a8ce9803f8ec7e9487ffa2823d478b79d6d710d860d6e55da5c9f",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200707.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1441",
+      "id": "bitter-melon",
+      "en": "Bitter melon",
+      "ja": "にがうり",
+      "unit": "kg",
+      "aliases": [
+        "vegetable",
+        "goya",
+        "ゴーヤ",
+        "苦瓜"
+      ],
+      "familyId": "bitter-melon",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2015-01",
+          "end": "2021-12",
+          "name": "にがうり",
+          "specName": "にがうり"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2015-01",
+          "end": "2021-12",
+          "specificationHash": "74eb0066a2a5ab6a112b57c3e88f4936a3d09c5bb7f1729224a42fb5a9393e9a",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "sourceUnits": [
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1451",
+      "id": "adzuki-beans",
+      "en": "Adzuki beans",
+      "ja": "あずき",
+      "unit": "kg",
+      "aliases": [
+        "beans",
+        "小豆",
+        "アズキ"
+      ],
+      "familyId": "adzuki-beans",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2016-12",
+          "name": "あずき",
+          "specName": "あずき"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2007-12",
+          "specificationHash": "81b5d10e24973dca1c1549b0adef5ed027c18c4bba96350bcab71b25f33a18a7",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2008-01",
+          "end": "2016-12",
+          "specificationHash": "a9cf83f9b32da943708a8e73b6fe7b02f5993095ca582a2c01d150af790b7587",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200801.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1452",
+      "id": "soybeans",
+      "en": "Soybeans",
+      "ja": "だいず",
+      "unit": "kg",
+      "aliases": [
+        "beans",
+        "大豆",
+        "ダイズ"
+      ],
+      "familyId": "soybeans",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "だいず",
+          "specName": "だいず"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "6f0428a175291d02877d21060d882192e702ac12c296825f2245308ec6135bd5",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1484",
+      "id": "fukujinzuke",
+      "en": "Fukujinzuke pickles",
+      "ja": "福神漬",
+      "unit": "kg",
+      "aliases": [
+        "pickle",
+        "ふくじんづけ"
+      ],
+      "familyId": "fukujinzuke",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2011-12",
+          "name": "福神漬",
+          "specName": "福神漬"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "11ca9b3016e53fffcc6944dbf45fdad4200c23590dadad5c7cd98ce34e70e327",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2011-12",
+          "specificationHash": "c2e74c2441807ddf20fc9f2c521eb00a2d149898f23083d7bcc1e46fdce36f73",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1501",
+      "id": "tsugaru-apples",
+      "en": "Tsugaru apples",
+      "ja": "りんご（つがる）",
+      "unit": "kg",
+      "aliases": [
+        "fruit",
+        "apple",
+        "リンゴ"
+      ],
+      "familyId": "tsugaru-apples",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "name": "りんご",
+          "specName": "りんご"
+        },
+        {
+          "start": "2010-01",
+          "end": "2021-12",
+          "name": "りんご(つがる)",
+          "specName": "りんご"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-06",
+          "specificationHash": "91e99924f97a8904c3fffee36cfbb388c991f42b4daa6892f51666fb56ca5f7f",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2001-07",
+          "end": "2004-12",
+          "specificationHash": "04ebc90aa4fea6be54c14daaf04b2aa5166c74ec5e9b2b600b17ae33a5fdd755",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200107.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2006-12",
+          "specificationHash": "66427f0463701498ffda85f8a08794eb8f81a2c9d74830e29a8456f49762f6f0",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        },
+        {
+          "start": "2007-01",
+          "end": "2021-12",
+          "specificationHash": "fbc08242eab5eef49fe9e0850bc4e45b578a7c7b5f851628284c81d7ee08812d",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            8,
+            9,
+            10
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200701.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1512",
+      "id": "natsu-citrus",
+      "en": "Natsu citrus",
+      "ja": "なつみかん",
+      "unit": "kg",
+      "aliases": [
+        "fruit",
+        "citrus",
+        "夏みかん"
+      ],
+      "familyId": "natsu-citrus",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "なつみかん",
+          "specName": "なつみかん"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "add9b765a2f02ba874f687e1a04054321d2bcca54622a3cc20d2964b92d996e4",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1513",
+      "id": "lemons",
+      "en": "Lemons",
+      "ja": "レモン",
+      "unit": "kg",
+      "aliases": [
+        "fruit",
+        "citrus",
+        "れもん"
+      ],
+      "familyId": "lemons",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2016-12",
+          "name": "レモン",
+          "specName": "レモン"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2000-12",
+          "specificationHash": "85a8ff50b15e560118afc09ca37dd2cd4839513378f6e5f3bf359749e9730761",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2001-01",
+          "end": "2008-10",
+          "specificationHash": "672e6fcd474cb1abd6727d2bd004352f177add2fd03c5cd3c536bbc291ca6e8c",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200101.xls"
+          ]
+        },
+        {
+          "start": "2008-11",
+          "end": "2016-12",
+          "specificationHash": "a77271c923ab82073835e767cda6b388355954b800e818c2020f06f507ac6d0b",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200811.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1514",
+      "id": "grapefruit",
+      "en": "Grapefruit",
+      "ja": "グレープフルーツ",
+      "unit": "kg",
+      "aliases": [
+        "fruit",
+        "citrus",
+        "ぐれーぷふるーつ"
+      ],
+      "familyId": "grapefruit",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "name": "グレープ",
+          "specName": "グレープフルーツ"
+        },
+        {
+          "start": "2010-01",
+          "end": "2021-12",
+          "name": "グレープフルーツ",
+          "specName": "グレープフルーツ"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2005-06",
+          "specificationHash": "39ef2d90feac130048ec1ef973fc2ea5ca5a2201da1cd95b3d473aff385cb3c3",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-07",
+          "end": "2021-12",
+          "specificationHash": "ebb39cc5a693c892df279bbc4b8831a1cbd2d99590e1f9a5850fba1c2cd7bcbb",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200507.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1516",
+      "id": "iyokan",
+      "en": "Iyokan citrus",
+      "ja": "いよかん",
+      "unit": "kg",
+      "aliases": [
+        "fruit",
+        "citrus",
+        "伊予柑"
+      ],
+      "familyId": "iyokan",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2016-12",
+          "name": "いよかん",
+          "specName": "いよかん"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2016-12",
+          "specificationHash": "e6a31d21f2d2480a8f80328e8fcbafd1d731501ec88d646763d15a351615081c",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3
+          ],
+          "sourceUnits": [
+            "(1kg)",
+            "1kg"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1562",
+      "id": "prince-melon",
+      "en": "Prince melon",
+      "ja": "メロン（プリンスメロン）",
+      "unit": "kg",
+      "aliases": [
+        "fruit",
+        "melon",
+        "めろん"
+      ],
+      "familyId": "prince-melon",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "メロン",
+          "specName": "メロン"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "512d366b07921686dc630dc27007f7f58a5b52d79dceca3ac171a1c5687652f4",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            4,
+            5,
+            6,
+            7
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1591",
+      "id": "canned-mandarin",
+      "en": "Canned mandarin oranges",
+      "ja": "みかん缶詰",
+      "unit": "kg",
+      "aliases": [
+        "fruit",
+        "canned",
+        "ミカン"
+      ],
+      "familyId": "canned-mandarin",
+      "quoteQuantity": "0.425",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2015-12",
+          "name": "みかん缶詰",
+          "specName": "みかん缶詰"
+        },
+        {
+          "start": "2016-01",
+          "end": "2021-12",
+          "name": "果物缶詰",
+          "specName": "果物缶詰"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2000-12",
+          "specificationHash": "649c5d503463acde1019dfc5c6fe8187a1e3cc6582a5cc6c7b4d00a7a85851d2",
+          "quoteQuantity": "0.435",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "435 g",
+            "ja": "435 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･435g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2001-01",
+          "end": "2003-06",
+          "specificationHash": "05022956f5a1647720c1f16ea5b383c09477167884e2e5f6414add82f521b052",
+          "quoteQuantity": "0.425",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "425 g",
+            "ja": "425 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･425g)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200101.xls"
+          ]
+        },
+        {
+          "start": "2003-07",
+          "end": "2004-12",
+          "specificationHash": "2a82814005c3157848608a21d26d241451afb281def425f4740dd4acec953f56",
+          "quoteQuantity": "0.425",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "425 g",
+            "ja": "425 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･425g)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200307.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2011-06",
+          "specificationHash": "9166589ada9108bca1922c699e4410d84ee5e8ee5b5c443a33eb51b162e24fa3",
+          "quoteQuantity": "0.425",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "425 g",
+            "ja": "425 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･425g)",
+            "(1缶)",
+            "(1缶・425g)",
+            "1缶･425g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        },
+        {
+          "start": "2011-07",
+          "end": "2013-06",
+          "specificationHash": "539477e5e025f723e0064e524ab7fe5675d321c94a780a1fdc8b1025a13165f2",
+          "quoteQuantity": "0.425",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "425 g",
+            "ja": "425 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1缶･425g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201107.xls"
+          ]
+        },
+        {
+          "start": "2013-07",
+          "end": "2015-12",
+          "specificationHash": "8af1f8ad362d2d62fe06a7b14d15ebcd3f84c1f20c4e38a3ba64716cff66dba2",
+          "quoteQuantity": "0.425",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "425 g",
+            "ja": "425 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1缶･425g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201307.xls"
+          ]
+        },
+        {
+          "start": "2016-01",
+          "end": "2021-12",
+          "specificationHash": "e7fd198871c22ec735085deef351c3d7821c6aed12dbd421ae8fd439eb642707",
+          "quoteQuantity": "0.425",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "425 g",
+            "ja": "425 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1缶･425g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201601.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1592",
+      "id": "canned-pineapple-pack",
+      "en": "Canned pineapple, surveyed can",
+      "ja": "パイナップル缶詰（調査対象の缶）",
+      "unit": "package",
+      "aliases": [
+        "fruit",
+        "canned",
+        "pineapple",
+        "パイン"
+      ],
+      "familyId": "canned-pineapple-pack",
+      "quoteQuantity": "1",
+      "presets": [
+        "1",
+        "2",
+        "3"
+      ],
+      "comparisonNote": {
+        "en": "Compared per surveyed package. Permitted contents vary and no exact weight conversion is established; changes can include package size.",
+        "ja": "調査対象の１包装当たりで比較します。内容量には幅があり、正確な重量換算はできません。価格の変化には包装の内容量の変化も含まれます。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2000-08",
+          "name": "パ イ ナ ッ プ ル 缶 詰",
+          "specName": "パイナップル缶詰"
+        },
+        {
+          "start": "2000-09",
+          "end": "2001-12",
+          "name": "パイナップル",
+          "specName": "パイナップル缶詰"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "d506b1806990f9746625285375ba337a09bdc3e6fc1fc29db57af499e9025c51",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 surveyed package",
+            "ja": "調査対象の１包装"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1缶･565,567g",
+            "(1缶･can)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1593",
+      "id": "canned-peaches",
+      "en": "Canned peaches, surveyed can",
+      "ja": "もも缶詰（調査対象の缶）",
+      "unit": "package",
+      "aliases": [
+        "fruit",
+        "canned",
+        "桃"
+      ],
+      "familyId": "canned-peaches",
+      "quoteQuantity": "1",
+      "presets": [
+        "1",
+        "2",
+        "3"
+      ],
+      "comparisonNote": {
+        "en": "Compared per surveyed package. Permitted contents vary and no exact weight conversion is established; changes can include package size.",
+        "ja": "調査対象の１包装当たりで比較します。内容量には幅があり、正確な重量換算はできません。価格の変化には包装の内容量の変化も含まれます。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2006-12",
+          "name": "もも缶詰",
+          "specName": "もも缶詰"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "61055e764c059b5976cc1bc40131f31c5bb17d3075335532113aa5af11afa6d1",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 surveyed package",
+            "ja": "調査対象の１包装"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･410～425g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2006-12",
+          "specificationHash": "3c932745155d38143fb62e87c89e62c0ef204e24f3c38b871206c17269d82327",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 surveyed package",
+            "ja": "調査対象の１包装"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･410～425g)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1651",
+      "id": "umami-seasoning",
+      "en": "Umami seasoning / MSG",
+      "ja": "うま味調味料",
+      "unit": "kg",
+      "aliases": [
+        "seasoning",
+        "味の素"
+      ],
+      "familyId": "umami-seasoning",
+      "quoteQuantity": "0.12",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "うま味",
+          "specName": "うま味調味料"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "d12ab19875a6d65f513557c0d6b94bb27de45ca24faa2a83b996813c45a9c2f1",
+          "quoteQuantity": "0.12",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "120 g",
+            "ja": "120 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1袋･120g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1731",
+      "id": "milk-caramel",
+      "en": "Milk caramel, per piece",
+      "ja": "ミルクキャラメル（１粒）",
+      "unit": "count",
+      "aliases": [
+        "sweets",
+        "candy",
+        "キャラメル"
+      ],
+      "familyId": "milk-caramel",
+      "quoteQuantity": "12",
+      "presets": [
+        "1",
+        "5",
+        "10"
+      ],
+      "comparisonNote": {
+        "en": "Compared per surveyed item or portion. Its size can change over time; this count comparison does not assert a constant weight.",
+        "ja": "調査対象の１個・１食分当たりで比較します。大きさは時期により変わります。個数での比較であり、重量が一定であるとは限りません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2000-08",
+          "name": "キ   ャ   ラ   メ   ル",
+          "specName": "キャラメル"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2000-08",
+          "specificationHash": "a81457cfb2f2366785bb8b323bc3dd8e577b53743913d3dffa71e2018769d8bb",
+          "quoteQuantity": "12",
+          "quoteUnit": "count",
+          "quoteLabel": {
+            "en": "12 item(s)",
+            "ja": "12 個"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1箱･12pieces"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1742",
+      "id": "kawara-senbei",
+      "en": "Kawara senbei, wheat crackers",
+      "ja": "かわらせんべい",
+      "unit": "kg",
+      "aliases": [
+        "sweets",
+        "crackers",
+        "瓦煎餅"
+      ],
+      "familyId": "kawara-senbei",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "name": "かわら",
+          "specName": "かわらせんべい"
+        },
+        {
+          "start": "2010-01",
+          "end": "2011-12",
+          "name": "かわらせんべい",
+          "specName": "かわらせんべい"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "24589501eb1322200cd95c916c9d8fc72f702119038d452c880258bd529daacc",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2011-12",
+          "specificationHash": "f1a7f14122c76dcf65fc495c81a087cc57c30e0a1d1692e8408b15926f2d6d5a",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)",
+            "100g"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1762",
+      "id": "imported-milk-chocolate",
+      "en": "Imported milk chocolate",
+      "ja": "チョコレート（輸入品）",
+      "unit": "kg",
+      "aliases": [
+        "sweets",
+        "chocolate",
+        "チョコ"
+      ],
+      "familyId": "imported-milk-chocolate",
+      "quoteQuantity": "0.05",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2000-08",
+          "name": "チョコレート（輸 入 品）",
+          "specName": "チョコレート(輸入品)"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2000-08",
+          "specificationHash": "728231976854d5871b78e924e247df6df985217c7e0a9da433402a5602dc9572",
+          "quoteQuantity": "0.05",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "50 g",
+            "ja": "50 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1袋･50g"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1841",
+      "id": "fried-horse-mackerel",
+      "en": "Fried horse mackerel",
+      "ja": "あじフライ",
+      "unit": "kg",
+      "aliases": [
+        "prepared food",
+        "fish",
+        "アジフライ"
+      ],
+      "familyId": "fried-horse-mackerel",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "フライ",
+          "specName": "フライ"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "207d971c4c5fe30c67b2e4ae08c77d24fb109e6e10bacbe4b9c4322661bd039a",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1901",
+      "id": "bancha",
+      "en": "Bancha green tea",
+      "ja": "緑茶（番茶）",
+      "unit": "kg",
+      "aliases": [
+        "drink",
+        "tea",
+        "ばんちゃ"
+      ],
+      "familyId": "bancha",
+      "quoteQuantity": "0.1",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2006-12",
+          "name": "緑   茶",
+          "specName": "緑茶"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "2f732bb04f8ccca056cb492d7c32ef4ffa34f94706ea3ce2f4cb85ce427f63e4",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2006-12",
+          "specificationHash": "6ba36d728a49a473a31a4b4fc8631f501da4e662c696cd460cb769f96206ff5d",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "100 g",
+            "ja": "100 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100g)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1912",
+      "id": "imported-leaf-tea",
+      "en": "Imported loose-leaf black tea",
+      "ja": "紅茶（輸入リーフティー）",
+      "unit": "kg",
+      "aliases": [
+        "drink",
+        "tea",
+        "こうちゃ"
+      ],
+      "familyId": "imported-leaf-tea",
+      "quoteQuantity": "0.125",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "name": "紅　茶",
+          "specName": "紅茶"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "7655c9758948a6a2658d03dd78f1c8eca698cce59e8b7bef2e5488ece23a94ba",
+          "quoteQuantity": "0.125",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "125 g",
+            "ja": "125 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･125g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1914",
+      "id": "canned-oolong-by-weight",
+      "en": "Canned oolong tea by weight",
+      "ja": "ウーロン茶缶飲料（重量）",
+      "unit": "kg",
+      "aliases": [
+        "drink",
+        "tea",
+        "烏龍茶"
+      ],
+      "familyId": "oolong-drink",
+      "quoteQuantity": "0.34",
+      "presets": [
+        "0.1",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2000-12",
+          "name": "ウーロン茶",
+          "specName": "ウーロン茶"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2000-12",
+          "specificationHash": "924ed69d2241e242929afa961c69e4caf39954edeffa3bee97eb576e30a603b4",
+          "quoteQuantity": "0.34",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "340 g",
+            "ja": "340 g"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･340g)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1914",
+      "id": "oolong-drink",
+      "en": "Oolong tea drink",
+      "ja": "ウーロン茶飲料",
+      "unit": "L",
+      "aliases": [
+        "drink",
+        "tea",
+        "烏龍茶"
+      ],
+      "familyId": "oolong-drink",
+      "quoteQuantity": "2",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2001-01",
+          "end": "2004-12",
+          "name": "ウーロン茶",
+          "specName": "ウーロン茶"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2001-01",
+          "end": "2004-12",
+          "specificationHash": "a86e5a3354f25b79cb97b707ed8b17ab90c3fe7478b2494518461ecf7f06a219",
+          "quoteQuantity": "2",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "2 L",
+            "ja": "2 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･2,000mL）"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200101.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1961",
+      "id": "clear-soda",
+      "en": "Clear soda",
+      "ja": "サイダー",
+      "unit": "L",
+      "aliases": [
+        "drink",
+        "soda",
+        "炭酸飲料"
+      ],
+      "familyId": "clear-soda",
+      "quoteQuantity": "0.35",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "name": "サイダー",
+          "specName": "サイダー"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2001-12",
+          "specificationHash": "794b51f9260d7689e317978223ea1e3774438e59c99499dff5b44aeae52e96f9",
+          "quoteQuantity": "0.35",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "350 mL",
+            "ja": "350 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･350ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1971",
+      "id": "lactic-drink-concentrate",
+      "en": "Lactic acid drink concentrate",
+      "ja": "乳酸菌飲料（希釈用）",
+      "unit": "L",
+      "aliases": [
+        "drink",
+        "カルピス"
+      ],
+      "familyId": "lactic-drink-concentrate",
+      "quoteQuantity": "1",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2009-12",
+          "name": "乳酸菌飲料",
+          "specName": "乳酸菌飲料"
+        },
+        {
+          "start": "2010-01",
+          "end": "2015-12",
+          "name": "乳酸菌飲料(カルピス)",
+          "specName": "乳酸菌飲料"
+        },
+        {
+          "start": "2016-01",
+          "end": "2016-12",
+          "name": "乳酸菌飲料(配達を除く。)",
+          "specName": "乳酸菌飲料（配達を除く。）"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "f0400989c716bae0e8c29f27e16ce51b00c4ec090379a4fa081ef56ede4c4054",
+          "quoteQuantity": "0.5",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "500 mL",
+            "ja": "500 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･500ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2008-06",
+          "specificationHash": "017d7912bca324ab0f61c9deb4b5dfc19ca752bd818536b94068feea32e101b3",
+          "quoteQuantity": "0.5",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "500 mL",
+            "ja": "500 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･500mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        },
+        {
+          "start": "2008-07",
+          "end": "2012-03",
+          "specificationHash": "4ae3fbdca6b868340a823792be3e71316332eca3c1d5c6ab7ba212b76c14bf05",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "100 mL",
+            "ja": "100 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(100mL)",
+            "100mL"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200807.xls"
+          ]
+        },
+        {
+          "start": "2012-04",
+          "end": "2013-12",
+          "specificationHash": "d87d9bd06da769b1059b0adb50773381bd1e01d48ff3a5e231daace5626764d6",
+          "quoteQuantity": "0.1",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "100 mL",
+            "ja": "100 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "100mL"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201204.xls"
+          ]
+        },
+        {
+          "start": "2014-01",
+          "end": "2015-12",
+          "specificationHash": "a6ae38d66b900b970b886dbb04bea4143477fba42a0f503dbfa8fbdae1f68ea6",
+          "quoteQuantity": "1",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1 L",
+            "ja": "1 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1000mL",
+            "1,000mL"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201401.xls"
+          ]
+        },
+        {
+          "start": "2016-01",
+          "end": "2016-12",
+          "specificationHash": "be6cddf6c8862db11f88ac99e3bdca241e67b585bc9c11438c55f0256b3991ff",
+          "quoteQuantity": "1",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1 L",
+            "ja": "1 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1,000mL"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201601.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1972",
+      "id": "delivered-fermented-milk-city",
+      "en": "Delivered fermented milk, historical city series",
+      "ja": "乳酸菌飲料（配達・過去の市別）",
+      "unit": "L",
+      "aliases": [
+        "drink",
+        "dairy",
+        "ヤクルト"
+      ],
+      "familyId": "delivered-fermented-milk-city",
+      "quoteQuantity": "0.08",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2000-08",
+          "name": "乳 酸 菌 飲 料（ヤクルト）",
+          "specName": "乳酸菌飲料"
+        },
+        {
+          "start": "2000-09",
+          "end": "2009-12",
+          "name": "乳酸菌飲料",
+          "specName": "乳酸菌飲料"
+        },
+        {
+          "start": "2010-01",
+          "end": "2014-12",
+          "name": "乳酸菌飲料(ヤクルト)",
+          "specName": "乳酸菌飲料"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "1997084d4a6be911792935941442d68c3d4c28e5eb7484e09295c5ef3acf3bca",
+          "quoteQuantity": "0.065",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "65 mL",
+            "ja": "65 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本･65ml",
+            "（1本･bottle)",
+            "(1本･bottle)",
+            "(1本･ bottle)　",
+            "(1本･65ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2006-12",
+          "specificationHash": "5e9244d8607d49d92b870b0cb6cdcc02c81d0681af85fdce55d5c5cd2f2734ae",
+          "quoteQuantity": "0.065",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "65 mL",
+            "ja": "65 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･65mL)",
+            "(1本･65ml)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        },
+        {
+          "start": "2007-01",
+          "end": "2010-10",
+          "specificationHash": "65b13583407a2bc41f5fd814a6fc8f6b00c15b509a73a9f99e3ff3cb517ab710",
+          "quoteQuantity": "0.08",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "80 mL",
+            "ja": "80 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･80mL)",
+            "(1本)",
+            "(1本・80mL)",
+            "1本･80mL"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200701.xls"
+          ]
+        },
+        {
+          "start": "2010-11",
+          "end": "2014-12",
+          "specificationHash": "38ae8291a6201f07b8911490d6f9ebd774db2975e0f810a9bbee6b4861ef8264",
+          "quoteQuantity": "0.08",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "80 mL",
+            "ja": "80 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1本･80mL"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201011.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2001",
+      "id": "premium-sake",
+      "en": "Premium sake",
+      "ja": "清酒（特撰）",
+      "unit": "L",
+      "aliases": [
+        "alcohol",
+        "日本酒",
+        "さけ"
+      ],
+      "familyId": "premium-sake",
+      "quoteQuantity": "1.8",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2003-06",
+          "name": "清酒Ａ",
+          "specName": "清酒"
+        },
+        {
+          "start": "2003-07",
+          "end": "2006-12",
+          "name": "清酒",
+          "specName": "清酒"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2003-06",
+          "specificationHash": "6400c1482bbd4bd26b495c38d70fd1a968c971cdacb36c6e0452920048a04662",
+          "quoteQuantity": "1.8",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1.8 L",
+            "ja": "1.8 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･1800ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2003-07",
+          "end": "2004-12",
+          "specificationHash": "7026b424b3f8edd610dbcef261069d96ef16cc4753704fe04fbe91728bd2400b",
+          "quoteQuantity": "1.8",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1.8 L",
+            "ja": "1.8 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･1,800mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200307.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2006-12",
+          "specificationHash": "07946ad12f10479d1d43671a7881f6bf7bc04f7859075dc4831bd3d04bd1f006",
+          "quoteQuantity": "1.8",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1.8 L",
+            "ja": "1.8 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･1,800mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2002",
+      "id": "josen-sake",
+      "en": "Josen sake",
+      "ja": "清酒（上撰）",
+      "unit": "L",
+      "aliases": [
+        "alcohol",
+        "日本酒",
+        "さけ"
+      ],
+      "familyId": "josen-sake",
+      "quoteQuantity": "1.8",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2003-06",
+          "name": "清酒Ｂ",
+          "specName": "清酒"
+        },
+        {
+          "start": "2003-07",
+          "end": "2006-12",
+          "name": "清酒",
+          "specName": "清酒"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2003-06",
+          "specificationHash": "ed378f16077a21c60c5406fa1cb0040a5d50fa3685e3b5cebe3485fa4c338156",
+          "quoteQuantity": "1.8",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1.8 L",
+            "ja": "1.8 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･1800ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2003-07",
+          "end": "2004-12",
+          "specificationHash": "32d75ab2455aa59e4d6e65e1891a0285fd1aecd7054adc2a10ee1210c834e736",
+          "quoteQuantity": "1.8",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1.8 L",
+            "ja": "1.8 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･1,800mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200307.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2006-12",
+          "specificationHash": "96819825c86f98f29387a1d1c8b25303b20e6d1d8951155ccec55087ed20ce52",
+          "quoteQuantity": "1.8",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "1.8 L",
+            "ja": "1.8 L"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･1,800mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2025",
+      "id": "imported-beer",
+      "en": "Imported beer",
+      "ja": "ビール（輸入品）",
+      "unit": "L",
+      "aliases": [
+        "alcohol",
+        "beer",
+        "びーる"
+      ],
+      "familyId": "imported-beer",
+      "quoteQuantity": "0.35",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2006-12",
+          "name": "ビール",
+          "specName": "ビール"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "45c80fe5b48afa45ab8563275a9c37eb152f29945807fe50d5c34eee36375954",
+          "quoteQuantity": "0.35",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "350 mL",
+            "ja": "350 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･350ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2006-12",
+          "specificationHash": "d579a7a1802e95cf23f932c5d8e7d8a6a44f9e2366bb09789412fd83bb96909a",
+          "quoteQuantity": "0.35",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "350 mL",
+            "ja": "350 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1缶･350mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2031",
+      "id": "scotch-whisky",
+      "en": "Scotch whisky",
+      "ja": "ウイスキー（スコッチ）",
+      "unit": "L",
+      "aliases": [
+        "alcohol",
+        "whiskey",
+        "スコッチ"
+      ],
+      "familyId": "scotch-whisky",
+      "quoteQuantity": "0.7",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2006-12",
+          "name": "ウイスキー",
+          "specName": "ウイスキー"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "89de85903e8c7a56258c32616496c96f920e8d1b54f41a21db7847c80d0c1803",
+          "quoteQuantity": "0.7",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "700 mL",
+            "ja": "700 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･700ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2006-12",
+          "specificationHash": "a6b859b926ecabf7a03c7437332d826e3379e00d167d71b8574c655a1d09d042",
+          "quoteQuantity": "0.7",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "700 mL",
+            "ja": "700 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･700mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2032",
+      "id": "reserve-whisky",
+      "en": "Japanese reserve whisky",
+      "ja": "ウイスキー（リザーブ）",
+      "unit": "L",
+      "aliases": [
+        "alcohol",
+        "whiskey",
+        "リザーブ"
+      ],
+      "familyId": "reserve-whisky",
+      "quoteQuantity": "0.75",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2006-12",
+          "name": "ウイスキー",
+          "specName": "ウイスキー"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "4ddfb25740ba5f45227367a0dfda99c6eb49a251d966bc3d7f1ebff957913c25",
+          "quoteQuantity": "0.75",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "750 mL",
+            "ja": "750 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･750ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2006-12",
+          "specificationHash": "1fd5d23c298a2332ad307057860ea29219297b6380c6ee094ba0347df1caff53",
+          "quoteQuantity": "0.75",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "750 mL",
+            "ja": "750 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･750mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "2034",
+      "id": "red-whisky",
+      "en": "Japanese Red whisky",
+      "ja": "ウイスキー（レッド）",
+      "unit": "L",
+      "aliases": [
+        "alcohol",
+        "whiskey",
+        "レッド"
+      ],
+      "familyId": "red-whisky",
+      "quoteQuantity": "0.64",
+      "presets": [
+        "0.25",
+        "0.5",
+        "1"
+      ],
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2006-12",
+          "name": "ウイスキー",
+          "specName": "ウイスキー"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2004-12",
+          "specificationHash": "b40b73905902966ac0d98a9c2c400daa94a84fc820469f47b155b0efaafd6c26",
+          "quoteQuantity": "0.64",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "640 mL",
+            "ja": "640 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･640ml)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2006-12",
+          "specificationHash": "be6e34d16b8bdf2c8c15ff4cd779ce10474ca6bdb22364d6b562a5d33235f576",
+          "quoteQuantity": "0.64",
+          "quoteUnit": "L",
+          "quoteLabel": {
+            "en": "640 mL",
+            "ja": "640 mL"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1本･640mL)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        }
+      ]
+    }
+  ],
+  "existingProductUpdates": [],
+  "notAdmitted": {
+    "localSpecifications": "Unresolved Y or local unit definitions remain unpriced.",
+    "sourceAbsence": "No prices before a source row first appears.",
+    "unresolvedWeights": "No mean or midpoint inferred from permitted pack ranges."
+  },
+  "unreviewedSourcePeriods": [
+    {
+      "code": "1061",
+      "start": "2000-09",
+      "end": "2007-06",
+      "reason": "Unresolved local basic definition",
+      "requireMissingBasicDefinition": true
+    },
+    {
+      "code": "1121",
+      "start": "2000-09",
+      "end": "2007-06",
+      "reason": "Unresolved local basic definition",
+      "requireMissingBasicDefinition": true
+    },
+    {
+      "code": "1122",
+      "start": "2000-09",
+      "end": "2007-06",
+      "reason": "Unresolved local basic definition",
+      "requireMissingBasicDefinition": true
+    },
+    {
+      "code": "1291",
+      "start": "2000-09",
+      "end": "2007-06",
+      "reason": "Unresolved local basic definition",
+      "requireMissingBasicDefinition": true
+    },
+    {
+      "code": "1439",
+      "start": "2000-09",
+      "end": "2007-06",
+      "reason": "Unresolved local basic definition",
+      "requireMissingBasicDefinition": true
+    },
+    {
+      "code": "1440",
+      "start": "2000-09",
+      "end": "2007-06",
+      "reason": "Unresolved local basic definition",
+      "requireMissingBasicDefinition": true
+    }
+  ]
+}

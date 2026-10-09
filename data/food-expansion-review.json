@@ -7851,6 +7851,87 @@
     },
     {
       "code": "1781",
+      "id": "gum-stick-pack",
+      "en": "Chewing gum, nine-stick pack",
+      "ja": "板ガム（９枚入り）",
+      "unit": "package",
+      "aliases": [
+        "sweets",
+        "chewing gum",
+        "ガム",
+        "がむ"
+      ],
+      "familyId": "sugarless-gum",
+      "quoteQuantity": "1",
+      "presets": [
+        "1",
+        "2",
+        "3"
+      ],
+      "comparisonNote": {
+        "en": "Compared per surveyed package. Permitted contents vary and no exact weight conversion is established; changes can include package size.",
+        "ja": "調査対象の１包装当たりで比較します。内容量には幅があり、正確な重量換算はできません。価格の変化には包装の内容量の変化も含まれます。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      },
+      "sourceNameSegments": [
+        {
+          "start": "2000-01",
+          "end": "2000-08",
+          "name": "チ ュ ー イ ン  ガ  ム",
+          "specName": "チューインガム"
+        },
+        {
+          "start": "2000-09",
+          "end": "2002-06",
+          "name": "チューイン",
+          "specName": "チューインガム"
+        }
+      ],
+      "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2002-06",
+          "specificationHash": "5f5f278c2c4360b352ee7bea4af91f364e2504fc77b3b6a6d1054262ba9a815c",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 surveyed package",
+            "ja": "調査対象の１包装"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "1個･9sticks",
+            "(1個･piece)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "1781",
       "id": "sugarless-gum",
       "en": "Sugarless chewing gum",
       "ja": "シュガーレスガム",
@@ -7881,6 +7962,12 @@
       },
       "sourceNameSegments": [
         {
+          "start": "2002-07",
+          "end": "2009-12",
+          "name": "チューイン",
+          "specName": "チューインガム"
+        },
+        {
           "start": "2010-01",
           "end": "2026-08",
           "name": "チューインガム",
@@ -7889,7 +7976,76 @@
       ],
       "reviewedSpecifications": [
         {
-          "start": "2010-01",
+          "start": "2002-07",
+          "end": "2004-12",
+          "specificationHash": "20abbbb3ae6e73ad153b1d6f5bed3fa9637296784052f0b57be49a3465c36e31",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 surveyed package",
+            "ja": "調査対象の１包装"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1個･piece)",
+            "(1個･14tablets)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2008-05",
+          "specificationHash": "c817a83adf7db9133d48dfc0c910635098be741c26de210b02ff6c8b5bac7ff8",
+          "quoteQuantity": "1",
+          "quoteUnit": "package",
+          "quoteLabel": {
+            "en": "1 surveyed package",
+            "ja": "調査対象の１包装"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1個･14tablets)",
+            "(1個)",
+            "(1個・14粒)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls"
+          ]
+        },
+        {
+          "start": "2008-06",
           "end": "2011-02",
           "specificationHash": "862440ef6cb4dae186d7657189c25bf05e740e3a1f74206b07070ac70aaa0b07",
           "quoteQuantity": "1",
@@ -7913,12 +8069,14 @@
             12
           ],
           "sourceUnits": [
+            "(1個・14粒)",
+            "(1個･14粒)",
             "1個･14粒"
           ],
-          "continuityFromPrevious": false,
-          "continuityReason": "First observed reviewed period for this food form.",
+          "continuityFromPrevious": true,
+          "continuityReason": "Owner-authorized comparison of the same generic food across dated brand, grade, packaging, size-selection and wording changes. Native prices and definitions are preserved; exact dated quantities are normalized. This nominal basket series is not a quality-adjusted official inflation index.",
           "continuityEvidence": [
-            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201001.xls"
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200806.xls"
           ]
         },
         {
@@ -10779,16 +10937,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -10958,16 +11116,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -11220,16 +11378,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -11323,16 +11481,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -11387,16 +11545,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -11489,16 +11647,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -11553,16 +11711,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -11652,16 +11810,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -11752,16 +11910,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -11818,16 +11976,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -11883,16 +12041,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -12054,16 +12212,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -12154,16 +12312,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -12219,16 +12377,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -12326,16 +12484,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -12436,16 +12594,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -12506,16 +12664,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     },
     {
@@ -12602,16 +12760,16 @@
           ]
         }
       ],
-      "comparisonNote": {
-        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
-        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
-      },
       "missingPriceEstimate": {
         "maxMonths": 2,
         "tokens": [
           "-"
         ],
         "allowEquivalentSegments": true
+      },
+      "comparisonNote": {
+        "en": "Survey brands, grades or definitions can change over time. Quantities are normalized where exact; this is a generic food-price comparison, not a quality-adjusted inflation index.",
+        "ja": "調査対象の銘柄・等級・定義は時期により変わります。正確に換算できる数量は統一しています。一般的な食品の価格比較であり、品質調整済みの物価指数ではありません。"
       }
     }
   ],

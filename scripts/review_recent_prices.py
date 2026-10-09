@@ -76,11 +76,12 @@ def validate_reviewed_specification(mapping, row, spec, month):
         raise ValueError(f"Unreviewed seasonal schedule {mapping['id']}, {month}")
     conversion = approval.get("quantityConversion")
     if conversion is not None:
-        # The owner explicitly approved this one historical approximation.
-        # It must not become a general permission to infer mass/count ratios.
+        # Each approximation has its own review. Conflicting old captions may
+        # use the dated specification with an explicit estimated-cost label;
+        # this does not authorize arbitrary mass/count or density assumptions.
         if approval.get("quantityConversionHash") != conversion_hash(conversion):
             raise ValueError(f"Unreviewed conversion metadata {mapping['id']}, {month}")
-        if not (
+        egg_assumption = (
                 mapping["id"] == "mixed-size-eggs" and mapping["code"] == "1341"
                 and "2000-01" <= month <= "2002-06"
                 and mapping["unit"] == "count" and approval["quoteUnit"] == "kg"
@@ -90,7 +91,26 @@ def validate_reviewed_specification(mapping, row, spec, month):
                 and conversion.get("from") == "count" and conversion.get("to") == "kg"
                 and conversion.get("factor") == "0.06" and conversion.get("estimated") is True
                 and conversion.get("evidenceUrl") == "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
-                and all(conversion.get("description", {}).get(language) for language in ["en", "ja"])):
+                and all(conversion.get("description", {}).get(language) for language in ["en", "ja"]))
+        conflict_windows = {
+            "1331": [("2000-01", "2000-01"), ("2000-03", "2000-03"),
+                     ("2005-05", "2005-10")],
+            "2042": [("2000-01", "2006-12")],
+            "1011": [("2002-01", "2002-01")],
+        }
+        caption_assumption = (
+            conversion.get("basis") == "dated-specification-over-conflicting-price-caption"
+            and any(first <= month <= last for first, last in conflict_windows.get(mapping["code"], []))
+            and mapping["unit"] in {"kg", "L"}
+            and approval["quoteUnit"] == mapping["unit"]
+            and conversion.get("from") == mapping["unit"]
+            and conversion.get("to") == mapping["unit"]
+            and conversion.get("factor") == "1"
+            and conversion.get("estimated") is True
+            and conversion.get("evidenceUrl", "").startswith(
+                "https://www.stat.go.jp/data/kouri/doukou/zuhyou/")
+            and all(conversion.get("description", {}).get(language) for language in ["en", "ja"]))
+        if not (egg_assumption or caption_assumption):
             raise ValueError(f"Unsupported reviewed conversion {mapping['id']}, {month}")
     elif approval["quoteUnit"] != mapping["unit"]:
         raise ValueError(f"Incompatible quote dimension {mapping['id']}, {month}")
@@ -150,6 +170,8 @@ def merge_reviews(base, expansion):
     review["policyVersion"] = "1.2"
     review["reviewedAt"] = expansion["reviewedAt"]
     review["policy"] = expansion["policy"]
+    review["unreviewedSourcePeriods"] = [*review.get("unreviewedSourcePeriods", []),
+                                        *copy.deepcopy(expansion.get("unreviewedSourcePeriods", []))]
     return review
 
 
@@ -171,11 +193,25 @@ def make_fixture(staging, review):
     # One actual source item belongs to exactly one reviewed variant that month.
     # Inactive variants are absent, rather than manufactured null observations.
     codes = {p["code"] for p in mappings}
+    exclusions = review.get("unreviewedSourcePeriods", [])
+    for exclusion in exclusions:
+        if (exclusion.get("code") not in codes
+                or not start <= exclusion.get("start", "") <= exclusion.get("end", "") <= end
+                or exclusion.get("requireMissingBasicDefinition") is not True
+                or not exclusion.get("reason")):
+            raise ValueError("Invalid explicit unresolved-definition period")
     for snapshot in snapshots:
         for code in codes:
             matching = [p for p in mappings if p["code"] == code
                         and reviewed_specification(p, snapshot["month"])]
-            present = any(row["code"] == code for row in snapshot["prices"])
+            rows = [row for row in snapshot["prices"] if row["code"] == code]
+            present = bool(rows)
+            excluded = [e for e in exclusions if e["code"] == code
+                        and e["start"] <= snapshot["month"] <= e["end"]]
+            if len(rows) > 1 or len(excluded) > 1 or (matching and excluded):
+                raise ValueError(f"Duplicate source or overlapping review/exclusion {code}, {snapshot['month']}")
+            if present and not matching and excluded and code not in snapshot["specs"]:
+                continue  # Retained raw evidence; explicitly unresolved local definition.
             if len(matching) > 1 or present != bool(matching):
                 raise ValueError(f"Missing or overlapping variant review {code}, {snapshot['month']}")
     cities = []
@@ -319,12 +355,13 @@ if __name__ == "__main__":
     parser.add_argument("--export-reviewed", action="store_true")
     parser.add_argument("--staging", type=Path, default=ROOT / "data/staging/recent.json")
     parser.add_argument("--review", type=Path, default=ROOT / "data/catalog-review.json")
-    parser.add_argument("--expansion", type=Path, help="Explicit food-only additional review")
+    parser.add_argument("--expansion", type=Path, action="append", default=[],
+                        help="Explicit food-only additional review; repeat in review order")
     args = parser.parse_args()
     staging = json.loads(args.staging.read_text(encoding="utf-8"))
     review = json.loads(args.review.read_text(encoding="utf-8"))
-    if args.expansion:
-        review = merge_reviews(review, json.loads(args.expansion.read_text(encoding="utf-8")))
+    for expansion_path in args.expansion:
+        review = merge_reviews(review, json.loads(expansion_path.read_text(encoding="utf-8")))
     fixture, report = make_fixture(staging, review)
     report_path = ROOT / "data/staging/review-report.json"
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -1,6 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { gunzipSync } from 'node:zlib';
-import { createHash } from 'node:crypto';
+import { readApprovedFixture } from '../scripts/read_approved_fixture.mjs';
 import {
   ReleaseSchema,
   CityDataSchema,
@@ -12,9 +11,11 @@ import {
 // domain.test.ts and never copied into the published application dataset.
 const raw = readFileSync('data/fixtures/recent-approved.json.gz');
 const approval = JSON.parse(readFileSync('data/fixtures/recent-approved.manifest.json', 'utf8'));
-if (createHash('sha256').update(raw).digest('hex') !== approval.sha256)
-  throw new Error('Fixture hash failed');
-export const fixture = JSON.parse(gunzipSync(raw).toString('utf8'));
+type ApprovedFixture = Omit<Release, 'releaseId' | 'cities'> & {
+  cities: Array<Omit<Release['cities'][number], 'file' | 'sha256'>>;
+  series: Readonly<Record<string, CityData['series']>>;
+};
+export const fixture = readApprovedFixture(raw, approval) as unknown as ApprovedFixture;
 export const release: Release = ReleaseSchema.parse({
   ...fixture,
   releaseId: 'test-official-fixture',

@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 from scripts.review_recent_prices import (
     make_fixture,
+    merge_reviews,
     conversion_hash,
     specification_hash,
     survey_months,
@@ -30,6 +31,115 @@ def approval(spec, month, unit, quantity, source_unit):
 
 
 class HistoricalReviewContracts(unittest.TestCase):
+    def test_conflicting_caption_quantity_is_explicitly_estimated_and_dated(self):
+        spec = {"name": "Synthetic cheese", "definition": "Synthetic package: 225g",
+                "detail": "", "unit": "1 box", "months": ""}
+        conversion = {"from": "kg", "to": "kg", "factor": "1", "estimated": True,
+                      "basis": "dated-specification-over-conflicting-price-caption",
+                      "evidenceUrl": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+                      "description": {"en": "Synthetic uncertain caption example", "ja": "合成テスト用"}}
+        admitted = approval(spec, "2000-01", "kg", "0.225", "Synthetic 200g caption")
+        admitted.update(quantityConversion=conversion, quantityConversionHash=conversion_hash(conversion))
+        mapping = {"id": "synthetic-cheese", "code": "1331", "unit": "kg",
+                   "reviewedSpecifications": [admitted]}
+        validate_reviewed_specification(mapping, {"unit": "Synthetic 200g caption"}, spec, "2000-01")
+        for key, value in [("factor", "5"), ("estimated", False), ("to", "count")]:
+            changed = copy.deepcopy(mapping)
+            changed["reviewedSpecifications"][0]["quantityConversion"][key] = value
+            changed["reviewedSpecifications"][0]["quantityConversionHash"] = conversion_hash(
+                changed["reviewedSpecifications"][0]["quantityConversion"])
+            with self.assertRaisesRegex(ValueError, "Unsupported reviewed conversion"):
+                validate_reviewed_specification(changed, {"unit": "Synthetic 200g caption"}, spec, "2000-01")
+        for code in ["1021", "1341", "1491"]:
+            changed = {**mapping, "code": code}
+            with self.assertRaisesRegex(ValueError, "Unsupported reviewed conversion"):
+                validate_reviewed_specification(changed, {"unit": "Synthetic 200g caption"}, spec, "2000-01")
+        changed = copy.deepcopy(mapping)
+        changed["reviewedSpecifications"][0].update(start="2000-02", end="2000-02")
+        with self.assertRaisesRegex(ValueError, "Unsupported reviewed conversion"):
+            validate_reviewed_specification(changed, {"unit": "Synthetic 200g caption"}, spec, "2000-02")
+
+    def test_other_caption_estimates_require_reviewed_windows_and_disclosure(self):
+        for code, month, unit, quantity, invalid_month in [
+            ("1011", "2002-01", "kg", "1", "2002-02"),
+            ("2042", "2006-12", "L", "0.75", "2007-01"),
+            ("1331", "2005-10", "kg", "0.18", "2005-11"),
+        ]:
+            with self.subTest(code=code):
+                spec = {"name": "Synthetic caption conflict", "definition": "Synthetic dated package",
+                        "detail": "", "unit": "Synthetic package", "months": ""}
+                conversion = {
+                    "from": unit, "to": unit, "factor": "1", "estimated": True,
+                    "basis": "dated-specification-over-conflicting-price-caption",
+                    "evidenceUrl": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/synthetic-only.xls",
+                    "description": {"en": "Synthetic disclosed conflict", "ja": "合成テスト用"},
+                }
+                admitted = approval(spec, month, unit, quantity, "Synthetic conflicting caption")
+                admitted.update(quantityConversion=conversion, quantityConversionHash=conversion_hash(conversion))
+                mapping = {"id": "synthetic-caption-conflict", "code": code, "unit": unit,
+                           "reviewedSpecifications": [admitted]}
+                validate_reviewed_specification(mapping, {"unit": "Synthetic conflicting caption"}, spec, month)
+                for change in [
+                    {"basis": "unreviewed-caption-preference"},
+                    {"evidenceUrl": "https://example.invalid/unreviewed"},
+                    {"description": {"en": "Missing Japanese disclosure"}},
+                ]:
+                    changed = copy.deepcopy(mapping)
+                    converted = changed["reviewedSpecifications"][0]["quantityConversion"]
+                    converted.update(change)
+                    changed["reviewedSpecifications"][0]["quantityConversionHash"] = conversion_hash(converted)
+                    with self.assertRaisesRegex(ValueError, "Unsupported reviewed conversion"):
+                        validate_reviewed_specification(changed, {"unit": "Synthetic conflicting caption"}, spec, month)
+                changed = copy.deepcopy(mapping)
+                changed["reviewedSpecifications"][0].update(start=invalid_month, end=invalid_month)
+                with self.assertRaisesRegex(ValueError, "Unsupported reviewed conversion"):
+                    validate_reviewed_specification(changed, {"unit": "Synthetic conflicting caption"}, spec, invalid_month)
+
+    def test_ordered_food_reviews_preserve_existing_and_household_identities(self):
+        base = {"approvedWindow": {"start": "2000-01", "end": "2026-08"},
+                "products": [{"id": "synthetic-food", "code": "1021", "unit": "kg"},
+                             {"id": "synthetic-household", "code": "4421", "unit": "package"}]}
+        first = {"approvedWindow": base["approvedWindow"], "policyVersion": "1.2",
+                 "reviewedAt": "2026-10-10", "policy": "Synthetic review only",
+                 "products": [{"id": "synthetic-added-a", "code": "1031", "unit": "kg"}],
+                 "existingProductUpdates": [{**base["products"][0], "reviewed": True}]}
+        second = {**first, "products": [{"id": "synthetic-added-b", "code": "1041", "unit": "kg"}],
+                  "existingProductUpdates": []}
+        combined = merge_reviews(merge_reviews(base, first), second)
+        self.assertEqual([p["id"] for p in combined["products"]],
+                         ["synthetic-food", "synthetic-household", "synthetic-added-a", "synthetic-added-b"])
+        self.assertEqual(combined["products"][1], base["products"][1])
+        self.assertTrue(combined["products"][0]["reviewed"])
+        self.assertNotIn("reviewed", base["products"][0])
+        with self.assertRaisesRegex(ValueError, "duplicate identity"):
+            merge_reviews(combined, second)
+        bad_household = {**first, "products": [],
+                         "existingProductUpdates": [{**base["products"][1], "reviewed": True}]}
+        with self.assertRaisesRegex(ValueError, "stable product identity"):
+            merge_reviews(base, bad_household)
+
+    def test_ordered_food_reviews_accumulate_independent_definition_exclusions(self):
+        base = {"approvedWindow": {"start": "2000-01", "end": "2026-08"},
+                "products": [{"id": "synthetic-food", "code": "1021", "unit": "kg"}],
+                "unreviewedSourcePeriods": [{"code": "1021", "start": "2000-01",
+                                             "end": "2000-02", "requireMissingBasicDefinition": True,
+                                             "reason": "Synthetic absent local definition"}]}
+        expansion = {"approvedWindow": base["approvedWindow"], "policyVersion": "1.2",
+                     "reviewedAt": "2026-10-10", "policy": "Synthetic review only",
+                     "products": [{"id": "synthetic-added", "code": "1031", "unit": "kg"}],
+                     "unreviewedSourcePeriods": [{"code": "1031", "start": "2000-03",
+                                                  "end": "2000-04", "requireMissingBasicDefinition": True,
+                                                  "reason": "Another synthetic absent definition"}]}
+        combined = merge_reviews(base, expansion)
+        self.assertEqual(combined["unreviewedSourcePeriods"],
+                         base["unreviewedSourcePeriods"] + expansion["unreviewedSourcePeriods"])
+        combined["unreviewedSourcePeriods"][0]["reason"] = "Changed test copy"
+        combined["unreviewedSourcePeriods"][1]["reason"] = "Changed second test copy"
+        self.assertEqual(base["unreviewedSourcePeriods"][0]["reason"],
+                         "Synthetic absent local definition")
+        self.assertEqual(expansion["unreviewedSourcePeriods"][0]["reason"],
+                         "Another synthetic absent definition")
+
     def reviewed_egg(self):
         review = json.loads((Path(__file__).resolve().parents[1] / "data/catalog-review.json").read_text(encoding="utf-8"))
         mapping = next(p for p in review["products"] if p["id"] == "mixed-size-eggs")
@@ -87,7 +197,7 @@ class HistoricalReviewContracts(unittest.TestCase):
                     cell = (row["sourceId"], row["sourceSheet"], row["sourceRow"], row["sourceColumn"])
                     self.assertNotIn(cell, cells, "A native cell was duplicated under multiple variants")
                     cells.add(cell)
-        self.assertEqual(len(cells), 2180448)
+        self.assertEqual(len(cells), 5261365)
         self.assertTrue(all(p.get("selectable") is False for p in fixture["products"]
                             if p["code"] in {"4431", "4441"}))
 
@@ -277,6 +387,75 @@ class HistoricalReviewContracts(unittest.TestCase):
             bad["products"][0]["reviewedSpecifications"][0]["start"] = "2020-12"
             with self.assertRaisesRegex(ValueError, "Missing or overlapping variant review"):
                 make_fixture(staging, bad)
+
+    def unresolved_definition(self):
+        staging, review = self.staging()
+        # The first month really contains a price row, but no basic definition.
+        # Admit the later defined form and retain the earlier evidence upstream.
+        review["products"] = [review["products"][1]]
+        staging["snapshots"][0]["specs"] = {}
+        review["unreviewedSourcePeriods"] = [{
+            "code": "1341", "start": "2020-12", "end": "2020-12",
+            "requireMissingBasicDefinition": True,
+            "reason": "Synthetic local definition not yet recovered",
+        }]
+        return staging, review
+
+    def test_bounded_unresolved_definition_excludes_only_unadmitted_public_prices(self):
+        staging, review = self.unresolved_definition()
+        original = copy.deepcopy(staging)
+        with patch("pathlib.Path.read_bytes", return_value=SYNTHETIC_BYTES):
+            fixture, _ = make_fixture(staging, review)
+        self.assertEqual(staging, original, "Raw staging evidence must remain unchanged")
+        self.assertEqual(fixture["series"]["00001-pre202101"]["synthetic-eggs-count"], [])
+        admitted = fixture["series"]["00001"]["synthetic-eggs-count"]
+        self.assertEqual([(row["month"], row["raw"], row["price"]) for row in admitted],
+                         [("2021-01", 123, "123")])
+        self.assertIn("2020-12-synthetic", {source["id"] for source in fixture["sources"]})
+
+    def test_unresolved_definition_rule_cannot_hide_defined_or_approved_rows(self):
+        staging, review = self.unresolved_definition()
+        with patch("pathlib.Path.read_bytes", return_value=SYNTHETIC_BYTES):
+            defined = copy.deepcopy(staging)
+            defined["snapshots"][0]["specs"]["1341"] = self.staging()[0]["snapshots"][0]["specs"]["1341"]
+            with self.assertRaisesRegex(ValueError, "Missing or overlapping variant review"):
+                make_fixture(defined, review)
+            approved = copy.deepcopy(review)
+            approved["products"].insert(0, self.staging()[1]["products"][0])
+            with self.assertRaisesRegex(ValueError, "overlapping review/exclusion"):
+                make_fixture(staging, approved)
+            absent_rule = copy.deepcopy(review)
+            del absent_rule["unreviewedSourcePeriods"]
+            with self.assertRaisesRegex(ValueError, "Missing or overlapping variant review"):
+                make_fixture(staging, absent_rule)
+
+    def test_unresolved_definition_rule_requires_bounded_explicit_metadata(self):
+        staging, review = self.unresolved_definition()
+        with patch("pathlib.Path.read_bytes", return_value=SYNTHETIC_BYTES):
+            for change in [
+                {"code": "9999"}, {"start": "2020-11"}, {"end": "2021-02"},
+                {"start": "2021-01", "end": "2020-12"},
+                {"requireMissingBasicDefinition": False}, {"reason": ""},
+            ]:
+                with self.subTest(change=change):
+                    changed = copy.deepcopy(review)
+                    changed["unreviewedSourcePeriods"][0].update(change)
+                    with self.assertRaisesRegex(ValueError, "Invalid explicit unresolved-definition period"):
+                        make_fixture(staging, changed)
+
+    def test_unresolved_definition_rule_cannot_hide_duplicate_sources_or_exclusions(self):
+        staging, review = self.unresolved_definition()
+        with patch("pathlib.Path.read_bytes", return_value=SYNTHETIC_BYTES):
+            duplicated = copy.deepcopy(staging)
+            duplicated["snapshots"][0]["prices"].append(
+                copy.deepcopy(duplicated["snapshots"][0]["prices"][0]))
+            with self.assertRaisesRegex(ValueError, "Duplicate source or overlapping review/exclusion"):
+                make_fixture(duplicated, review)
+            overlapping = copy.deepcopy(review)
+            overlapping["unreviewedSourcePeriods"].append(
+                copy.deepcopy(overlapping["unreviewedSourcePeriods"][0]))
+            with self.assertRaisesRegex(ValueError, "Duplicate source or overlapping review/exclusion"):
+                make_fixture(staging, overlapping)
 
     def test_nonpositive_prices_booleans_and_changed_evidence_fail(self):
         for raw in [0, -1, False, True]:

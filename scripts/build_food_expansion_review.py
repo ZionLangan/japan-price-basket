@@ -359,7 +359,7 @@ def build_review(staging, current, previous=None, initialize=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--staging", type=Path, default=ROOT / "data/staging/food-history.json")
+    parser.add_argument("--staging", type=Path, default=ROOT / "data/staging/food-history-complete.json")
     parser.add_argument("--current", type=Path, default=ROOT / "data/catalog-review.json")
     parser.add_argument("--output", type=Path, default=ROOT / "data/food-expansion-review.json")
     parser.add_argument("--initialize", action="store_true",

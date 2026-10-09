@@ -180,6 +180,9 @@ export function LiveBasket({
                     <p>
                       {t.quote}: {s.quoteLabel?.[locale] ?? p.quoteLabel[locale]}
                     </p>
+                    {s.quantityConversion?.estimated && (
+                      <p className="notice">{s.quantityConversion.description[locale]}</p>
+                    )}
                     {index > 0 && !s.continuityFromPrevious && (
                       <p className="notice">{t.breakWarning}</p>
                     )}
