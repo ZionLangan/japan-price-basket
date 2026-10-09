@@ -193,8 +193,8 @@ export function ChartViews({
               </div>
             ) : (
               <>
-                <div className="view-heading">
-                  {tab === 'product' ? (
+                {tab === 'product' && (
+                  <div className="view-heading">
                     <div className="product-series">
                       <label htmlFor="chart-series">{t.series}</label>
                       <select
@@ -210,13 +210,11 @@ export function ChartViews({
                         ))}
                       </select>
                     </div>
-                  ) : (
-                    <h3>{measure === 'index' ? t.index : t.yen}</h3>
-                  )}
-                  <span className="hint">
-                    {basket.start} – {basket.end}
-                  </span>
-                </div>
+                    <span className="hint">
+                      {basket.start} – {basket.end}
+                    </span>
+                  </div>
+                )}
                 <div className="chart-canvas">
                   <PriceChart
                     rows={shown}
@@ -225,18 +223,17 @@ export function ChartViews({
                     locale={locale}
                     label={`${tab === 'product' ? (selected?.names[locale] ?? t.series) : t.total} · ${measure === 'index' ? t.index : t.yen}`}
                     empty={t.noGraph}
+                    t={t}
+                    seriesKey={JSON.stringify([
+                      release.releaseId,
+                      basket.cityId,
+                      measure,
+                      tab === 'product' ? selected?.id : basket.items.map((item) => item.productId),
+                      basket.start,
+                      basket.end,
+                      observedOnly,
+                    ])}
                   />
-                </div>
-                <div className="chart-legend hint">
-                  <span>
-                    <i className="legend-line" />
-                    {t.graphObserved}
-                  </span>
-                  <span>
-                    <i className="legend-line estimated-line" />
-                    {t.graphEstimated}
-                  </span>
-                  <span>{t.graphBreaks}</span>
                 </div>
               </>
             ))}

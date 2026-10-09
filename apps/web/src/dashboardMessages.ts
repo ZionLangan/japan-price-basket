@@ -42,7 +42,13 @@ const english = {
   graphObserved: 'Observed',
   graphEstimated: 'Estimated',
   graphBreaks: 'Gaps and specification changes stay separate.',
-  chartInstructions: 'Hover or focus a point for its value. Exact values are in Monthly data.',
+  chartInstructions:
+    'Hover to inspect · click or tap to pin · arrow keys to explore · Esc to close',
+  pinned: 'Pinned · tap again to close',
+  indexUnit: 'Index · baseline = 100',
+  chartDetails: 'Selected month details',
+  baselineUnavailable:
+    'The baseline has no usable price. Percentage changes and index are unavailable.',
   catalogLimit: '20 reviewed products · more products and older history are under review.',
   noCityPrices: 'No observed prices in this city',
 };
@@ -88,8 +94,11 @@ const japanese: typeof english = {
   graphObserved: '実測',
   graphEstimated: '推定',
   graphBreaks: '欠測と銘柄変更の境界は線で結びません。',
-  chartInstructions:
-    '点にカーソルを合わせるかフォーカスすると値を表示します。正確な値は月次データで確認できます。',
+  chartInstructions: 'カーソルで確認・クリック／タップで固定・矢印キーで移動・Escで閉じる',
+  pinned: '固定中・再タップで閉じる',
+  indexUnit: '指数・基準月 = 100',
+  chartDetails: '選択月の詳しい値',
+  baselineUnavailable: '基準月の価格が利用できないため、変化率と指数を算出できません。',
   catalogLimit: '確認済みの20品目を収録。商品の追加と過去の履歴は確認中です。',
   noCityPrices: 'この都市の実測値はありません',
 };

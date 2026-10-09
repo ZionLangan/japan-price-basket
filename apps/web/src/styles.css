@@ -428,16 +428,78 @@ summary {
   gap: 0.375rem;
 }
 .chart-canvas {
-  min-height: 17rem;
+  min-height: 20rem;
   flex: 1;
   display: flex;
   align-items: stretch;
 }
 .price-chart {
   width: 100%;
-  height: 100%;
-  min-height: 17rem;
+  height: 0;
+  flex: 1;
+  min-height: 14rem;
   overflow: visible;
+}
+.interactive-chart {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+}
+.chart-inspector {
+  height: 6.25rem;
+  flex: 0 0 6.25rem;
+  min-width: 0;
+  border-left: 2px solid var(--divider);
+  background: var(--surface);
+}
+.chart-inspector.has-selection {
+  border-left-color: var(--action);
+}
+.chart-readout,
+.chart-idle {
+  height: 100%;
+  overflow: auto;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+.chart-idle-heading,
+.chart-readout-summary,
+.chart-readout-details {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.125rem 1rem;
+}
+.chart-idle-heading {
+  margin-bottom: 0.25rem;
+}
+.chart-readout-value {
+  font-size: 1.125rem;
+  font-variant-numeric: tabular-nums;
+}
+.chart-readout-details {
+  color: var(--muted);
+  margin-block: 0.125rem;
+  font-variant-numeric: tabular-nums;
+}
+.chart-quality {
+  color: var(--muted);
+  margin: 0;
+}
+.chart-status.estimated {
+  color: var(--action);
+}
+.chart-status.unavailable {
+  color: var(--muted);
+}
+.chart-hit-area {
+  cursor: crosshair;
 }
 .price-chart text {
   fill: var(--muted);
@@ -634,6 +696,7 @@ thead {
 .bar {
   height: 100%;
   background: var(--action);
+  transition: width 180ms ease-out;
 }
 .estimated-bar {
   background: white;
@@ -672,10 +735,10 @@ thead {
     padding-left: 1rem;
   }
   .chart-canvas {
-    min-height: 14rem;
+    min-height: 17rem;
   }
   .price-chart {
-    min-height: 14rem;
+    min-height: 10rem;
   }
   .table-scroll,
   .breakdown-list {
@@ -706,12 +769,17 @@ thead {
     margin-left: 0;
   }
   .chart-canvas {
-    min-height: 17rem;
+    min-height: 20rem;
   }
   .product-series {
     flex-wrap: wrap;
   }
   .basket-items {
     overflow-y: visible;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    transition: none;
   }
 }
