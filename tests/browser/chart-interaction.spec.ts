@@ -1,10 +1,13 @@
 import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { selectMonth } from './helpers/dates';
 
 async function load(page: Page) {
   await page.goto('/');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
   await expect(page.locator('.price-chart')).toBeVisible();
+  // Keep independent calculation checks on their audited 24-month window.
+  await selectMonth(page, 'start', '2024-09');
 }
 
 async function addOnly(page: Page, query: string, product: RegExp) {
@@ -190,7 +193,7 @@ test('an entirely unsurveyed interval remains inspectable without inventing poin
 }) => {
   await load(page);
   await page.locator('#city').selectOption('14205');
-  await page.locator('#end').selectOption('2024-12');
+  await selectMonth(page, 'end', '2024-12');
   await expect(page.getByTestId('latest-cost')).toHaveText('—');
   const chart = page.locator('.price-chart');
   await expect(chart).toBeVisible();

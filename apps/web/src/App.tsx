@@ -17,6 +17,7 @@ import { dashboardMessages } from './dashboardMessages';
 import { ProductSearch } from './ProductSearch';
 import { LiveBasket } from './LiveBasket';
 import { ChartViews } from './ChartViews';
+import { DateRangeControls, type EndMode } from './DateRangeControls';
 
 async function loadRelease(): Promise<Release> {
   const response = await fetch('/data/current.json');
@@ -117,6 +118,9 @@ function Workbench({ release }: { release: Release }) {
   // Preserve old named records while the public interface edits one current basket.
   const [saved] = useState(initial.state?.saved ?? []);
   const [basket, setBasket] = useState<Basket>(initial.state?.current ?? example(release));
+  const [endMode, setEndMode] = useState<EndMode>(
+    initial.state?.endMode ?? (initial.state ? 'fixed' : 'latest'),
+  );
   const [locale, setLocale] = useState<Locale>(initial.state?.locale ?? 'en');
   const [observedOnly, setObservedOnly] = useState(initial.state?.observedOnly ?? false);
   const [storageIssue, setStorageIssue] = useState(initial.issue);
@@ -189,6 +193,7 @@ function Workbench({ release }: { release: Release }) {
           releaseId: release.releaseId,
           locale,
           observedOnly,
+          endMode,
           current: validateBasket(basket, release),
           saved,
         },
@@ -198,9 +203,10 @@ function Workbench({ release }: { release: Release }) {
     } catch {
       setStorageIssue('storageUnavailable');
     }
-  }, [basket, saved, locale, observedOnly, release, inputError, preserveStored]);
+  }, [basket, saved, locale, observedOnly, endMode, release, inputError, preserveStored]);
   function resetBasket() {
     setBasket(example(release, basket.cityId));
+    setEndMode('latest');
     setPreserveStored(false);
     setStorageIssue('');
   }
@@ -268,6 +274,8 @@ function Workbench({ release }: { release: Release }) {
         <p>{t.method3}</p>
         <p>{t.quantityNote}</p>
         <p>{t.carryNote}</p>
+        <p>{t.catalogLimit}</p>
+        <p>{t.nowDescription}</p>
         <p>
           {t.coverage}: {selectedCity.start} – {selectedCity.end}
         </p>
@@ -299,57 +307,24 @@ function Workbench({ release }: { release: Release }) {
       )}
       <main className="workspace" id="price-workspace" tabIndex={-1}>
         <section className="analysis" aria-labelledby="results-heading">
-          <div className="analysis-heading">
-            <h2 id="results-heading">{t.results}</h2>
-            <span className="hint">
-              {t.monthly} · {selectedCity.names[locale]}
-            </span>
-          </div>
-          <div className="date-controls">
-            <div>
-              <label htmlFor="start">{t.start}</label>
-              <select
-                id="start"
-                value={basket.start}
-                onChange={(e) => setBasket((b) => ({ ...b, start: e.target.value }))}
-              >
-                {months(release.start, release.end).map((m) => (
-                  <option key={m} value={m}>
-                    {m}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="end">{t.end}</label>
-              <select
-                id="end"
-                value={basket.end}
-                onChange={(e) => setBasket((b) => ({ ...b, end: e.target.value }))}
-              >
-                {months(release.start, release.end).map((m) => (
-                  <option key={m} value={m}>
-                    {m}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button
-              className="text-button"
-              disabled={basket.start === release.start && basket.end === release.end}
-              onClick={() => setBasket((b) => ({ ...b, start: release.start, end: release.end }))}
-            >
-              {t.fullHistory}
-            </button>
-            <label className="checkbox">
-              <input
-                type="checkbox"
-                checked={observedOnly}
-                onChange={(e) => setObservedOnly(e.target.checked)}
-              />
-              {t.observedOnly}
-            </label>
-          </div>
+          <h2 id="results-heading" className="sr-only">
+            {t.results}
+          </h2>
+          <DateRangeControls
+            start={basket.start}
+            end={basket.end}
+            minimum={release.start}
+            maximum={release.end}
+            endMode={endMode}
+            locale={locale}
+            t={t}
+            observedOnly={observedOnly}
+            onRange={(range, mode) => {
+              setBasket((previous) => ({ ...previous, ...range }));
+              setEndMode(mode);
+            }}
+            onObservedOnly={setObservedOnly}
+          />
           {inputError && (
             <p className="error" role="alert">
               {inputError}
@@ -388,7 +363,7 @@ function Workbench({ release }: { release: Release }) {
                   ? t.compareBlocked
                   : first?.status === 'estimated' || last?.status === 'estimated'
                     ? t.estimatedEndpoint
-                    : t.graphObserved}
+                    : null}
               </small>
             </div>
             <div>
@@ -397,22 +372,20 @@ function Workbench({ release }: { release: Release }) {
               </span>
               <strong>{percent(last?.yoy)}</strong>
               <small>
-                {last?.yoyEstimated
-                  ? t.estimatedEndpoint
-                  : last?.yoy == null
-                    ? t.noChange
-                    : t.graphObserved}
+                {last?.yoyEstimated ? t.estimatedEndpoint : last?.yoy == null ? t.noChange : null}
               </small>
             </div>
           </div>
           {(lastIssues.length > 0 ||
             breakItems.length > 0 ||
-            selectedCity.start > release.start) && (
+            selectedCity.start > basket.start) && (
             <details className="quality-summary">
               <summary>
                 {breakItems.length
                   ? `${t.compareBlocked} · ${breakItems.map((p) => p.names[locale]).join(', ')}`
-                  : `${t.status}: ${text(last?.status ?? 'unavailable')}`}
+                  : lastIssues.length
+                    ? `${t.status}: ${text(last?.status ?? 'unavailable')}`
+                    : `${t.coverage}: ${selectedCity.start} – ${selectedCity.end}`}
               </summary>
               {breakItems.length > 0 && (
                 <p>
@@ -433,7 +406,7 @@ function Workbench({ release }: { release: Release }) {
                     .join(' · ')}
                 </p>
               )}
-              {selectedCity.start > release.start && (
+              {selectedCity.start > basket.start && (
                 <p>
                   {t.coverage}: {selectedCity.start} – {selectedCity.end} · {t['not-surveyed']}:{' '}
                   {release.start} – {months(release.start, selectedCity.start).at(-2)}
@@ -461,7 +434,6 @@ function Workbench({ release }: { release: Release }) {
           products={release.products}
           locale={locale}
           t={t}
-          storageWorking={!storageIssue && !preserveStored}
           update={setBasket}
           onClear={() => setBasket((b) => ({ ...b, items: [] }))}
           onReset={resetBasket}

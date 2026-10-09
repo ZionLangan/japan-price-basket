@@ -15,7 +15,6 @@ export function LiveBasket({
   update,
   onClear,
   onReset,
-  storageWorking,
 }: {
   basket: Basket;
   products: Product[];
@@ -24,7 +23,6 @@ export function LiveBasket({
   update: (basket: Basket) => void;
   onClear: () => void;
   onReset: () => void;
-  storageWorking: boolean;
 }) {
   const unitLabel = (unit: string) =>
     unit === 'package' ? t.package : unit === 'count' ? t.count : unit;
@@ -191,7 +189,6 @@ export function LiveBasket({
         })}
       </div>
       <div className="basket-bottom">
-        {storageWorking && <span className="hint">{t.autoSaved}</span>}
         <button className="text-button" onClick={onReset}>
           {t.reset}
         </button>

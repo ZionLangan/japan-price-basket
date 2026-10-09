@@ -222,9 +222,11 @@ export function PriceChart({
                 <i className="legend-line estimated-line" />
                 {t.graphEstimated}
               </span>
-              <span>{t.graphBreaks}</span>
+              {frame.connected.slice(1).some((connected) => !connected) && (
+                <span>{t.graphBreaks}</span>
+              )}
             </div>
-            <p className="hint">{t.chartInstructions}</p>
+            <p className="hint">{t.chartHint}</p>
           </div>
         )}
       </div>
@@ -255,7 +257,6 @@ export function PriceChart({
           selectKeyboard(next);
         }}
       >
-        <title>{label}</title>
         <desc>
           {t.chartInstructions} {t.graphBreaks} {t.table}
         </desc>
@@ -306,7 +307,13 @@ export function PriceChart({
           );
         })}
         {rows.map((row, i) =>
-          frame.points[i].y === null ? null : (
+          frame.points[i].y === null ||
+          (frame.points.length > 1 &&
+            frame.points[1].x - frame.points[0].x < 9 &&
+            i > 0 &&
+            i < rows.length - 1 &&
+            frame.connected[i] &&
+            frame.connected[i + 1]) ? null : (
             <circle
               key={row.month}
               data-month={row.month}

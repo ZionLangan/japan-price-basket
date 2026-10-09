@@ -13,8 +13,8 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "check": "tsc --noEmit",
-    "format": "prettier --write apps/web/src packages/domain/src tests/*.ts tests/browser/*.ts *.ts package.json tsconfig.json",
-    "format:check": "prettier --check apps/web/src packages/domain/src tests/*.ts tests/browser/*.ts *.ts package.json tsconfig.json"
+    "format": "prettier --write apps/web/src packages/domain/src tests/*.ts tests/browser *.ts package.json tsconfig.json",
+    "format:check": "prettier --check apps/web/src packages/domain/src tests/*.ts tests/browser *.ts package.json tsconfig.json"
   },
   "dependencies": {
     "decimal.js": "10.6.0",

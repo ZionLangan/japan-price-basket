@@ -210,9 +210,6 @@ export function ChartViews({
                         ))}
                       </select>
                     </div>
-                    <span className="hint">
-                      {basket.start} – {basket.end}
-                    </span>
                   </div>
                 )}
                 <div className="chart-canvas">

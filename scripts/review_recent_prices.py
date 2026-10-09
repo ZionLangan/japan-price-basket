@@ -25,6 +25,27 @@ def normalized(text):
     return re.sub(r"\s+", "", unicodedata.normalize("NFKC", str(text or "")))
 
 
+def review_identity(mapping, row, spec, month):
+    """Admit only reviewed item names and product forms, including dated aliases."""
+    source_name = normalized(row["name"])
+    spec_name = normalized(spec["name"])
+    names_match = source_name == spec_name
+    if mapping.get("sourceName"):
+        names_match = (source_name == normalized(mapping["sourceName"])
+                       and spec_name == normalized(mapping["specName"]))
+    for alias in mapping.get("sourceNameSegments", []):
+        if alias["start"] <= month <= alias["end"]:
+            names_match = names_match or (
+                source_name == normalized(alias["name"])
+                and spec_name == normalized(alias["specName"]))
+    if not names_match:
+        raise ValueError(f"Name mismatch {mapping['code']}, {month}")
+    definition = normalized(spec["definition"])
+    for term in mapping.get("requiredSpecificationTerms", []):
+        if normalized(term) not in definition:
+            raise ValueError(f"Unreviewed product form {mapping['code']}, {month}: {term}")
+
+
 def make_fixture(staging, review):
     snapshots = staging["snapshots"]
     start, end = snapshots[0]["month"], snapshots[-1]["month"]
@@ -75,13 +96,7 @@ def make_fixture(staging, review):
             if len(rows) != 1 or code not in s["specs"]:
                 raise ValueError(f"Missing or duplicate item {code}, {s['month']}")
             row, spec = rows[0], s["specs"][code]
-            if code == "1001":
-                names_match = (normalized(row["name"]) == normalized(mapping["sourceName"])
-                               and normalized(spec["name"]) == normalized(mapping["specName"]))
-            else:
-                names_match = normalized(row["name"]) == normalized(spec["name"])
-            if not names_match:
-                raise ValueError(f"Name mismatch {code}")
+            review_identity(mapping, row, spec, s["month"])
             if code in {"1001", "1303", "1341"}:
                 expected_source, expected_spec, quantity_term = {
                     "1001": ("1袋・5kg", "1袋", "5kg入り"),
@@ -104,7 +119,8 @@ def make_fixture(staging, review):
                 raise ValueError(f"Unreviewed package {code}: {row['unit']}")
             elif code == "4431":
                 quantity = normalized(row["unit"]).replace("･", "・")
-                if quantity not in {"1本・370mL", "1本・700mL"} or quantity.split("・")[1] not in normalized(spec["definition"]):
+                reviewed = {f"1本・{v}mL" for v in mapping["reviewedRefillVolumesML"]}
+                if quantity not in reviewed or quantity.split("・")[1] not in normalized(spec["definition"]):
                     raise ValueError(f"Unreviewed package {code}: {row['unit']}")
             schedule = mapping.get("surveyMonths", list(range(1, 13)))
             expected_schedule = {"1511": "1月~3月,9月~12月", "1572": "6月~7月"}.get(code, "")

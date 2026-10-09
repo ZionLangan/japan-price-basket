@@ -1,9 +1,12 @@
 import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { expectRange, selectMonth } from './helpers/dates';
 
 async function load(page: Page) {
   await page.goto('/');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
+  // Keep independent calculation checks on their audited 24-month window.
+  await selectMonth(page, 'start', '2024-09');
 }
 async function add(page: Page, query: string, name: RegExp) {
   await page.locator('#search').fill(query);
@@ -22,8 +25,7 @@ test('one basket recalculates charts immediately and persists without a save ste
   });
   await load(page);
   await expect(page.locator('#city option')).toHaveCount(81);
-  await expect(page.locator('#start')).toHaveValue('2024-09');
-  await expect(page.locator('#end')).toHaveValue('2026-08');
+  await expectRange(page, '2024-09', '2026-08');
   const before = await page.locator('.price-chart').innerHTML();
   await page.locator('#qty-white-bread').fill('0.5');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥1,815');
@@ -33,11 +35,12 @@ test('one basket recalculates charts immediately and persists without a save ste
   await page.locator('#unit-onions').selectOption('g');
   await expect(page.locator('#qty-onions')).toHaveValue('500');
   await page.getByRole('button', { name: '日本語', exact: true }).click();
-  await page.locator('#start').selectOption('2025-10');
+  await selectMonth(page, 'start', '2025-10');
   await page.reload();
   await expect(page.locator('#qty-onions')).toHaveValue('500');
   await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
-  await expect(page.locator('#start')).toHaveValue('2025-10');
+  await expect(page.locator('#start-year')).toHaveValue('2025');
+  await expect(page.locator('#start-month')).toHaveValue('10');
   await expect(page.locator('.price-chart')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Save named basket' })).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'How to read these results' })).toHaveCount(0);
@@ -122,9 +125,9 @@ test('real specification breaks split chart lines and block comparisons until ba
   await expect(page.locator('.quality-summary')).toContainText('Comparison unavailable');
   await expect(page.locator('.price-chart circle')).toHaveCount(24);
   await expect(page.locator('.price-chart line[stroke-width="2.5"]')).toHaveCount(22);
-  await page.locator('#start').selectOption('2025-10');
+  await selectMonth(page, 'start', '2025-10');
   await expect(page.getByTestId('basket-change')).not.toHaveText('—');
-  await page.getByRole('button', { name: 'Full history', exact: true }).click();
+  await page.locator('.range-presets button').filter({ hasText: /^All$/ }).click();
   await expect(page.getByTestId('basket-change')).toHaveText('—');
   await page.locator('#city').selectOption('14205');
   await page.getByRole('tab', { name: 'Monthly data', exact: true }).click();
@@ -146,11 +149,11 @@ test('invalid quantities and dates prevent misleading charts while preserving th
   ).toBe('1');
   await page.locator('#qty-white-bread').fill('0.5');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥1,815');
-  await page.locator('#start').selectOption('2026-08');
-  await page.locator('#end').selectOption('2025-09');
+  await selectMonth(page, 'start', '2026-08');
+  await selectMonth(page, 'end', '2025-09');
   await expect(page.getByRole('alert')).toContainText('baseline');
   await expect(page.getByTestId('latest-cost')).toHaveText('—');
-  await page.getByRole('button', { name: 'Full history', exact: true }).click();
+  await page.locator('.range-presets button').filter({ hasText: /^All$/ }).click();
   await expect(page.getByTestId('latest-cost')).toHaveText('¥1,815');
 });
 

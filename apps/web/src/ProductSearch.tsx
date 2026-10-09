@@ -132,9 +132,6 @@ export function ProductSearch({
               <option value="food">{t.food}</option>
               <option value="household">{t.household}</option>
             </select>
-            <span className="hint">
-              {matches.length} / {products.length}
-            </span>
           </div>
           <div
             id={`${id}-results`}
@@ -178,7 +175,6 @@ export function ProductSearch({
               {t.noResults}
             </p>
           )}
-          <p className="search-footnote hint">{t.catalogLimit}</p>
         </div>
       )}
     </div>

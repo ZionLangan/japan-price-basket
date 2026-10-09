@@ -1,18 +1,22 @@
 import { expect, it } from 'vitest';
 import { fixture, release, city } from './fixture';
 import { ObservationSchema } from '../packages/domain/src/contracts';
+import { months } from '../packages/domain/src/domain';
 
-it('validates every city series, unique keys, all 24 months and source locators', () => {
+it('validates every city series, unique keys, all 69 months and source locators', () => {
   expect(release.cities).toHaveLength(81);
   expect(release.products).toHaveLength(20);
   expect(new Set(release.cities.map((c) => c.id)).size).toBe(81);
   expect(new Set(release.products.map((p) => p.id)).size).toBe(20);
   const sourceIds = new Set(release.sources.map((s) => s.id));
-  for (const c of release.cities)
+  const expectedMonths = months(release.start, release.end);
+  expect(expectedMonths).toHaveLength(69);
+  for (const c of release.cities) {
+    const data = city(c.id);
     for (const product of release.products) {
-      const rows = city(c.id).series[product.id];
-      expect(rows).toHaveLength(24);
-      expect(new Set(rows.map((o) => o.month)).size).toBe(24);
+      const rows = data.series[product.id];
+      expect(rows.map((row) => row.month)).toEqual(expectedMonths);
+      expect(new Set(rows.map((o) => o.month)).size).toBe(69);
       for (const row of rows) {
         expect(sourceIds.has(row.sourceId)).toBe(true);
         expect(
@@ -27,6 +31,7 @@ it('validates every city series, unique keys, all 24 months and source locators'
           );
       }
     }
+  }
 });
 it('keeps missing source tokens and never treats a blank price as zero', () => {
   const rows = fixture.series['01202']['broccoli'];

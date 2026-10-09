@@ -1,3 +1,4 @@
 # Operator acquisition and ingestion tests only; the website build uses Node.
 openpyxl==3.1.5
 et-xmlfile==2.0.0
+xlrd==2.0.1

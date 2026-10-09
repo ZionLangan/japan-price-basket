@@ -59,6 +59,51 @@ const synthetic = (
 });
 
 describe('reviewed real monthly data', () => {
+  it('reconciles the newly reviewed December 2020 staple endpoint without filling missing cities', () => {
+    const results = evaluate({ ...basket, start: '2020-12' }, release, city());
+    expect(results).toHaveLength(69);
+    expect(results[0].cost).toBe('1468');
+    expect(results.at(-1)?.cost).toBe('2098');
+    expect(results.every((row) => row.status === 'observed')).toBe(true);
+    const newCity = evaluate(
+      { ...basket, cityId: '14205', start: '2020-12' },
+      release,
+      city('14205'),
+    );
+    expect(newCity.filter((row) => row.month < '2025-01').every((row) => row.cost === null)).toBe(
+      true,
+    );
+  });
+  it('keeps newly reviewed package and formulation changes separate from earlier comparisons', () => {
+    for (const [productId, start, boundary] of [
+      ['dishwashing-liquid', '2020-12', '2023-10'],
+      ['liquid-laundry-detergent', '2020-12', '2022-07'],
+      ['liquid-laundry-detergent', '2023-01', '2024-08'],
+    ]) {
+      const results = evaluate(
+        {
+          ...basket,
+          start,
+          items: [
+            {
+              productId,
+              quantity: '1',
+              unit: release.products.find((product) => product.id === productId)!.unit,
+            },
+          ],
+        },
+        release,
+        city(),
+      );
+      const before = results.filter((row) => row.month < boundary).at(-1)!;
+      const after = results.find((row) => row.month === boundary)!;
+      expect(before.cost).not.toBeNull();
+      expect(before.change).not.toBeNull();
+      expect(after.cost).not.toBeNull();
+      expect(after.change).toBeNull();
+      expect(after.index).toBeNull();
+    }
+  });
   it('reconciles both endpoints of the Tokyo staple basket', () => {
     const result = evaluate(basket, release, city());
     expect(result).toHaveLength(24);

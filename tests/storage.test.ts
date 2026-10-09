@@ -34,6 +34,25 @@ it('round-trips local basket and language without altering quantities', () => {
   writeState(state, storage);
   expect(readState(release, storage)).toEqual(state);
 });
+it('advances an explicit latest end on a new release while fixed and legacy ends stay fixed', () => {
+  const nextRelease = { ...release, end: '2026-09' };
+  for (const endMode of ['latest', 'fixed', undefined] as const) {
+    const storage = memoryStorage();
+    writeState({ ...state, endMode }, storage);
+    const restored = readState(nextRelease, storage)!;
+    expect(restored.current.end).toBe(endMode === 'latest' ? '2026-09' : '2026-08');
+    expect(restored.current.start).toBe('2026-01');
+    expect(restored.current.items).toEqual(current.items);
+    expect(restored.saved[0].end).toBe('2026-08');
+  }
+});
+it('rejects an unknown end mode without silently changing the stored record', () => {
+  const storage = memoryStorage();
+  const value = JSON.stringify({ ...state, endMode: 'today' });
+  storage.setItem('japan-basket-prices:v1', value);
+  expect(() => readState(release, storage)).toThrow('storageInvalid');
+  expect(storage.getItem('japan-basket-prices:v1')).toBe(value);
+});
 it('rejects corrupt, oversized and incompatible imports without mutating a basket', () => {
   for (const text of [
     '{}',

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "reviewedAt": "2026-10-06",
+  "reviewedAt": "2026-10-10",
   "approvedWindow": {
-    "start": "2024-09",
+    "start": "2020-12",
     "end": "2026-08"
   },
   "policy": "Exact dated specification signatures create separate segments; no changed signature has approved continuity. Local Y specifications are excluded. Unknown missing values are never carried. Seasonal carry applies only where the monthly calendar is unchanged across the anchor and target.",
@@ -43,6 +43,14 @@
         "milk",
         "ぎゅうにゅう",
         "ミルク"
+      ],
+      "sourceNameSegments": [
+        {
+          "start": "2020-12",
+          "end": "2021-12",
+          "name": "牛乳(店頭売り, 紙容器入り)",
+          "specName": "牛乳"
+        }
       ]
     },
     {
@@ -62,7 +70,11 @@
         "たまご",
         "卵"
       ],
-      "quoteLabelEn": "10 eggs"
+      "quoteLabelEn": "10 eggs",
+      "requiredSpecificationTerms": [
+        "白色卵",
+        "サイズ混合"
+      ]
     },
     {
       "code": "1021",
@@ -284,6 +296,9 @@
         10,
         11,
         12
+      ],
+      "requiredSpecificationTerms": [
+        "温州みかん"
       ]
     },
     {
@@ -322,6 +337,9 @@
         "wrap",
         "plastic wrap",
         "ラップ"
+      ],
+      "requiredSpecificationTerms": [
+        "幅22cm×長さ50m"
       ]
     },
     {
@@ -340,6 +358,15 @@
         "detergent",
         "食器用洗剤",
         "台所用洗剤"
+      ],
+      "reviewedRefillVolumesML": [
+        "385",
+        "370",
+        "700"
+      ],
+      "requiredSpecificationTerms": [
+        "液体",
+        "詰め替え用"
       ]
     },
     {
@@ -359,6 +386,10 @@
         "washing",
         "洗濯用洗剤",
         "液体洗剤"
+      ],
+      "requiredSpecificationTerms": [
+        "液体",
+        "詰め替え用"
       ]
     }
   ]

@@ -2,7 +2,8 @@
 
 Downloaded bytes are immutable content-addressed evidence; caches and generated
 releases are ignored. A fixed source manifest allows offline, reproducible rebuilds.
-This adapter supports the recent wide XLSX format only, not the 2000 archive.
+This adapter supports wide monthly XLSX price tables and dated XLS/XLSX
+specifications. Legacy city-price layouts still require separate review.
 """
 
 import argparse
@@ -17,6 +18,7 @@ from html import unescape
 from pathlib import Path
 
 import openpyxl
+import xlrd
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "data/raw/recent"
@@ -46,6 +48,8 @@ def download(url):
 
 
 def read_prices(data, month):
+    if not data.startswith(b"PK\x03\x04"):
+        raise ValueError(f"Unsupported legacy price workbook for {month}; city-code/layout review required")
     book = openpyxl.load_workbook(io.BytesIO(data), read_only=True, data_only=True)
     sheet = book.worksheets[0]
     rows = list(sheet.values)
@@ -72,14 +76,37 @@ def read_prices(data, month):
 
 
 def read_specs(data):
-    book = openpyxl.load_workbook(io.BytesIO(data), read_only=True, data_only=True)
+    if data.startswith(b"\xd0\xcf\x11\xe0"):
+        book = xlrd.open_workbook(file_contents=data)
+        sheet = book.sheet_by_index(0)
+        rows = [sheet.row_values(i) for i in range(sheet.nrows)]
+        book.release_resources()
+    elif data.startswith(b"PK\x03\x04"):
+        book = openpyxl.load_workbook(io.BytesIO(data), read_only=True, data_only=True)
+        rows = list(book.worksheets[0].values)
+        book.close()
+    else:
+        raise ValueError("Unsupported specification workbook format")
+    # The original 2000 specification sheet has no detail column. Determine
+    # its quote-unit column from the published header rather than shifting
+    # fields silently into the wrong meanings.
+    header = next((r for r in rows[:8] if r and r[0] in {"符号", "銘柄符号"}
+                   and "単位" in r), None)
+    if header is None or header.index("単位") not in {4, 5}:
+        raise ValueError("Unreviewed specification column layout")
+    unit_column = header.index("単位")
     result = {}
-    for row in book.worksheets[0].values:
-        code = str(row[0]) if row and row[0] is not None else ""
+    for row in rows:
+        raw = row[0] if row else None
+        code = str(int(raw)) if isinstance(raw, (int, float)) and raw == int(raw) else str(raw or "")
         if re.fullmatch(r"\d{4}", code):
-            result[code] = {"name": row[1], "definition": row[2], "detail": row[3],
-                            "months": row[4], "unit": row[5]}
-    book.close()
+            if code in result:
+                raise ValueError(f"Duplicate specification code {code}")
+            if len(row) <= unit_column:
+                raise ValueError(f"Incomplete specification row {code}")
+            result[code] = {"name": row[1], "definition": row[2],
+                            "detail": row[3] if unit_column == 5 else "",
+                            "months": row[unit_column - 1], "unit": row[unit_column]}
     if not result:
         raise ValueError("No specification rows")
     return result
@@ -102,7 +129,7 @@ def acquire(start, end):
         for href, text in re.findall(r'<a\b[^>]*href="([^"]+)"[^>]*>(.*?)</a>', tr, re.S):
             label = unescape(re.sub(r"<[^>]+>", "", text))
             match = re.search(r"(\d+)(?:～(\d+))?月", label)
-            if match and href.endswith(".xlsx"):
+            if match and href.endswith((".xlsx", ".xls")):
                 for number in range(int(match[1]), int(match[2] or match[1]) + 1):
                     spec_links[f"{year_match[1]}-{number:02}"] = urllib.request.urljoin(spec_index_url, href)
     snapshots, roster = [], None
@@ -143,6 +170,8 @@ def acquire(start, end):
             info = {**info, "category": category, "id": month + "-" + category}
             sources.append(info)
             prices.extend([{**v, "sourceId": info["id"]} for v in values])
+        if month not in spec_links:
+            raise ValueError(f"No dated specification workbook discovered for {month}; review required")
         spec_url = spec_links[month]
         raw, spec_info = download(spec_url)
         specs = read_specs(raw)
@@ -158,7 +187,7 @@ def acquire(start, end):
 if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--start", default="2024-09")
+    parser.add_argument("--start", default="2020-12")
     parser.add_argument("--end", default="2026-08")
     args = parser.parse_args()
     for date in [args.start, args.end]:

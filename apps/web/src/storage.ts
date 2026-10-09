@@ -13,6 +13,7 @@ const StateSchema = z
     releaseId: z.string(),
     locale: z.enum(['en', 'ja']),
     observedOnly: z.boolean(),
+    endMode: z.enum(['latest', 'fixed']).optional(),
     current: BasketSchema,
     saved: z.array(BasketSchema).max(10),
   })
@@ -24,6 +25,7 @@ export function readState(release: Release, storage: Storage): StoredState | nul
   if (text.length > 128 * 1024) throw new Error('storageInvalid');
   try {
     const parsed = StateSchema.parse(JSON.parse(text));
+    if (parsed.endMode === 'latest') parsed.current.end = release.end;
     validateBasket(parsed.current, release);
     parsed.saved.forEach((b) => validateBasket(b, release));
     if (new Set(parsed.saved.map((b) => b.name)).size !== parsed.saved.length)
