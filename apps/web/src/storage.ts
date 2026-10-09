@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import Decimal from 'decimal.js';
 import {
   BasketSchema,
   validateBasket,
@@ -19,18 +20,84 @@ const StateSchema = z
   })
   .strict();
 export type StoredState = z.infer<typeof StateSchema>;
-export function readState(release: Release, storage: Storage): StoredState | null {
+export const retiredDetergentIds = new Set([
+  'dishwashing-liquid',
+  'dishwashing-liquid-bottle',
+  'dishwashing-liquid-per-litre',
+  'liquid-laundry-detergent',
+  'powder-laundry-detergent',
+]);
+type Migration = { removedDetergents: number; convertedEggs: boolean };
+export type RestoredState = StoredState & { migration?: Migration };
+
+function migrateBasket(basket: Basket, removeDetergents: boolean) {
+  if (new Set(basket.items.map((item) => item.productId)).size !== basket.items.length)
+    throw new Error('storageInvalid');
+  let removedDetergents = 0;
+  let convertedEggs = false;
+  const items: Basket['items'] = [];
+  for (const original of basket.items) {
+    if (removeDetergents && retiredDetergentIds.has(original.productId)) {
+      removedDetergents++;
+      continue;
+    }
+    let item = { ...original };
+    if (item.productId === 'large-size-eggs') {
+      if (item.unit !== 'count') throw new Error('storageInvalid');
+      item.productId = 'mixed-size-eggs';
+      convertedEggs = true;
+    } else if (item.productId === 'eggs-by-weight') {
+      if (!['kg', 'g'].includes(item.unit)) throw new Error('storageInvalid');
+      item = {
+        ...item,
+        productId: 'mixed-size-eggs',
+        quantity: new Decimal(item.quantity)
+          .mul(item.unit === 'kg' ? 1000 : 1)
+          .div(60)
+          .toDecimalPlaces(6)
+          .toString(),
+        unit: 'count',
+        quantityEstimated: true,
+      };
+      convertedEggs = true;
+    }
+    const existing = items.find((i) => i.productId === item.productId);
+    if (existing) {
+      // Only the explicitly reviewed egg migration may merge old variant rows.
+      if (item.productId !== 'mixed-size-eggs' || existing.unit !== item.unit)
+        throw new Error('storageInvalid');
+      existing.quantity = new Decimal(existing.quantity).plus(item.quantity).toString();
+      if (item.quantityEstimated) existing.quantityEstimated = true;
+    } else items.push(item);
+  }
+  return { basket: { ...basket, items }, removedDetergents, convertedEggs };
+}
+
+export function readState(release: Release, storage: Storage): RestoredState | null {
   const text = storage.getItem(KEY);
   if (!text) return null;
   if (text.length > 128 * 1024) throw new Error('storageInvalid');
   try {
     const parsed = StateSchema.parse(JSON.parse(text));
+    const migrated = migrateBasket(parsed.current, true);
+    parsed.current = migrated.basket;
+    let convertedEggs = migrated.convertedEggs;
+    parsed.saved = parsed.saved.map((basket) => {
+      const saved = migrateBasket(basket, false);
+      convertedEggs ||= saved.convertedEggs;
+      return saved.basket;
+    });
     if (parsed.endMode === 'latest') parsed.current.end = release.end;
     validateBasket(parsed.current, release);
     parsed.saved.forEach((b) => validateBasket(b, release));
     if (new Set(parsed.saved.map((b) => b.name)).size !== parsed.saved.length)
       throw new Error('storageInvalid');
-    return parsed;
+    return migrated.removedDetergents || convertedEggs
+      ? {
+          ...parsed,
+          migration: { removedDetergents: migrated.removedDetergents, convertedEggs },
+        }
+      : parsed;
   } catch {
     throw new Error('storageInvalid');
   }

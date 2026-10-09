@@ -13,6 +13,15 @@ export const ProductSchema = z.object({
   familyId: z.string(),
   variantId: z.string(),
   names: Names,
+  selectable: z.boolean().optional(),
+  comparisonNote: Names.optional(),
+  missingPriceEstimate: z
+    .object({
+      maxMonths: z.union([z.literal(1), z.literal(2)]),
+      tokens: z.array(z.string()).min(1),
+      allowEquivalentSegments: z.boolean(),
+    })
+    .optional(),
   aliases: z.array(z.string()),
   category: z.enum(['food', 'household']),
   unit: Unit,
@@ -37,6 +46,16 @@ export const ProductSchema = z.object({
           sourceUnit: z.string().optional(),
           specificationUnit: z.string().optional(),
           specificationName: z.string().optional(),
+          quantityConversion: z
+            .object({
+              from: Unit,
+              to: Unit,
+              factor: PositiveDecimal,
+              estimated: z.boolean(),
+              evidenceUrl: z.string().url(),
+              description: Names,
+            })
+            .optional(),
           // A break is unresolved unless the review explicitly admits continuity.
           continuityFromPrevious: z.boolean(),
           continuityReason: z.string().optional(),
@@ -93,7 +112,7 @@ export const CityDataSchema = z.object({
 export const ReleaseSchema = z.object({
   schemaVersion: z.literal(1),
   releaseId: z.string(),
-  policyVersion: z.literal('1.0'),
+  policyVersion: z.enum(['1.0', '1.1']),
   start: Month,
   end: Month,
   builtAt: z.string(),
@@ -129,7 +148,14 @@ export const BasketSchema = z
     start: Month,
     end: Month,
     items: z
-      .array(z.object({ productId: z.string(), quantity: PositiveDecimal, unit: Unit }))
+      .array(
+        z.object({
+          productId: z.string(),
+          quantity: PositiveDecimal,
+          unit: Unit,
+          quantityEstimated: z.boolean().optional(),
+        }),
+      )
       .max(50),
   })
   .strict();

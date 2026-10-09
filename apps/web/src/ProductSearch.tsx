@@ -1,13 +1,20 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import type { CityData, Locale, Product } from '../../../packages/domain/src/contracts';
-import { monthNumber, searchProducts } from '../../../packages/domain/src/domain';
+import {
+  monthNumber,
+  productEligibility,
+  searchProducts,
+} from '../../../packages/domain/src/domain';
 import type { DashboardText } from './dashboardMessages';
 
 export function ProductSearch({
   products,
   selected,
   city,
+  start,
   month,
+  observedOnly,
+  loading,
   historyStart,
   historyEnd,
   locale,
@@ -17,7 +24,10 @@ export function ProductSearch({
   products: Product[];
   selected: string[];
   city?: CityData;
+  start: string;
   month: string;
+  observedOnly: boolean;
+  loading: boolean;
   historyStart: string;
   historyEnd: string;
   locale: Locale;
@@ -31,7 +41,24 @@ export function ProductSearch({
   const input = useRef<HTMLInputElement>(null);
   const root = useRef<HTMLDivElement>(null);
   const id = useId();
-  const matches = searchProducts(products, query, category);
+  const catalog = products.filter((product) => product.selectable !== false);
+  const eligible = useMemo(
+    () =>
+      !city || loading || start > month
+        ? []
+        : products.filter(
+            (product) =>
+              product.selectable !== false &&
+              productEligibility(product, city.series[product.id] ?? [], start, month, observedOnly)
+                .eligible,
+          ),
+    [products, city, start, month, observedOnly, loading],
+  );
+  const matches = searchProducts(eligible, query, category);
+  const catalogMatches = searchProducts(catalog, query, category);
+  const activeIndex = Math.min(active, Math.max(0, matches.length - 1));
+  const matchIds = matches.map((product) => product.id).join('|');
+  useEffect(() => setActive(0), [matchIds]);
   useEffect(() => {
     const dismiss = (e: PointerEvent) => {
       if (e.target instanceof Node && !root.current?.contains(e.target)) setOpen(false);
@@ -40,7 +67,7 @@ export function ProductSearch({
     return () => document.removeEventListener('pointerdown', dismiss);
   }, []);
   function choose(product: Product) {
-    if (selected.includes(product.id)) return;
+    if (selected.includes(product.id) || !eligible.some((p) => p.id === product.id)) return;
     onAdd(product);
     setQuery('');
     setActive(0);
@@ -53,6 +80,7 @@ export function ProductSearch({
       className="search-area"
       role="search"
       aria-label={t.searchTitle}
+      aria-busy={loading}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false);
       }}
@@ -68,13 +96,14 @@ export function ProductSearch({
           ref={input}
           role="combobox"
           autoComplete="off"
+          disabled={loading || !city}
           value={query}
           placeholder={t.searchHint}
           aria-autocomplete="list"
           aria-expanded={open}
           aria-controls={open ? `${id}-results` : undefined}
           aria-activedescendant={
-            open && matches[active] ? `${id}-${matches[active].id}` : undefined
+            open && matches[activeIndex] ? `${id}-${matches[activeIndex].id}` : undefined
           }
           onFocus={() => setOpen(true)}
           onClick={() => setOpen(true)}
@@ -93,7 +122,7 @@ export function ProductSearch({
               e.preventDefault();
               setOpen(true);
               const next = open
-                ? (active + (e.key === 'ArrowDown' ? 1 : -1) + matches.length) %
+                ? (activeIndex + (e.key === 'ArrowDown' ? 1 : -1) + matches.length) %
                   Math.max(1, matches.length)
                 : 0;
               setActive(next);
@@ -101,9 +130,9 @@ export function ProductSearch({
                 .getElementById(`${id}-${matches[next]?.id}`)
                 ?.scrollIntoView({ block: 'nearest' });
             }
-            if (e.key === 'Enter' && open && matches[active]) {
+            if (e.key === 'Enter' && open && matches[activeIndex]) {
               e.preventDefault();
-              choose(matches[active]);
+              choose(matches[activeIndex]);
             }
           }}
         />
@@ -122,7 +151,7 @@ export function ProductSearch({
           </button>
         )}
       </div>
-      {open && (
+      {open && !loading && city && (
         <div className="search-menu">
           <div className="search-filter">
             <label htmlFor="category">{t.category}</label>
@@ -164,7 +193,7 @@ export function ProductSearch({
                   key={p.id}
                   id={`${id}-${p.id}`}
                   role="option"
-                  aria-selected={index === active}
+                  aria-selected={index === activeIndex}
                   aria-disabled={added}
                   aria-label={`${added ? t.alreadyAdded : t.add}: ${p.names[locale]}`}
                   className="search-result"
@@ -189,7 +218,7 @@ export function ProductSearch({
           </div>
           {!matches.length && (
             <p className="notice" role="status">
-              {t.noResults}
+              {catalogMatches.length || !eligible.length ? t.noEligibleResults : t.noResults}
             </p>
           )}
         </div>

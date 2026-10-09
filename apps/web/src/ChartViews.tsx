@@ -67,7 +67,11 @@ export function ChartViews({
       .filter((i) => i.status !== 'observed')
       .map((i) => {
         const p = products.find((p) => p.id === i.productId)!;
-        return `${p.names[locale]}: ${text(i.reason)}${i.anchor ? ` · ${t.anchor} ${i.anchor} · ${i.age} ${t.age}` : ''}`;
+        return `${p.names[locale]}: ${text(i.reason)}${
+          i.anchor && ['seasonal', 'temporary', 'assumed-gap'].includes(i.reason)
+            ? ` · ${t.anchor} ${i.anchor} · ${i.age} ${t.age}`
+            : ''
+        }`;
       });
     if (!row.comparable) notes.push(t.breakWarning);
     if (row.yoyEstimated) notes.push(t.yoyEstimated);
@@ -146,7 +150,11 @@ export function ChartViews({
                         <div className="hint breakdown-note">
                           <span>
                             {text(item?.status ?? 'unavailable')}
-                            {item?.anchor ? ` · ${t.anchor} ${item.anchor}` : ''}
+                            {item?.status === 'estimated' ? ` · ${text(item.reason)}` : ''}
+                            {item?.anchor &&
+                            ['seasonal', 'temporary', 'assumed-gap'].includes(item.reason)
+                              ? ` · ${t.anchor} ${item.anchor}`
+                              : ''}
                           </span>
                           <span>
                             {t.contribution}:{' '}

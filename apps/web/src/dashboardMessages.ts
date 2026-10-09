@@ -6,7 +6,7 @@ const english = {
   skip: 'Skip to price chart',
   basketTitle: 'Your basket',
   search: 'Add products',
-  searchHint: 'Search in English or Japanese — rice, じゃがいも, detergent…',
+  searchHint: 'Search in English or Japanese — rice, じゃがいも, eggs…',
   noResults: 'No matching reviewed products. Try another name or item code.',
   storageUnavailable: 'Browser storage is unavailable. Changes last for this session only.',
   storageInvalid:
@@ -65,10 +65,32 @@ const english = {
   baselineUnavailable:
     'The baseline has no usable price. Percentage changes and index are unavailable.',
   catalogLimit:
-    'Reviewed groceries and household goods. Historical forms appear as separate products; their survey periods and specifications are preserved.',
+    'Search offers products usable throughout the selected city and dates. Other source records remain archived. Egg conversions and short gap estimates are labeled.',
   'variant-inactive': 'This product form was not surveyed in this period',
   interruptedPeriods: 'Interrupted survey periods',
   noCityPrices: 'No observed prices in this city',
+  noEligibleResults:
+    'No matching products can be compared throughout these dates in this city. Change the dates or estimate mode.',
+  rangeBlocked: 'Dates unchanged. These products cannot be compared throughout that range:',
+  modeBlocked: 'Estimate mode unchanged. These products need estimates:',
+  cityBlocked:
+    'City unchanged. These products are unavailable in that city for the selected dates:',
+  cityClamped: 'Dates adjusted to this city’s published coverage:',
+  selectionRecovery: 'Choose compatible dates or remove these products.',
+  selectionUnavailable: 'Unavailable for these dates. Change the dates or remove this product.',
+  waitForCity: 'Wait for the city data to load before changing the selection.',
+  detergentRemoved:
+    'Detergent products were removed from this basket as requested. Earlier saved baskets are preserved.',
+  eggsMigrated:
+    'Saved egg selections now use one egg series. Weight quantities use an estimated 60 g per egg.',
+  eggQuantityEstimate:
+    'Egg quantity estimated from weight at 60 g per egg. Enter a count to replace this estimate.',
+  'quantity-conversion': 'Estimated quantity conversion',
+  'quantity-assumption': 'Estimated egg quantity',
+  'assumed-gap': 'Estimated missing price',
+  'specification-break': 'Specification changed',
+  'invalid-range': 'Choose a valid date range',
+  'incomplete-history': 'Prices are unavailable in this range',
 };
 const japanese: typeof english = {
   ...ja,
@@ -76,7 +98,7 @@ const japanese: typeof english = {
   skip: '価格グラフへ移動',
   basketTitle: '買い物かご',
   search: '商品を追加',
-  searchHint: '日本語・英語で検索 — 米、じゃがいも、detergent…',
+  searchHint: '日本語・英語で検索 — 米、じゃがいも、eggs…',
   noResults: '該当する確認済み商品がありません。別の名称や品目コードで検索してください。',
   storageUnavailable: 'ブラウザーに保存できません。変更は現在の操作中のみ保持されます。',
   storageInvalid:
@@ -132,10 +154,32 @@ const japanese: typeof english = {
   chartDetails: '選択月の詳しい値',
   baselineUnavailable: '基準月の価格が利用できないため、変化率と指数を算出できません。',
   catalogLimit:
-    '確認済みの食品・日用品を収録。過去の異なる商品形態は別の商品として表示し、調査期間と銘柄を保持しています。',
+    '指定した都市・全期間で利用できる商品を検索できます。その他の元データは保持しています。卵の換算と短期欠測の推定は明示しています。',
   'variant-inactive': 'この期間はこの商品形態が調査されていません',
   interruptedPeriods: '調査期間に中断あり',
   noCityPrices: 'この都市の実測値はありません',
+  noEligibleResults:
+    'この都市・期間で全月を比較できる該当商品はありません。期間または推定値の設定を変更してください。',
+  rangeBlocked: '期間は変更していません。指定した全期間を比較できない商品：',
+  modeBlocked: '推定値の設定は変更していません。推定値が必要な商品：',
+  cityBlocked: '都市は変更していません。指定した都市・期間で利用できない商品：',
+  cityClamped: 'この都市の公表期間に合わせて期間を変更しました：',
+  selectionRecovery: '利用できる期間を選ぶか、該当商品を削除してください。',
+  selectionUnavailable:
+    'この期間では利用できません。期間を変更するか、この商品を削除してください。',
+  waitForCity: '都市のデータを読み込んでから変更してください。',
+  detergentRemoved:
+    '指定に従い、この買い物かごから洗剤を削除しました。以前の保存済みかごは保持しています。',
+  eggsMigrated:
+    '保存済みの卵を共通の系列に移行しました。重量の数量は卵1個60gとして推定しています。',
+  eggQuantityEstimate:
+    '卵1個60gとして重量から数量を推定しました。個数を入力すると、この推定を置き換えます。',
+  'quantity-conversion': '数量換算による推定',
+  'quantity-assumption': '卵の数量を推定',
+  'assumed-gap': '欠測価格を推定',
+  'specification-break': '銘柄の変更',
+  'invalid-range': '有効な期間を選択してください',
+  'incomplete-history': 'この期間の価格が利用できません',
 };
 
 export const dashboardMessages = { en: english, ja: japanese };

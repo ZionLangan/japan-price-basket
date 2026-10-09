@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Decimal from 'decimal.js';
 import { z } from 'zod';
 import {
@@ -11,7 +11,7 @@ import {
   type Locale,
   type Release,
 } from '../../../packages/domain/src/contracts';
-import { evaluate, months } from '../../../packages/domain/src/domain';
+import { evaluate, months, productEligibility } from '../../../packages/domain/src/domain';
 import { readState, writeState } from './storage';
 import { dashboardMessages } from './dashboardMessages';
 import { ProductSearch } from './ProductSearch';
@@ -127,6 +127,13 @@ function Workbench({ release }: { release: Release }) {
   const [preserveStored, setPreserveStored] = useState(initial.issue === 'storageInvalid');
   const [cityData, setCityData] = useState<CityData>();
   const [cityError, setCityError] = useState(false);
+  const [candidateCityId, setCandidateCityId] = useState<string>();
+  const [failedCityId, setFailedCityId] = useState<string>();
+  const candidateController = useRef<AbortController | null>(null);
+  const latest = useRef({ basket, observedOnly, endMode });
+  latest.current = { basket, observedOnly, endMode };
+  const [notice, setNotice] = useState<{ key: string; items?: string[]; range?: string }>();
+  const [migration, setMigration] = useState(initial.state?.migration);
   const [retry, setRetry] = useState(0);
   const t = dashboardMessages[locale];
   const selectedCity = release.cities.find((c) => c.id === basket.cityId)!;
@@ -149,6 +156,25 @@ function Workbench({ release }: { release: Release }) {
       ? t.invalidRange
       : '';
   const ready = cityData?.cityId === basket.cityId && !inputError;
+  const matchingCity = cityData?.cityId === basket.cityId ? cityData : undefined;
+  const itemIssues = useMemo(() => {
+    const issues: Record<string, string> = {};
+    if (!matchingCity) return issues;
+    for (const item of basket.items) {
+      const product = release.products.find((p) => p.id === item.productId)!;
+      const eligibility = productEligibility(
+        product,
+        matchingCity.series[product.id] ?? [],
+        basket.start,
+        basket.end,
+        observedOnly,
+      );
+      if (!eligibility.eligible)
+        issues[item.productId] =
+          `${t.selectionUnavailable}${eligibility.firstUnavailable ? ` (${eligibility.firstUnavailable})` : ''}`;
+    }
+    return issues;
+  }, [basket, matchingCity, release, observedOnly, t.selectionUnavailable]);
   const rows = useMemo(
     () => (ready ? evaluate(basket, release, cityData!, observedOnly) : []),
     [basket, release, cityData, observedOnly, ready],
@@ -171,7 +197,7 @@ function Workbench({ release }: { release: Release }) {
       .filter((i) => i.status !== 'observed')
       .map((i) => {
         const p = release.products.find((p) => p.id === i.productId)!;
-        return `${p.names[locale]}: ${text(i.reason)}${i.anchor ? ` · ${t.anchor} ${i.anchor} · ${i.age} ${t.age}` : ''}`;
+        return `${p.names[locale]}: ${text(i.reason)}${i.anchor && ['seasonal', 'temporary', 'assumed-gap'].includes(i.reason) ? ` · ${t.anchor} ${i.anchor} · ${i.age} ${t.age}` : ''}`;
       }) ?? [];
   const breakItems = release.products.filter(
     (p) =>
@@ -185,6 +211,7 @@ function Workbench({ release }: { release: Release }) {
     document.title = t.title;
   }, [locale, t.title]);
   useEffect(() => {
+    if (cityData?.cityId === basket.cityId && cityData.releaseId === release.releaseId) return;
     const controller = new AbortController();
     setCityData(undefined);
     setCityError(false);
@@ -197,6 +224,100 @@ function Workbench({ release }: { release: Release }) {
       });
     return () => controller.abort();
   }, [release, basket.cityId, retry]);
+  useEffect(() => () => candidateController.current?.abort(), []);
+  function blockedItems(candidate: Basket, data: CityData, mode: boolean) {
+    return candidate.items
+      .filter((item) => {
+        const product = release.products.find((p) => p.id === item.productId)!;
+        return !productEligibility(
+          product,
+          data.series[product.id] ?? [],
+          candidate.start,
+          candidate.end,
+          mode,
+        ).eligible;
+      })
+      .map((item) => item.productId);
+  }
+  function changeRange(range: Pick<Basket, 'start' | 'end'>, mode: EndMode) {
+    if (range.start > range.end) {
+      setBasket((previous) => ({ ...previous, ...range }));
+      setEndMode(mode);
+      setNotice(undefined);
+      return;
+    }
+    if (!matchingCity || candidateCityId) {
+      setNotice({ key: 'waitForCity' });
+      return;
+    }
+    const blocked = blockedItems({ ...basket, ...range }, matchingCity, observedOnly);
+    if (blocked.length) {
+      setNotice({ key: 'rangeBlocked', items: blocked });
+      return;
+    }
+    setBasket((previous) => ({ ...previous, ...range }));
+    setEndMode(mode);
+    setNotice(undefined);
+  }
+  function changeObservedOnly(mode: boolean) {
+    if (!matchingCity || candidateCityId) {
+      setNotice({ key: 'waitForCity' });
+      return;
+    }
+    const blocked = blockedItems(basket, matchingCity, mode);
+    if (blocked.length) {
+      setNotice({ key: 'modeBlocked', items: blocked });
+      return;
+    }
+    setObservedOnly(mode);
+    setNotice(undefined);
+  }
+  async function changeCity(cityId: string) {
+    candidateController.current?.abort();
+    setFailedCityId(undefined);
+    if (cityId === basket.cityId) {
+      setCandidateCityId(undefined);
+      return;
+    }
+    const controller = new AbortController();
+    candidateController.current = controller;
+    setCandidateCityId(cityId);
+    setNotice(undefined);
+    try {
+      const data = await loadCity(release, cityId, controller.signal);
+      if (controller.signal.aborted) return;
+      const current = latest.current;
+      const meta = release.cities.find((city) => city.id === cityId)!;
+      const clamp = (month: string) =>
+        month < meta.start ? meta.start : month > meta.end ? meta.end : month;
+      const range = { start: clamp(current.basket.start), end: clamp(current.basket.end) };
+      if (range.start > range.end) {
+        setNotice({ key: 'invalid-range' });
+        setCandidateCityId(undefined);
+        return;
+      }
+      const candidate = { ...current.basket, ...range, cityId };
+      const blocked = blockedItems(candidate, data, current.observedOnly);
+      if (blocked.length) {
+        setNotice({ key: 'cityBlocked', items: blocked });
+        setCandidateCityId(undefined);
+        return;
+      }
+      const clamped = range.start !== current.basket.start || range.end !== current.basket.end;
+      setBasket(candidate);
+      setCityData(data);
+      setCityError(false);
+      if (range.end !== release.end) setEndMode('fixed');
+      setNotice(
+        clamped ? { key: 'cityClamped', range: `${range.start} – ${range.end}` } : undefined,
+      );
+      setCandidateCityId(undefined);
+    } catch {
+      if (controller.signal.aborted) return;
+      setFailedCityId(cityId);
+      setCandidateCityId(undefined);
+    }
+  }
   useEffect(() => {
     if (preserveStored || inputError) return;
     try {
@@ -218,10 +339,23 @@ function Workbench({ release }: { release: Release }) {
     }
   }, [basket, saved, locale, observedOnly, endMode, release, inputError, preserveStored]);
   function resetBasket() {
-    setBasket(example(release, basket.cityId));
-    setEndMode('latest');
+    if (!matchingCity || candidateCityId) {
+      setNotice({ key: 'waitForCity' });
+      return;
+    }
+    const reset = example(release, basket.cityId);
+    reset.start = selectedCity.start;
+    reset.end = selectedCity.end;
+    if (matchingCity)
+      reset.items = reset.items.filter(
+        (item) => !blockedItems({ ...reset, items: [item] }, matchingCity, observedOnly).length,
+      );
+    setBasket(reset);
+    setEndMode(reset.end === release.end ? 'latest' : 'fixed');
     setPreserveStored(false);
     setStorageIssue('');
+    setMigration(undefined);
+    setNotice(undefined);
   }
   return (
     <div className="dashboard-shell">
@@ -234,8 +368,8 @@ function Workbench({ release }: { release: Release }) {
           <label htmlFor="city">{t.city}</label>
           <select
             id="city"
-            value={basket.cityId}
-            onChange={(e) => setBasket((b) => ({ ...b, cityId: e.target.value }))}
+            value={candidateCityId ?? basket.cityId}
+            onChange={(e) => void changeCity(e.target.value)}
           >
             {[false, true].map((historical) => (
               <optgroup
@@ -308,13 +442,31 @@ function Workbench({ release }: { release: Release }) {
       <ProductSearch
         products={release.products}
         selected={basket.items.map((i) => i.productId)}
-        city={ready ? cityData : undefined}
+        city={matchingCity}
+        start={basket.start}
         month={basket.end}
+        observedOnly={observedOnly}
+        loading={Boolean(candidateCityId)}
         historyStart={release.start}
         historyEnd={release.end}
         locale={locale}
         t={t}
         onAdd={(p) => {
+          if (
+            !matchingCity ||
+            candidateCityId ||
+            p.selectable === false ||
+            !productEligibility(
+              p,
+              matchingCity.series[p.id] ?? [],
+              basket.start,
+              basket.end,
+              observedOnly,
+            ).eligible
+          ) {
+            setNotice({ key: 'noEligibleResults' });
+            return;
+          }
           setBasket((b) =>
             b.items.some((i) => i.productId === p.id)
               ? b
@@ -328,6 +480,22 @@ function Workbench({ release }: { release: Release }) {
       {storageIssue && (
         <p className="notice storage-notice" role="status">
           {text(storageIssue)}
+        </p>
+      )}
+      {migration && (
+        <p className="notice storage-notice" role="status">
+          {migration.removedDetergents ? t.detergentRemoved : ''}{' '}
+          {migration.convertedEggs ? t.eggsMigrated : ''}
+        </p>
+      )}
+      {notice && (
+        <p className="notice storage-notice" role="status" data-testid="compatibility-notice">
+          {text(notice.key)}{' '}
+          {notice.items
+            ?.map((id) => release.products.find((p) => p.id === id)!.names[locale])
+            .join(', ')}
+          {notice.range}
+          {notice.items?.length ? ` ${t.selectionRecovery}` : ''}
         </p>
       )}
       <main className="workspace" id="price-workspace" tabIndex={-1}>
@@ -344,23 +512,28 @@ function Workbench({ release }: { release: Release }) {
             locale={locale}
             t={t}
             observedOnly={observedOnly}
-            onRange={(range, mode) => {
-              setBasket((previous) => ({ ...previous, ...range }));
-              setEndMode(mode);
-            }}
-            onObservedOnly={setObservedOnly}
+            onRange={changeRange}
+            onObservedOnly={changeObservedOnly}
           />
           {inputError && (
             <p className="error" role="alert">
               {inputError}
             </p>
           )}
-          {cityError && (
+          {(cityError || failedCityId) && (
             <div className="notice" role="alert">
-              {t.loadError} <button onClick={() => setRetry((r) => r + 1)}>{t.retry}</button>
+              {t.loadError}{' '}
+              {failedCityId && release.cities.find((c) => c.id === failedCityId)!.names[locale]}{' '}
+              <button
+                onClick={() =>
+                  failedCityId ? void changeCity(failedCityId) : setRetry((r) => r + 1)
+                }
+              >
+                {t.retry}
+              </button>
             </div>
           )}
-          {!cityData && !cityError && (
+          {((!cityData && !cityError) || candidateCityId) && (
             <p role="status" className="notice">
               {t.loadingCity}
             </p>
@@ -460,6 +633,7 @@ function Workbench({ release }: { release: Release }) {
           products={release.products}
           locale={locale}
           t={t}
+          issues={itemIssues}
           update={setBasket}
           onClear={() => setBasket((b) => ({ ...b, items: [] }))}
           onReset={resetBasket}

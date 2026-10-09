@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { selectMonth } from './helpers/dates';
+import { expectRange, selectMonth } from './helpers/dates';
 
 async function load(page: Page) {
   await page.goto('/');
@@ -139,7 +139,7 @@ test('Escape from the keyboard inspector returns focus to the chart without reop
   await expect(inspector).toContainText('2026-08');
 });
 
-test('seasonal inspection distinguishes an estimate and its actual anchor from an unavailable observation', async ({
+test('seasonal inspection retains its actual anchor when observed-only would break the basket', async ({
   page,
 }) => {
   await load(page);
@@ -155,79 +155,84 @@ test('seasonal inspection distinguishes an estimate and its actual anchor from a
   await expect(tooltip).toContainText(/5.*months old/);
   await expect(tooltip).toContainText('scheduled off-season');
 
-  await page.getByLabel('Observed prices only', { exact: true }).check();
+  await page.getByLabel('Observed prices only', { exact: true }).click();
+  await expect(page.getByLabel('Observed prices only', { exact: true })).not.toBeChecked();
+  await expect(page.getByTestId('compatibility-notice')).toContainText('Satsuma');
   await chart.focus();
   await chart.press('End');
   await expect(tooltip).toContainText('2026-08');
-  await expect(tooltip).toContainText('Unavailable');
+  await expect(tooltip).toContainText('Estimated');
   await expect(tooltip).toContainText('scheduled off-season');
-  await expect(tooltip).not.toContainText('¥1,055');
+  await expect(tooltip).toContainText('¥1,055');
   await expectCrosshair(page);
-  await expect(page.getByTestId('chart-active-point')).toHaveCount(0);
+  await expect(page.getByTestId('chart-active-point')).toBeVisible();
 });
 
-test('inspection retains absolute prices but explains why a specification break blocks comparison', async ({
+test('an incompatible range change retains the working basket and its inspected prices', async ({
   page,
 }) => {
   await load(page);
-  await addOnly(page, 'dish soap', /^Add: Dishwashing liquid · specified refill$/);
+  await addOnly(page, 'rice', /^Add: Koshihikari rice/);
+  await page.locator('#start-year').selectOption('2000');
+  await expectRange(page, '2024-09', '2026-08');
+  await expect(page.getByTestId('compatibility-notice')).toContainText('Koshihikari rice');
   const chart = page.locator('.price-chart');
   await chart.focus();
   await chart.press('End');
   const tooltip = page.getByTestId('chart-tooltip');
   await expect(tooltip).toContainText('2026-08');
-  await expect(tooltip).toContainText('¥366');
+  await expect(tooltip).toContainText('¥865');
   await expect(tooltip).toContainText('Observed');
-  await expect(tooltip).toContainText(/specification/i);
-  await expect(page.getByTestId('basket-change')).toHaveText('—');
+  await expect(tooltip).not.toContainText('Not comparable');
+  await expect(page.getByTestId('basket-change')).not.toHaveText('—');
   await page.getByRole('tab', { name: 'Price index', exact: true }).click();
   await page.locator('.price-chart').focus();
   await page.locator('.price-chart').press('End');
   await expect(tooltip).toContainText('2026-08');
-  await expect(tooltip).toContainText(/specification/i);
-  await expect(page.getByTestId('chart-active-point')).toHaveCount(0);
+  await expect(page.getByTestId('chart-active-point')).toBeVisible();
 });
 
-test('an entirely unsurveyed interval remains inspectable without inventing points or zero prices', async ({
+test('switching to a later-surveyed city starts inspection at its actual first month', async ({
   page,
 }) => {
   await load(page);
   await page.locator('#city').selectOption('14205');
-  await selectMonth(page, 'end', '2024-12');
-  await expect(page.getByTestId('latest-cost')).toHaveText('—');
+  await expectRange(page, '2025-01', '2026-08');
+  await expect(page.getByTestId('latest-cost')).not.toHaveText('—');
   const chart = page.locator('.price-chart');
   await expect(chart).toBeVisible();
   await chart.focus();
   await chart.press('Home');
   const tooltip = page.getByTestId('chart-tooltip');
-  await expect(tooltip).toContainText('2024-09');
-  await expect(tooltip).toContainText('Unavailable');
-  await expect(tooltip).toContainText('city not surveyed');
+  await expect(tooltip).toContainText('2025-01');
+  await expect(tooltip).toContainText('Observed');
   await expect(tooltip).not.toContainText('¥0');
-  await expect(chart.locator('circle[data-month]')).toHaveCount(0);
-  await expect(page.getByTestId('chart-active-point')).toHaveCount(0);
+  await expect(chart.locator('circle[data-month="2024-09"]')).toHaveCount(0);
+  await expect(page.getByTestId('chart-active-point')).toBeVisible();
   await chart.press('End');
-  await expect(tooltip).toContainText('2024-12');
+  await expect(tooltip).toContainText('2026-08');
 });
 
-test('an unavailable baseline blocks the index while retaining the inspected month’s observed status', async ({
+test('a later-surveyed city has a real baseline and usable index after its dates are clamped', async ({
   page,
 }) => {
   await load(page);
   await page.locator('#city').selectOption('14205');
+  await expectRange(page, '2025-01', '2026-08');
   await page.getByRole('tab', { name: 'Price index', exact: true }).click();
   const chart = page.locator('.price-chart');
   await expect(chart).toBeVisible();
   await chart.focus();
-  await chart.press('End');
+  await chart.press('Home');
   const inspector = page.getByTestId('chart-tooltip');
-  await expect(inspector).toContainText('2026-08');
+  await expect(inspector).toContainText('2025-01');
   await expect(inspector.locator('.chart-status')).toHaveText('Observed');
-  await expect(inspector.locator('.chart-readout-value')).toHaveText('—');
-  await expect(inspector).toContainText('The baseline has no usable price.');
-  await expect(inspector).toContainText('Percentage changes and index are unavailable.');
+  await expect(inspector.locator('.chart-readout-value')).toHaveText('100');
+  await chart.press('End');
+  await expect(inspector).toContainText('2026-08');
+  await expect(inspector.locator('.chart-readout-value')).not.toHaveText('—');
   await expectCrosshair(page);
-  await expect(page.getByTestId('chart-active-point')).toHaveCount(0);
+  await expect(page.getByTestId('chart-active-point')).toBeVisible();
 });
 
 test('a pointer gesture ending outside the plot leaves later keyboard inspection usable', async ({

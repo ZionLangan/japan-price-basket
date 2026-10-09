@@ -63,11 +63,11 @@ test('search supports keyboard selection, categories, no results and Escape', as
   await expect(page.getByText('No matching reviewed products.', { exact: false })).toBeVisible();
   await page.locator('#search').fill('');
   await page.locator('#category').selectOption('household');
-  // Current and historical household forms are all searchable.
-  await expect(page.getByRole('listbox').getByRole('option')).toHaveCount(7);
+  // Only usable household goods appear; retired detergents remain archived.
+  await expect(page.getByRole('listbox').getByRole('option')).toHaveCount(1);
   await expect(
     page.getByRole('listbox').getByRole('option', { name: /Powder laundry/i }),
-  ).toBeVisible();
+  ).toHaveCount(0);
   await page.locator('#search').focus();
   await page.locator('#search').press('Escape');
   await expect(page.locator('#search')).toHaveAttribute('aria-expanded', 'false');
@@ -113,35 +113,33 @@ test('seasonal prices retain actual anchors and observed-only never drops goods'
   await expect(page.locator('.price-chart line[stroke-dasharray]')).not.toHaveCount(0);
   await page.getByRole('tab', { name: 'Monthly data', exact: true }).click();
   await expect(page.locator('.monthly-table tbody tr').last()).toContainText('2026-03');
-  await page.getByLabel('Observed prices only', { exact: true }).check();
-  await expect(page.getByTestId('latest-cost')).toHaveText('—');
-  await expect(page.locator('#qty-satsuma-mandarins')).not.toHaveValue('');
-  await page.getByLabel('Observed prices only', { exact: true }).uncheck();
+  await page.getByLabel('Observed prices only', { exact: true }).click();
+  await expect(page.getByLabel('Observed prices only', { exact: true })).not.toBeChecked();
+  await expect(page.getByTestId('compatibility-notice')).toContainText('need estimates');
   await expect(page.getByTestId('latest-cost')).not.toHaveText('—');
+  await expect(page.locator('#qty-satsuma-mandarins')).not.toHaveValue('');
 });
 
-test('real specification breaks split chart lines and block comparisons until baseline moves', async ({
+test('date changes cannot introduce an unresolved specification break into a working basket', async ({
   page,
 }) => {
   await load(page);
   await page.getByRole('button', { name: 'Clear basket', exact: true }).click();
-  await add(page, 'dish soap', /^Add: Dishwashing liquid · specified refill$/);
-  await expect(page.getByTestId('basket-change')).toHaveText('—');
-  await expect(page.locator('.quality-summary')).toContainText('Comparison unavailable');
+  await add(page, 'rice', /^Add: Koshihikari/);
+  await expect(page.getByTestId('basket-change')).not.toHaveText('—');
   await expect(page.locator('.price-chart circle')).toHaveCount(24);
-  await expect(page.locator('.price-chart line[stroke-width="2.5"]')).toHaveCount(22);
+  await expect(page.locator('.price-chart line[stroke-width="2.5"]')).toHaveCount(23);
   await selectMonth(page, 'start', '2025-10');
   await expect(page.getByTestId('basket-change')).not.toHaveText('—');
   await page.locator('.range-presets button').filter({ hasText: /^All$/ }).click();
-  await expect(page.getByTestId('basket-change')).toHaveText('—');
+  await expectRange(page, '2025-10', '2026-08');
+  await expect(page.getByTestId('compatibility-notice')).toContainText('Dates unchanged');
+  await expect(page.getByTestId('basket-change')).not.toHaveText('—');
   await page.locator('#city').selectOption('14205');
   await page.getByRole('tab', { name: 'Monthly data', exact: true }).click();
-  await expect(page.locator('.monthly-table tbody tr').first()).toContainText(
-    'This product form was not surveyed',
-  );
-  await expect(
-    page.locator('.monthly-table tbody tr').filter({ hasText: '2024-09' }),
-  ).toContainText('city not surveyed');
+  await expect(page.locator('table caption')).toContainText('Fujisawa');
+  await expect(page.locator('.monthly-table tbody tr').first()).toContainText('2025-10');
+  await expect(page.getByTestId('latest-cost')).not.toHaveText('—');
 });
 
 test('invalid quantities and dates prevent misleading charts while preserving the last valid basket', async ({
@@ -182,7 +180,8 @@ test('blocked storage and a failed city file preserve the session with retry', a
   await page.route('**/cities/01100.json', (r) => r.fulfill({ status: 503, body: 'Unavailable' }));
   await page.locator('#city').selectOption('01100');
   await expect(page.getByRole('alert')).toContainText('bundled data');
-  await expect(page.getByTestId('latest-cost')).toHaveText('—');
+  await expect(page.getByTestId('latest-cost')).toHaveText('¥1,815');
+  await expect(page.locator('#city')).toHaveValue('13100');
   await page.unroute('**/cities/01100.json');
   await page.getByRole('button', { name: 'Retry', exact: true }).click();
   await expect(page.getByRole('alert')).toHaveCount(0);
@@ -222,6 +221,7 @@ test('unit presets and rapid city switching keep the correct city and quantities
   page,
 }) => {
   await load(page);
+  await selectMonth(page, 'start', '2026-01');
   await add(page, 'milk', /^Add: Milk/);
   await page.locator('#qty-carton-milk').fill('0.5');
   await page.locator('#unit-carton-milk').selectOption('mL');
@@ -237,7 +237,7 @@ test('unit presets and rapid city switching keep the correct city and quantities
   await page.locator('#city').selectOption('47201');
   await page.getByRole('tab', { name: 'Monthly data', exact: true }).click();
   await expect(page.locator('table caption')).toContainText('Naha');
-  await expect(page.locator('.monthly-table tbody tr')).toHaveCount(24);
+  await expect(page.locator('.monthly-table tbody tr')).toHaveCount(8);
 });
 
 test('desktop fits its viewport and long basket and data lists scroll inside panels', async ({

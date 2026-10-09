@@ -8,7 +8,13 @@ it('validates all 320 source months, distinct historical identities and exact ob
   expect(release.end).toBe('2026-08');
   expect(release.cities.filter((c) => !c.historical)).toHaveLength(81);
   expect(release.cities.some((c) => c.historical)).toBe(true);
-  expect(release.products).toHaveLength(28);
+  expect(release.products).toHaveLength(26);
+  expect(release.products.filter((p) => p.selectable !== false)).toHaveLength(21);
+  expect(
+    release.products
+      .filter((p) => p.selectable === false)
+      .every((p) => ['4431', '4441'].includes(p.code)),
+  ).toBe(true);
   expect(new Set(release.cities.map((c) => c.id)).size).toBe(release.cities.length);
   expect(new Set(release.products.map((p) => p.id)).size).toBe(release.products.length);
   expect(new Set(release.products.map((p) => p.code)).size).toBe(20);

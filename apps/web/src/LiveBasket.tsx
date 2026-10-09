@@ -12,6 +12,7 @@ export function LiveBasket({
   products,
   locale,
   t,
+  issues,
   update,
   onClear,
   onReset,
@@ -20,6 +21,7 @@ export function LiveBasket({
   products: Product[];
   locale: Locale;
   t: DashboardText;
+  issues: Record<string, string>;
   update: (basket: Basket) => void;
   onClear: () => void;
   onReset: () => void;
@@ -29,7 +31,9 @@ export function LiveBasket({
   function patch(id: string, change: Partial<Basket['items'][number]>) {
     update({
       ...basket,
-      items: basket.items.map((i) => (i.productId === id ? { ...i, ...change } : i)),
+      items: basket.items.map((i) =>
+        i.productId === id ? { ...i, ...change, quantityEstimated: undefined } : i,
+      ),
     });
   }
   return (
@@ -145,6 +149,8 @@ export function LiveBasket({
                   {t.invalidQuantity}
                 </p>
               )}
+              {issues[p.id] && <p className="notice">{issues[p.id]}</p>}
+              {item.quantityEstimated && <p className="notice">{t.eggQuantityEstimate}</p>}
               <div
                 className="source-popover product-definition"
                 id={`definition-${p.id}`}
@@ -165,6 +171,7 @@ export function LiveBasket({
                     ×
                   </button>
                 </div>
+                {p.comparisonNote && <p className="notice">{p.comparisonNote[locale]}</p>}
                 {p.segments.map((s, index) => (
                   <div key={s.id}>
                     <p className="hint">

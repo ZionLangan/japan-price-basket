@@ -1,11 +1,15 @@
 """Synthetic publication fixtures verify review boundaries; never public prices."""
 import copy
 import hashlib
+import gzip
+import json
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from scripts.review_recent_prices import (
     make_fixture,
+    conversion_hash,
     specification_hash,
     survey_months,
     validate_reviewed_specification,
@@ -26,6 +30,67 @@ def approval(spec, month, unit, quantity, source_unit):
 
 
 class HistoricalReviewContracts(unittest.TestCase):
+    def reviewed_egg(self):
+        review = json.loads((Path(__file__).resolve().parents[1] / "data/catalog-review.json").read_text(encoding="utf-8"))
+        mapping = next(p for p in review["products"] if p["id"] == "mixed-size-eggs")
+        spec = {"name": "鶏卵", "definition": "1個約60g", "detail": "", "unit": "1kg", "months": ""}
+        return copy.deepcopy(mapping), spec
+
+    def test_only_the_dated_60g_egg_assumption_allows_mass_to_count(self):
+        mapping, spec = self.reviewed_egg()
+        admitted = validate_reviewed_specification(mapping, {"unit": "(1kg)"}, spec, "2000-01")
+        self.assertEqual(mapping["unit"], "count")
+        self.assertEqual((admitted["quoteQuantity"], admitted["quoteUnit"]), ("1", "kg"))
+        self.assertEqual(admitted["quantityConversion"]["factor"], "0.06")
+        self.assertTrue(admitted["quantityConversion"]["estimated"])
+        missing = copy.deepcopy(mapping)
+        del missing["reviewedSpecifications"][0]["quantityConversion"]
+        with self.assertRaisesRegex(ValueError, "Incompatible quote dimension"):
+            validate_reviewed_specification(missing, {"unit": "(1kg)"}, spec, "2000-01")
+
+    def test_changed_conversion_metadata_and_unrelated_conversions_fail_review(self):
+        mapping, spec = self.reviewed_egg()
+        for field, value in [("factor", "0.067"), ("estimated", False), ("from", "kg"),
+                             ("to", "count"), ("evidenceUrl", "https://example.invalid/unreviewed")]:
+            changed = copy.deepcopy(mapping)
+            changed["reviewedSpecifications"][0]["quantityConversion"][field] = value
+            with self.assertRaisesRegex(ValueError, "Unreviewed conversion metadata"):
+                validate_reviewed_specification(changed, {"unit": "(1kg)"}, spec, "2000-01")
+        for id_, factor in [("synthetic-unrelated-product", "0.06"), ("mixed-size-eggs", "0.067")]:
+            changed = copy.deepcopy(mapping)
+            changed["id"] = id_
+            admitted = changed["reviewedSpecifications"][0]
+            admitted["quantityConversion"]["factor"] = factor
+            admitted["quantityConversionHash"] = conversion_hash(admitted["quantityConversion"])
+            with self.assertRaisesRegex(ValueError, "Unsupported reviewed conversion"):
+                validate_reviewed_specification(changed, {"unit": "(1kg)"}, spec, "2000-01")
+
+    def test_published_egg_merge_preserves_native_prices_and_unique_cells(self):
+        fixture = json.loads(gzip.decompress((Path(__file__).resolve().parents[1] /
+                                             "data/fixtures/recent-approved.json.gz").read_bytes()))
+        eggs = [p for p in fixture["products"] if p["code"] == "1341"]
+        self.assertEqual([p["id"] for p in eggs], ["mixed-size-eggs"])
+        self.assertEqual(eggs[0]["missingPriceEstimate"],
+                         {"maxMonths": 2, "tokens": ["-"], "allowEquivalentSegments": True})
+        self.assertEqual(eggs[0]["segments"][0]["quoteUnit"], "kg")
+        self.assertTrue(eggs[0]["segments"][0]["quantityConversion"]["estimated"])
+        tokyo = fixture["series"]["13100"]["mixed-size-eggs"]
+        native = next(o for o in tokyo if o["month"] == "2000-01")
+        self.assertEqual((native["raw"], native["price"], native["status"], native["sourceUnit"]),
+                         (302, "302", "observed", "(1kg)"))
+        cells = set()
+        for products in fixture["series"].values():
+            for rows in products.values():
+                for row in rows:
+                    if "sourceColumn" not in row:
+                        continue
+                    cell = (row["sourceId"], row["sourceSheet"], row["sourceRow"], row["sourceColumn"])
+                    self.assertNotIn(cell, cells, "A native cell was duplicated under multiple variants")
+                    cells.add(cell)
+        self.assertEqual(len(cells), 495360)
+        self.assertTrue(all(p.get("selectable") is False for p in fixture["products"]
+                            if p["code"] in {"4431", "4441"}))
+
     def test_calendar_comes_from_explicit_months_not_a_missing_token(self):
         self.assertEqual(survey_months({"months": "１月～３月，\n９月～１２月"}), [1, 2, 3, 9, 10, 11, 12])
         self.assertEqual(survey_months({"months": "6月～7月"}), [6, 7])
@@ -145,6 +210,14 @@ class HistoricalReviewContracts(unittest.TestCase):
         staging["snapshots"][0]["prices"][0]["values"]["00001-pre202101"] = "MYSTERY"
         with patch("pathlib.Path.read_bytes", return_value=SYNTHETIC_BYTES):
             with self.assertRaisesRegex(ValueError, "Unexpected price token"):
+                make_fixture(staging, review)
+
+    def test_egg_market_gap_exception_cannot_leak_to_an_unreviewed_product(self):
+        staging, review = self.staging()
+        review["products"][0]["missingPriceEstimate"] = {
+            "maxMonths": 2, "tokens": ["-"], "allowEquivalentSegments": True}
+        with patch("pathlib.Path.read_bytes", return_value=SYNTHETIC_BYTES):
+            with self.assertRaisesRegex(ValueError, "Unreviewed missing-price estimate rule"):
                 make_fixture(staging, review)
 
     def test_nonpositive_prices_booleans_and_changed_evidence_fail(self):

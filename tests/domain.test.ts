@@ -6,6 +6,7 @@ import {
   resolvePrice,
   searchProducts,
   months,
+  productEligibility,
 } from '../packages/domain/src/domain';
 import {
   validateBasket,
@@ -352,5 +353,144 @@ describe('synthetic gap-policy edge cases', () => {
         false,
       ).price,
     ).toBeNull();
+  });
+});
+
+describe('compatible public baskets and source-based egg conversion', () => {
+  const eggs = release.products.find((p) => p.id === 'mixed-size-eggs')!;
+  const eggBasket: Basket = {
+    ...basket,
+    start: '2000-01',
+    items: [{ productId: eggs.id, quantity: '10', unit: 'count' }],
+  };
+  it('keeps original kg observations and estimates count costs with the source 60g definition', () => {
+    const results = evaluate(eggBasket, release, city());
+    expect(results).toHaveLength(320);
+    expect(results[0].items[0].price).toBe('302');
+    expect(results[0].cost).toBe('181.2');
+    expect(results[0].status).toBe('estimated');
+    expect(results[0].items[0].reason).toBe('quantity-conversion');
+    expect(results.at(-1)?.cost).toBe('321');
+    expect(results.at(-1)?.change).not.toBeNull();
+    expect(results.every((r) => r.cost !== null && r.comparable)).toBe(true);
+    expect(results.filter((r) => r.items[0].reason === 'quantity-conversion')).toHaveLength(30);
+    expect(evaluate(eggBasket, release, city(), true)[0].status).toBe('estimated');
+    expect(results.find((r) => r.month === '2001-01')?.yoyEstimated).toBe(true);
+    expect(results.find((r) => r.month === '2003-01')?.yoyEstimated).toBe(true);
+    const migrated = evaluate(
+      {
+        ...eggBasket,
+        start: '2026-08',
+        items: [
+          { productId: eggs.id, quantity: '16.666667', unit: 'count', quantityEstimated: true },
+        ],
+      },
+      release,
+      city(),
+    );
+    expect(migrated[0].status).toBe('estimated');
+    expect(migrated[0].items[0].reason).toBe('quantity-assumption');
+  });
+  it('uses prior actual egg prices for six source market gaps without replacing raw absence', () => {
+    for (const [cityId, period, anchor] of [
+      ['01100', '2010-11', '2010-10'],
+      ['04100', '2011-03', '2011-02'],
+      ['45201', '2004-12', '2004-11'],
+      ['45201', '2005-01', '2004-11'],
+      ['35203-pre200510', '2004-01', '2003-12'],
+      ['04202', '2011-03', '2011-02'],
+    ]) {
+      const sourceCity = city(cityId);
+      const raw = sourceCity.series[eggs.id].find((r) => r.month === period)!;
+      expect(raw.raw).toBe('-');
+      expect(raw.status).toBe('unavailable');
+      expect(raw.price).toBeNull();
+      const actual = resolvePrice(eggs, sourceCity.series[eggs.id], period, false);
+      expect(actual.status).toBe('estimated');
+      expect(actual.reason).toBe('assumed-gap');
+      expect(actual.anchor).toBe(anchor);
+      expect(actual.price).toBe(sourceCity.series[eggs.id].find((r) => r.month === anchor)?.price);
+      expect(resolvePrice(eggs, sourceCity.series[eggs.id], period, true).price).toBeNull();
+    }
+  });
+  it('rejects missing-price assumptions past the cap, for unknown tokens, or across unresolved breaks', () => {
+    const ruleProduct: Product = {
+      ...syntheticProduct,
+      missingPriceEstimate: { maxMonths: 2, tokens: ['-'], allowEquivalentSegments: true },
+    };
+    const rows = [
+      synthetic('2024-01', 'observed', '100'),
+      ...['2024-02', '2024-03', '2024-04'].map((m) => ({
+        ...synthetic(m, 'unavailable'),
+        raw: '-',
+      })),
+    ];
+    expect(resolvePrice(ruleProduct, rows, '2024-03', false).price).toBe('100');
+    expect(resolvePrice(ruleProduct, rows, '2024-04', false).price).toBeNull();
+    expect(
+      resolvePrice(ruleProduct, [rows[0], { ...rows[1], raw: '..' }], '2024-02', false).price,
+    ).toBeNull();
+    const later = {
+      ...ruleProduct.segments[0],
+      id: 'synthetic-later',
+      start: '2024-02',
+      continuityFromPrevious: false,
+    };
+    const changed = {
+      ...ruleProduct,
+      segments: [{ ...ruleProduct.segments[0], end: '2024-01' }, later],
+    };
+    expect(
+      resolvePrice(changed, [rows[0], { ...rows[1], segmentId: later.id }], '2024-02', false).price,
+    ).toBeNull();
+    const equivalent = {
+      ...changed,
+      segments: [
+        changed.segments[0],
+        { ...later, continuityFromPrevious: true, quoteQuantity: '10', quoteUnit: 'kg' as const },
+      ],
+    };
+    const carried = resolvePrice(
+      equivalent,
+      [rows[0], { ...rows[1], segmentId: later.id }],
+      '2024-02',
+      false,
+    );
+    expect(carried.segmentId).toBe('synthetic-segment');
+    expect(quantityCost(carried.price!, '1', 'kg', equivalent, equivalent.segments[0])).toBe('100');
+  });
+  it('gates the whole city/period, continuity, inactive forms, estimates and retirement independently', () => {
+    const tokyo = city();
+    const eligible = release.products.filter(
+      (p) => productEligibility(p, tokyo.series[p.id], release.start, release.end).eligible,
+    );
+    expect(eligible).toHaveLength(10);
+    expect(eligible.map((p) => p.id)).toContain(eggs.id);
+    expect(
+      productEligibility(eggs, tokyo.series[eggs.id], release.start, release.end).estimatedMonths,
+    ).toBe(30);
+    const detergent = release.products.find((p) => p.id === 'liquid-laundry-detergent')!;
+    expect(
+      productEligibility(detergent, tokyo.series[detergent.id], '2025-01', '2026-08').reason,
+    ).toBe('retired-product');
+    const rice = release.products.find((p) => p.id === 'koshihikari-rice')!;
+    expect(productEligibility(rice, tokyo.series[rice.id], release.start, release.end).reason).toBe(
+      'specification-break',
+    );
+    expect(productEligibility(rice, tokyo.series[rice.id], '2024-09', release.end).eligible).toBe(
+      true,
+    );
+    expect(
+      productEligibility(bread, city('14205').series[bread.id], release.start, release.end)
+        .eligible,
+    ).toBe(false);
+    const mandarin = release.products.find((p) => p.id === 'satsuma-mandarins')!;
+    expect(
+      productEligibility(mandarin, tokyo.series[mandarin.id], '2025-09', release.end).eligible,
+    ).toBe(true);
+    expect(
+      productEligibility(mandarin, tokyo.series[mandarin.id], '2025-09', release.end, true)
+        .eligible,
+    ).toBe(false);
   });
 });

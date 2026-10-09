@@ -33,6 +33,11 @@ def specification_hash(spec):
     })).hexdigest()
 
 
+def conversion_hash(conversion):
+    """Fingerprint an explicitly reviewed conversion assumption independently."""
+    return hashlib.sha256(canonical(conversion)).hexdigest()
+
+
 def survey_months(spec):
     """Read an explicit month list/range; unknown calendar wording fails review."""
     text = normalized(spec.get("months")).replace("～", "~")
@@ -68,7 +73,25 @@ def validate_reviewed_specification(mapping, row, spec, month):
         raise ValueError(f"Unreviewed quote unit {mapping['id']}, {month}: {row['unit']}")
     if survey_months(spec) != approval["surveyMonths"]:
         raise ValueError(f"Unreviewed seasonal schedule {mapping['id']}, {month}")
-    if approval["quoteUnit"] != mapping["unit"]:
+    conversion = approval.get("quantityConversion")
+    if conversion is not None:
+        # The owner explicitly approved this one historical approximation.
+        # It must not become a general permission to infer mass/count ratios.
+        if approval.get("quantityConversionHash") != conversion_hash(conversion):
+            raise ValueError(f"Unreviewed conversion metadata {mapping['id']}, {month}")
+        if not (
+                mapping["id"] == "mixed-size-eggs" and mapping["code"] == "1341"
+                and "2000-01" <= month <= "2002-06"
+                and mapping["unit"] == "count" and approval["quoteUnit"] == "kg"
+                and str(approval["quoteQuantity"]) == "1"
+                and normalized(spec["unit"]) == "1kg"
+                and normalized(spec["definition"]) == "1個約60g"
+                and conversion.get("from") == "count" and conversion.get("to") == "kg"
+                and conversion.get("factor") == "0.06" and conversion.get("estimated") is True
+                and conversion.get("evidenceUrl") == "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+                and all(conversion.get("description", {}).get(language) for language in ["en", "ja"])):
+            raise ValueError(f"Unsupported reviewed conversion {mapping['id']}, {month}")
+    elif approval["quoteUnit"] != mapping["unit"]:
         raise ValueError(f"Incompatible quote dimension {mapping['id']}, {month}")
     quantity = str(approval["quoteQuantity"])
     if not re.fullmatch(r"(?:0|[1-9]\d*)(?:\.\d{1,6})?", quantity) or not 0 < float(quantity) <= 10000:
@@ -154,6 +177,11 @@ def make_fixture(staging, review):
     missing_tokens = set(review["reviewedMissingTokens"])
     for mapping in mappings:
         code = mapping["code"]
+        if mapping.get("missingPriceEstimate") is not None and not (
+                code == "1341" and mapping["id"] == "mixed-size-eggs"
+                and mapping["missingPriceEstimate"] == {
+                    "maxMonths": 2, "tokens": ["-"], "allowEquivalentSegments": True}):
+            raise ValueError(f"Unreviewed missing-price estimate rule {mapping['id']}")
         segments, all_rows = [], []
         last_approval = None
         for snapshot in snapshots:
@@ -180,6 +208,8 @@ def make_fixture(staging, review):
                     "continuityEvidence": approval["continuityEvidence"],
                     "reviewHash": approval["specificationHash"],
                 })
+                if approval.get("quantityConversion") is not None:
+                    segments[-1]["quantityConversion"] = approval["quantityConversion"]
                 last_approval = approval
             segments[-1]["end"] = period
             all_rows.append((snapshot, row, segments[-1]))
@@ -196,6 +226,9 @@ def make_fixture(staging, review):
             "quoteLabel": latest["quoteLabel"], "units": units,
             "presets": mapping["presets"], "segments": segments,
         })
+        for field in ["selectable", "comparisonNote", "missingPriceEstimate"]:
+            if field in mapping:
+                products[-1][field] = mapping[field]
         counts = Counter()
         for city in cities:
             observations = []
@@ -241,7 +274,7 @@ def make_fixture(staging, review):
         report.append({"id": mapping["id"], "code": code, "activeMonths": len(all_rows),
                        "segments": segments, "counts": dict(counts)})
     fixture = {
-        "schemaVersion": 1, "policyVersion": "1.0", "start": start, "end": end,
+        "schemaVersion": 1, "policyVersion": review.get("policyVersion", "1.0"), "start": start, "end": end,
         "builtAt": max(s["retrievedAt"] for s in sources),
         "sourceName": {"en": "Statistics Bureau of Japan · Retail Price Survey (Trend)",
                        "ja": "総務省統計局 · 小売物価統計調査（動向編）"},

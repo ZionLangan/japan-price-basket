@@ -1,6 +1,6 @@
 {
-  "policy_version": "1.0",
-  "updated_at": "2026-10-06",
+  "policy_version": "1.1",
+  "updated_at": "2026-10-10",
   "primary_source": "Statistics Bureau Retail Price Survey Trend Survey",
   "ingestion_start_month": "2000-01",
   "default_gap_mode": "allow_reviewed_estimates",
@@ -33,12 +33,75 @@
     "allow_replacement_variant_bridge": false,
     "require_positive_baseline_cost": true
   },
-  "point_statuses": ["observed", "estimated_temporary", "estimated_seasonal", "unavailable", "pending"],
-  "basket_statuses": ["observed", "estimated", "unavailable"],
+  "point_statuses": [
+    "observed",
+    "estimated_temporary",
+    "estimated_seasonal",
+    "unavailable",
+    "pending",
+    "estimated_quantity_conversion"
+  ],
+  "basket_statuses": [
+    "observed",
+    "estimated",
+    "unavailable"
+  ],
   "unavailable_price_value": null,
   "decimal_wire_format": "string",
-  "search_fields": ["name_en", "name_ja", "reviewed_aliases", "reviewed_readings", "family", "category", "form", "specification_terms", "explicit_source_brands", "official_item_code"],
-  "normalization": ["NFKC", "English case folding", "whitespace normalization"],
+  "search_fields": [
+    "name_en",
+    "name_ja",
+    "reviewed_aliases",
+    "reviewed_readings",
+    "family",
+    "category",
+    "form",
+    "specification_terms",
+    "explicit_source_brands",
+    "official_item_code"
+  ],
+  "normalization": [
+    "NFKC",
+    "English case folding",
+    "whitespace normalization"
+  ],
   "catalog_admission_requires_resolved_local_specifications": true,
-  "source_prices_overwritten_by_estimates": false
+  "source_prices_overwritten_by_estimates": false,
+  "public_catalog": {
+    "require_complete_usable_selected_city_period": true,
+    "require_reviewed_comparison_continuity": true,
+    "guard_changes_that_invalidate_current_basket": true,
+    "excluded_source_codes": [
+      "4431",
+      "4441"
+    ]
+  },
+  "product_exceptions": {
+    "mixed-size-eggs": {
+      "authorized_by": "Owner request on 2026-10-10: estimated conversion in main basket and generic egg history",
+      "comparison_basis": "Generic egg count; original size definitions remain visible, not quality-adjusted CPI",
+      "historical_quantity_conversion": {
+        "start": "2000-01",
+        "end": "2002-06",
+        "from": "count",
+        "to": "kg",
+        "factor": "0.06",
+        "estimated": true,
+        "basis": "Source specification: approximately 60 g per whole egg",
+        "source_url": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+      },
+      "missing_price_estimate": {
+        "tokens": [
+          "-"
+        ],
+        "max_anchor_age_calendar_months": 2,
+        "allow_approved_equivalent_segments": true,
+        "anchor_quote_used_for_calculation": true,
+        "estimated": true,
+        "allow_before_first_observation": false,
+        "allow_chaining": false
+      },
+      "observed_only": "Exclude missing-price carry; retain explicitly estimated quantity conversion of actual observed kg prices"
+    }
+  }
 }

@@ -58,16 +58,26 @@ export function quantityCost(
 ) {
   const quoteUnit = segment?.quoteUnit ?? product.unit;
   const quoteQuantity = segment?.quoteQuantity ?? product.quoteQuantity;
+  const conversion = segment?.quantityConversion;
   if (
     !product.units.includes(unit as Product['unit']) ||
     !measures[unit] ||
     measures[unit].dimension !== measures[product.unit].dimension ||
-    measures[quoteUnit].dimension !== measures[product.unit].dimension
+    (conversion
+      ? conversion.from !== product.unit ||
+        measures[conversion.to].dimension !== measures[quoteUnit].dimension
+      : measures[quoteUnit].dimension !== measures[product.unit].dimension)
   )
     throw new Error('invalidUnit');
+  const quotedMeasure = conversion
+    ? new Decimal(quantity)
+        .mul(measures[unit].factor)
+        .div(measures[product.unit].factor)
+        .mul(conversion.factor)
+        .mul(measures[conversion.to].factor)
+    : new Decimal(quantity).mul(measures[unit].factor);
   return new Decimal(price)
-    .mul(quantity)
-    .mul(measures[unit].factor)
+    .mul(quotedMeasure)
     .div(new Decimal(quoteQuantity).mul(measures[quoteUnit].factor))
     .toString();
 }
@@ -107,15 +117,24 @@ export function resolvePrice(
       reason: 'observed',
       anchor: month,
     };
-  if (observedOnly || !['seasonal', 'temporary'].includes(row.status)) return absent;
+  const assumption = product.missingPriceEstimate;
+  const assumedGap =
+    row.status === 'unavailable' && assumption?.tokens.includes(String(row.raw).trim());
+  if (observedOnly || (!assumedGap && !['seasonal', 'temporary'].includes(row.status)))
+    return absent;
   const anchor = rows
     .filter(
       (r) =>
         r.month < month &&
         r.status === 'observed' &&
         r.price !== null &&
-        r.segmentId === segment.id &&
-        r.month >= segment.start,
+        product.segments.some(
+          (s) => s.id === r.segmentId && s.start <= r.month && s.end >= r.month,
+        ) &&
+        (r.segmentId === segment.id ||
+          (assumedGap &&
+            assumption?.allowEquivalentSegments &&
+            !hasBreak(product, r.month, month))),
     )
     .sort((a, b) => b.month.localeCompare(a.month))[0];
   if (!anchor) return absent;
@@ -123,7 +142,20 @@ export function resolvePrice(
   const intervening = months(anchor.month, month)
     .slice(1)
     .map((m) => rows.find((r) => r.month === m));
-  if (row.status === 'temporary') {
+  if (assumedGap && assumption) {
+    if (
+      age > assumption.maxMonths ||
+      intervening.some(
+        (r) =>
+          !r ||
+          r.status !== 'unavailable' ||
+          !assumption.tokens.includes(String(r.raw).trim()) ||
+          (!assumption.allowEquivalentSegments && r.segmentId !== anchor.segmentId) ||
+          hasBreak(product, anchor.month, r.month),
+      )
+    )
+      return absent;
+  } else if (row.status === 'temporary') {
     if (
       age > 2 ||
       intervening.some((r) => !r || r.status !== 'temporary' || r.segmentId !== segment.id)
@@ -147,9 +179,10 @@ export function resolvePrice(
     ...absent,
     status: 'estimated',
     price: anchor.price,
-    reason: row.status,
+    reason: assumedGap ? 'assumed-gap' : row.status,
     anchor: anchor.month,
     age,
+    segmentId: anchor.segmentId,
     sourceId: anchor.sourceId,
     sourceUnit: anchor.sourceUnit,
     sourceRow: anchor.sourceRow,
@@ -161,6 +194,61 @@ export function hasBreak(product: Product, start: string, end: string) {
   return product.segments.some(
     (s) => s.start > start && s.start <= end && !s.continuityFromPrevious,
   );
+}
+function pricedItem(
+  product: Product,
+  rows: Observation[],
+  month: string,
+  quantity: string,
+  unit: string,
+  observedOnly: boolean,
+  quantityEstimated = false,
+): ItemValue {
+  const value = resolvePrice(product, rows, month, observedOnly);
+  const segment = product.segments.find((s) => s.id === value.segmentId);
+  const converted = segment?.quantityConversion?.estimated;
+  const estimatedQuantity = value.price !== null && (converted || quantityEstimated);
+  return {
+    ...value,
+    productId: product.id,
+    status: estimatedQuantity ? 'estimated' : value.status,
+    reason:
+      estimatedQuantity && value.reason === 'observed'
+        ? quantityEstimated
+          ? 'quantity-assumption'
+          : 'quantity-conversion'
+        : value.reason,
+    cost: value.price === null ? null : quantityCost(value.price, quantity, unit, product, segment),
+  };
+}
+export function productEligibility(
+  product: Product,
+  rows: Observation[],
+  start: string,
+  end: string,
+  observedOnly = false,
+): { eligible: boolean; reason: string; firstUnavailable: string | null; estimatedMonths: number } {
+  const rejected = (reason: string, firstUnavailable: string | null = null) => ({
+    eligible: false,
+    reason,
+    firstUnavailable,
+    estimatedMonths: 0,
+  });
+  if (product.selectable === false) return rejected('retired-product');
+  if (start > end) return rejected('invalid-range');
+  if (hasBreak(product, start, end))
+    return rejected(
+      'specification-break',
+      product.segments.find((s) => s.start > start && s.start <= end && !s.continuityFromPrevious)!
+        .start,
+    );
+  let estimatedMonths = 0;
+  for (const month of months(start, end)) {
+    const value = pricedItem(product, rows, month, '1', product.unit, observedOnly);
+    if (value.cost === null) return rejected(value.reason, month);
+    if (value.status === 'estimated') estimatedMonths++;
+  }
+  return { eligible: true, reason: '', firstUnavailable: null, estimatedMonths };
 }
 export function evaluate(
   basket: Basket,
@@ -177,26 +265,15 @@ export function evaluate(
   const products = basket.items.map((i) => release.products.find((p) => p.id === i.productId)!);
   const results: Result[] = months(basket.start, basket.end).map((month) => {
     const items = basket.items.map((item, i): ItemValue => {
-      const value = resolvePrice(
+      return pricedItem(
         products[i],
         city.series[item.productId] ?? [],
         month,
+        item.quantity,
+        item.unit,
         observedOnly,
+        item.quantityEstimated,
       );
-      return {
-        ...value,
-        productId: item.productId,
-        cost:
-          value.price === null
-            ? null
-            : quantityCost(
-                value.price,
-                item.quantity,
-                item.unit,
-                products[i],
-                products[i].segments.find((s) => s.id === value.segmentId),
-              ),
-      };
     });
     const status: Status =
       !items.length || items.some((i) => i.cost === null)
@@ -245,25 +322,16 @@ export function evaluate(
     )
       continue;
     const priorItems = basket.items.map((item, i) => {
-      const value = resolvePrice(
+      const value = pricedItem(
         products[i],
         city.series[item.productId] ?? [],
         yearAgo,
+        item.quantity,
+        item.unit,
         observedOnly,
+        item.quantityEstimated,
       );
-      return {
-        value,
-        cost:
-          value.price === null
-            ? null
-            : quantityCost(
-                value.price,
-                item.quantity,
-                item.unit,
-                products[i],
-                products[i].segments.find((s) => s.id === value.segmentId),
-              ),
-      };
+      return { value, cost: value.cost };
     });
     if (priorItems.some((i) => i.cost === null) || !priorItems.length) continue;
     const priorCost = priorItems.reduce((sum, i) => sum.plus(i.cost!), new Decimal(0));

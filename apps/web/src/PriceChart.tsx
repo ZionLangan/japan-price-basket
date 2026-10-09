@@ -71,7 +71,9 @@ export function PriceChart({
       .map((item) => {
         const product = products.find((product) => product.id === item.productId);
         return `${product?.names[locale] ?? item.productId}: ${text(item.reason)}${
-          item.anchor ? ` · ${t.anchor} ${item.anchor} · ${item.age} ${t.age}` : ''
+          item.anchor && ['seasonal', 'temporary', 'assumed-gap'].includes(item.reason)
+            ? ` · ${t.anchor} ${item.anchor} · ${item.age} ${t.age}`
+            : ''
         }`;
       });
     if (!row.comparable) result.push(t.notComparable);

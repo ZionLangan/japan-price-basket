@@ -5,7 +5,7 @@
     "start": "2000-01",
     "end": "2026-08"
   },
-  "policy": "Dated exact specification fingerprints, physical quotes and source units require explicit review. Incompatible forms/dimensions use separate stable variants. Evidence permits only listed orthographic/reporting-unit continuity; all other boundaries block comparisons. Local Y remains excluded; unknown gap causes are unavailable, never temporary estimates. Seasonal carry requires an unchanged dated calendar and actual anchor.",
+  "policy": "Dated exact specification fingerprints, physical quotes and source units require explicit review. Incompatible forms/dimensions use separate stable variants. Evidence permits only listed orthographic/reporting-unit continuity; all other boundaries block comparisons. Local Y remains excluded; unknown gap causes are unavailable, never temporary estimates. Seasonal carry requires an unchanged dated calendar and actual anchor. Owner-authorized generic egg-count basket continuity joins the dated egg selections, with an explicitly estimated 60 g/whole egg conversion only in January 2000–June 2002; native prices remain unchanged. Short egg market gaps marked - may use actual-anchor estimates for at most 2 months. Detergent archives remain preserved but are not selectable.",
   "reviewedMissingTokens": [
     "",
     "..",
@@ -367,7 +367,7 @@
     {
       "code": "1341",
       "id": "mixed-size-eggs",
-      "en": "White eggs · mixed-size 10 pack",
+      "en": "Eggs",
       "unit": "count",
       "quoteQuantity": "10",
       "presets": [
@@ -376,20 +376,140 @@
         "20"
       ],
       "aliases": [
-        "eggs",
         "egg",
+        "eggs",
         "たまご",
-        "卵"
+        "卵",
+        "玉子",
+        "鶏卵",
+        "重量",
+        "L size",
+        "Lサイズ"
       ],
       "quoteLabelEn": "10 eggs",
-      "requiredSpecificationTerms": [
-        "白色卵",
-        "サイズ混合"
-      ],
-      "ja": "白色卵（サイズ混合・10個）",
+      "ja": "鶏卵",
       "familyId": "eggs",
       "sourceNameSegments": [],
       "reviewedSpecifications": [
+        {
+          "start": "2000-01",
+          "end": "2002-06",
+          "specificationHash": "6665a92d5f44c5dbce83900d22d5b6638ed2078045c9a1fd232e402a9ac5cb24",
+          "quoteQuantity": "1",
+          "quoteUnit": "kg",
+          "quoteLabel": {
+            "en": "1 kg",
+            "ja": "1 kg"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1kg)"
+          ],
+          "continuityFromPrevious": false,
+          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
+          ],
+          "quantityConversion": {
+            "from": "count",
+            "to": "kg",
+            "factor": "0.06",
+            "estimated": true,
+            "evidenceUrl": "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "description": {
+              "en": "Before July 2002, count costs assume 60 g per whole egg, following the original approximate specification.",
+              "ja": "2002年6月以前は、元の銘柄「1個約60g」に基づき、殻を含む卵1個を60gとして個数当たりの価格を推計します。"
+            }
+          },
+          "quantityConversionHash": "24b7677071920a6101b6d4735514ef40555ba7a6868384940618167f904ec682"
+        },
+        {
+          "start": "2002-07",
+          "end": "2004-12",
+          "specificationHash": "5342ff6e961f3c627d79ec3089d3cea4345a6c1986deb86ad55f02671433967f",
+          "quoteQuantity": "10",
+          "quoteUnit": "count",
+          "quoteLabel": {
+            "en": "10 eggs · L size",
+            "ja": "10個（Lサイズ）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1パック)"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "User-authorized generic egg-count basket continuity: the earlier approximately 60 g/kg quote is converted using a disclosed 60 g assumption; the later source is white L-size ten-egg packs. This is not identical-size or quality-adjusted continuity.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx",
+            "https://www.maff.go.jp/j/kokuji_tuti/kokuji/k0000481.html"
+          ]
+        },
+        {
+          "start": "2005-01",
+          "end": "2017-12",
+          "specificationHash": "30d0c8feca27c8cd7ba5927b82a1d976c8acfa4ed9a683512feb0bb215b5e098",
+          "quoteQuantity": "10",
+          "quoteUnit": "count",
+          "quoteLabel": {
+            "en": "10 eggs · L size",
+            "ja": "10個（Lサイズ）"
+          },
+          "surveyMonths": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "sourceUnits": [
+            "(1パック)",
+            "(1パック・10個)",
+            "(1パック･10個)",
+            "1パック･10個"
+          ],
+          "continuityFromPrevious": true,
+          "continuityReason": "NFKC width/punctuation rewrite only; product selection, physical quote and survey calendar are unchanged. Original strings are preserved.",
+          "continuityEvidence": [
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+          ]
+        },
         {
           "start": "2018-01",
           "end": "2026-08",
@@ -417,15 +537,28 @@
           "sourceUnits": [
             "1パック･10個"
           ],
-          "continuityFromPrevious": false,
-          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
+          "continuityFromPrevious": true,
+          "continuityReason": "User-authorized generic egg-count basket continuity: ten eggs remains an exact count, while the survey selection changes from white L-size to white mixed-size eggs. This does not assert identical size or quality.",
           "continuityEvidence": [
             "https://www.stat.go.jp/data/kouri/doukou/zuhyou/201801.xls",
             "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
-            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx",
+            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
+            "https://www.maff.go.jp/j/kokuji_tuti/kokuji/k0000481.html"
           ]
         }
-      ]
+      ],
+      "comparisonNote": {
+        "en": "One generic egg-count basket: before July 2002, costs assume 60 g per whole egg; later prices are exact ten-egg quotes. The survey changed from L-size to mixed-size white eggs in January 2018, so long-run changes include the selection change.",
+        "ja": "卵の個数を固定したバスケットです。2002年6月以前は殻付き1個60gと仮定した推計、その後は10個入りの実際の価格を使います。2018年1月に白色Lサイズから白色サイズ混合に銘柄が変わったため、長期の変化には選定の違いも含まれます。"
+      },
+      "missingPriceEstimate": {
+        "maxMonths": 2,
+        "tokens": [
+          "-"
+        ],
+        "allowEquivalentSegments": true
+      }
     },
     {
       "code": "1021",
@@ -2145,7 +2278,8 @@
             "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
           ]
         }
-      ]
+      ],
+      "selectable": false
     },
     {
       "code": "4441",
@@ -2488,169 +2622,8 @@
             "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
           ]
         }
-      ]
-    },
-    {
-      "code": "1341",
-      "id": "eggs-by-weight",
-      "en": "Eggs · priced by weight",
-      "ja": "鶏卵（重量単位）",
-      "unit": "kg",
-      "quoteQuantity": "1",
-      "presets": [
-        "0.5",
-        "1",
-        "2"
       ],
-      "aliases": [
-        "egg",
-        "eggs",
-        "たまご",
-        "卵",
-        "重量"
-      ],
-      "requiredSpecificationTerms": [
-        "約60g"
-      ],
-      "familyId": "eggs",
-      "sourceNameSegments": [],
-      "reviewedSpecifications": [
-        {
-          "start": "2000-01",
-          "end": "2002-06",
-          "specificationHash": "6665a92d5f44c5dbce83900d22d5b6638ed2078045c9a1fd232e402a9ac5cb24",
-          "quoteQuantity": "1",
-          "quoteUnit": "kg",
-          "quoteLabel": {
-            "en": "1 kg",
-            "ja": "1 kg"
-          },
-          "surveyMonths": [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12
-          ],
-          "sourceUnits": [
-            "(1kg)"
-          ],
-          "continuityFromPrevious": false,
-          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
-          "continuityEvidence": [
-            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
-          ]
-        }
-      ]
-    },
-    {
-      "code": "1341",
-      "id": "large-size-eggs",
-      "en": "White eggs · L-size 10 pack",
-      "ja": "白色卵（Lサイズ・10個）",
-      "unit": "count",
-      "quoteQuantity": "1",
-      "presets": [
-        "6",
-        "10",
-        "20"
-      ],
-      "aliases": [
-        "egg",
-        "eggs",
-        "L size",
-        "たまご",
-        "卵",
-        "Lサイズ"
-      ],
-      "requiredSpecificationTerms": [
-        "白色卵",
-        "Lサイズ"
-      ],
-      "familyId": "eggs",
-      "sourceNameSegments": [],
-      "reviewedSpecifications": [
-        {
-          "start": "2002-07",
-          "end": "2004-12",
-          "specificationHash": "5342ff6e961f3c627d79ec3089d3cea4345a6c1986deb86ad55f02671433967f",
-          "quoteQuantity": "10",
-          "quoteUnit": "count",
-          "quoteLabel": {
-            "en": "10 eggs · L size",
-            "ja": "10個（Lサイズ）"
-          },
-          "surveyMonths": [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12
-          ],
-          "sourceUnits": [
-            "(1パック)"
-          ],
-          "continuityFromPrevious": false,
-          "continuityReason": "First variant definition or changed selection/form/package; continuity is not approved.",
-          "continuityEvidence": [
-            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls",
-            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls",
-            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
-          ]
-        },
-        {
-          "start": "2005-01",
-          "end": "2017-12",
-          "specificationHash": "30d0c8feca27c8cd7ba5927b82a1d976c8acfa4ed9a683512feb0bb215b5e098",
-          "quoteQuantity": "10",
-          "quoteUnit": "count",
-          "quoteLabel": {
-            "en": "10 eggs · L size",
-            "ja": "10個（Lサイズ）"
-          },
-          "surveyMonths": [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12
-          ],
-          "sourceUnits": [
-            "(1パック)",
-            "(1パック・10個)",
-            "(1パック･10個)",
-            "1パック･10個"
-          ],
-          "continuityFromPrevious": true,
-          "continuityReason": "NFKC width/punctuation rewrite only; product selection, physical quote and survey calendar are unchanged. Original strings are preserved.",
-          "continuityEvidence": [
-            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200501.xls",
-            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200207.xls",
-            "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
-          ]
-        }
-      ]
+      "selectable": false
     },
     {
       "code": "1407",
@@ -3016,7 +2989,8 @@
             "https://www.stat.go.jp/data/kouri/doukou/zuhyou/200001.xls"
           ]
         }
-      ]
+      ],
+      "selectable": false
     },
     {
       "code": "4431",
@@ -3148,7 +3122,8 @@
             "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
           ]
         }
-      ]
+      ],
+      "selectable": false
     },
     {
       "code": "4441",
@@ -3459,7 +3434,9 @@
             "https://www.stat.go.jp/data/kouri/doukou/zuhyou/shinkyu.xlsx"
           ]
         }
-      ]
+      ],
+      "selectable": false
     }
-  ]
+  ],
+  "policyVersion": "1.1"
 }
