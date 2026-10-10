@@ -310,11 +310,11 @@ test('bilingual layouts reflow at narrow widths, large text and reduced motion',
   ).not.toBe('none');
 });
 
-test('source disclosure, search and all chart tabs pass automated access checks in both languages', async ({
-  page,
-}, info) => {
-  await load(page);
-  for (const language of ['English', '日本語']) {
+for (const language of ['English', '日本語'] as const) {
+  test(`source disclosure, search and all chart tabs pass automated access checks in ${language}`, async ({
+    page,
+  }, info) => {
+    await load(page);
     await page.getByRole('button', { name: language, exact: true }).click();
     for (const tab of await page.getByRole('tab').all()) {
       await tab.click();
@@ -357,5 +357,5 @@ test('source disclosure, search and all chart tabs pass automated access checks 
     await expect(page.locator('#definition-white-bread')).toBeVisible();
     expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
     await page.keyboard.press('Escape');
-  }
-});
+  });
+}
