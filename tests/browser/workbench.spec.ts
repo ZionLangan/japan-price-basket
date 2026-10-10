@@ -332,11 +332,11 @@ test('source disclosure, search and all chart tabs pass automated access checks 
     );
     await expect(page.locator('#source-information')).toContainText(
       language === 'English'
-        ? 'not quality-adjusted inflation'
-        : '品質調整済みの物価上昇率ではありません',
+        ? 'does not remove quality differences'
+        : '品質の違いや包装サイズによる単価差の影響は残ります',
     );
     await expect(page.locator('#source-information')).toContainText(
-      language === 'English' ? 'seasonally adjusted series' : '季節調整済みの系列ではありません',
+      language === 'English' ? 'not seasonal adjustment' : '季節調整ではありません',
     );
     const bounds = await page.locator('#source-information').boundingBox();
     const viewport = page.viewportSize()!;

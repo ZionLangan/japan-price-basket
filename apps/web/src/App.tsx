@@ -5,6 +5,7 @@ import {
   CityDataSchema,
   ReleaseSchema,
   PositiveDecimal,
+  MAX_BASKET_ITEMS,
   validateBasket,
   type Basket,
   type CityData,
@@ -15,7 +16,6 @@ import { evaluate, months, productEligibility } from '../../../packages/domain/s
 import {
   createDefaultBasket,
   defaultBasketForCity,
-  DEFAULT_BASKET_SOURCE,
 } from '../../../packages/domain/src/defaultBasket';
 import { readState, writeState } from './storage';
 import { dashboardMessages } from './dashboardMessages';
@@ -23,6 +23,7 @@ import { ProductSearch } from './ProductSearch';
 import { LiveBasket } from './LiveBasket';
 import { ChartViews } from './ChartViews';
 import { DateRangeControls, type EndMode } from './DateRangeControls';
+import { DataSource } from './DataSource';
 
 async function loadRelease(): Promise<Release> {
   const response = await fetch('/data/current.json');
@@ -126,6 +127,9 @@ function Workbench({ release }: { release: Release }) {
   latest.current = { basket, observedOnly, endMode };
   const [notice, setNotice] = useState<{ key: string; items?: string[]; range?: string }>();
   const [migration, setMigration] = useState(initial.state?.migration);
+  const [pendingReleaseNotice, setPendingReleaseNotice] = useState(
+    initial.state?.pendingReleaseNotice,
+  );
   const [retry, setRetry] = useState(0);
   const t = dashboardMessages[locale];
   const selectedCity = release.cities.find((c) => c.id === basket.cityId)!;
@@ -317,6 +321,8 @@ function Workbench({ release }: { release: Release }) {
         {
           schemaVersion: 1,
           releaseId: release.releaseId,
+          releaseEnd: release.end,
+          pendingReleaseNotice,
           locale,
           observedOnly,
           endMode,
@@ -329,7 +335,17 @@ function Workbench({ release }: { release: Release }) {
     } catch {
       setStorageIssue('storageUnavailable');
     }
-  }, [basket, saved, locale, observedOnly, endMode, release, inputError, preserveStored]);
+  }, [
+    basket,
+    saved,
+    locale,
+    observedOnly,
+    endMode,
+    release,
+    inputError,
+    preserveStored,
+    pendingReleaseNotice,
+  ]);
   function resetBasket() {
     if (!matchingCity || candidateCityId) {
       setNotice({ key: 'waitForCity' });
@@ -387,8 +403,18 @@ function Workbench({ release }: { release: Release }) {
           </select>
         </div>
         <div className="header-tools">
-          <button className="text-button" popoverTarget="source-information">
+          <button
+            className="text-button"
+            popoverTarget="source-information"
+            aria-label={t.dataSource}
+            aria-description={pendingReleaseNotice ? t.newData : undefined}
+          >
             {t.dataSource}
+            {pendingReleaseNotice && (
+              <span className="source-update" aria-hidden="true">
+                {t.newData}
+              </span>
+            )}
           </button>
           <div className="language" role="group" aria-label="Language / 言語">
             <button lang="en" aria-pressed={locale === 'en'} onClick={() => setLocale('en')}>
@@ -400,49 +426,34 @@ function Workbench({ release }: { release: Release }) {
           </div>
         </div>
       </header>
-      <div
-        className="source-popover"
-        id="source-information"
-        popover="auto"
-        role="region"
-        aria-labelledby="source-heading"
-      >
-        <div className="popover-heading">
-          <h2 id="source-heading">{t.dataSource}</h2>
-          <button
-            className="text-button"
-            popoverTarget="source-information"
-            popoverTargetAction="hide"
-            aria-label={locale === 'en' ? 'Close data source' : '出典を閉じる'}
+      <DataSource release={release} locale={locale} cityId={basket.cityId}>
+        {pendingReleaseNotice && (
+          <section
+            className="source-release-notice"
+            aria-labelledby="source-release-update"
+            role="status"
           >
-            ×
-          </button>
-        </div>
-        <p>{t.independent}</p>
-        <p>
-          {release.sourceName[locale]} · {release.start} – {release.end}
-        </p>
-        <a href="https://www.e-stat.go.jp/dbview?sid=0003421913" target="_blank" rel="noreferrer">
-          {t.sourceLink}
-        </a>
-        <p>{t.method1}</p>
-        <p>{t.method3}</p>
-        <p>{t.defaultBasketNote}</p>
-        <a href={DEFAULT_BASKET_SOURCE} target="_blank" rel="noreferrer">
-          {t.defaultBasketSource}
-        </a>
-        <p>{t.definitionNote}</p>
-        <p>{t.quantityNote}</p>
-        <p>{t.carryNote}</p>
-        <p>{t.catalogLimit}</p>
-        <p>{t.nowDescription}</p>
-        <p>
-          {t.coverage}: {selectedCity.start} – {selectedCity.end}
-        </p>
-        <p className="hint">
-          {t.release}: {release.releaseId}
-        </p>
-      </div>
+            <h3 id="source-release-update">{t.releaseChanged}</h3>
+            <p>{t.releaseChangedDetail}</p>
+            <dl className="source-facts">
+              <dt>{t.previousDataset}</dt>
+              <dd>{pendingReleaseNotice.fromReleaseId}</dd>
+              <dt>{t.currentDataset}</dt>
+              <dd>{release.releaseId}</dd>
+            </dl>
+            {pendingReleaseNotice.advancedLatest &&
+              endMode === 'latest' &&
+              basket.end === pendingReleaseNotice.nextEnd && (
+                <p>
+                  {t.latestAdvanced} {pendingReleaseNotice.nextEnd}
+                </p>
+              )}
+            <button onClick={() => setPendingReleaseNotice(undefined)}>
+              {t.acknowledgeRelease}
+            </button>
+          </section>
+        )}
+      </DataSource>
       <ProductSearch
         products={release.products}
         selected={basket.items.map((i) => i.productId)}
@@ -455,7 +466,12 @@ function Workbench({ release }: { release: Release }) {
         historyEnd={release.end}
         locale={locale}
         t={t}
+        maxItems={MAX_BASKET_ITEMS}
         onAdd={(p) => {
+          if (basket.items.length >= MAX_BASKET_ITEMS) {
+            setNotice({ key: 'basketLimit' });
+            return;
+          }
           if (
             !matchingCity ||
             candidateCityId ||
@@ -472,7 +488,7 @@ function Workbench({ release }: { release: Release }) {
             return;
           }
           setBasket((b) =>
-            b.items.some((i) => i.productId === p.id)
+            b.items.length >= MAX_BASKET_ITEMS || b.items.some((i) => i.productId === p.id)
               ? b
               : {
                   ...b,
@@ -561,6 +577,11 @@ function Workbench({ release }: { release: Release }) {
             <div>
               <span>{t.change}</span>
               <strong data-testid="basket-change">{percent(last?.change)}</strong>
+              <span className="yen-difference" data-testid="basket-change-yen">
+                {t.changeYen}:{' '}
+                {last?.changeYen != null && new Decimal(last.changeYen).gte(0) ? '+' : ''}
+                {yen(last?.changeYen)}
+              </span>
               <small>
                 {last?.change == null
                   ? t.compareBlocked

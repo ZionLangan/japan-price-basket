@@ -120,7 +120,7 @@ test('fresh starter includes rice and everyday foods with bilingual reporting di
     const source = page.locator('#source-information');
     await expect(source).toBeVisible();
     await expect(source).toContainText(language === 'English' ? 'two or more people' : '二人以上');
-    await expect(source).toContainText(language === 'English' ? 'tofu' : '豆腐');
+    await expect(source).toContainText(language === 'English' ? /tofu/i : '豆腐');
     await expect(source).toContainText(language === 'English' ? '60 g' : '60g');
     const bounds = await source.boundingBox();
     const viewport = page.viewportSize()!;

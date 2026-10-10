@@ -207,7 +207,7 @@ test('switching to a later-surveyed city starts inspection at its actual first m
   const tooltip = page.getByTestId('chart-tooltip');
   await expect(tooltip).toContainText('2025-01');
   await expect(tooltip).toContainText('Observed');
-  await expect(tooltip).not.toContainText('¥0');
+  await expect(tooltip.locator('.chart-readout-value')).toHaveText('¥2,222');
   await expect(chart.locator('circle[data-month="2024-09"]')).toHaveCount(0);
   await expect(page.getByTestId('chart-active-point')).toBeVisible();
   await chart.press('End');

@@ -12,5 +12,15 @@ export default defineConfig({
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     { name: 'mobile', use: { ...devices['iPhone 13'], defaultBrowserType: 'chromium' } },
+    {
+      name: 'firefox',
+      testMatch: /(?:static-completion|result-details|search-release)\.spec\.ts$/,
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      testMatch: /(?:static-completion|result-details|search-release)\.spec\.ts$/,
+      use: { ...devices['Desktop Safari'] },
+    },
   ],
 });

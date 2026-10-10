@@ -1,5 +1,10 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
-import type { CityData, Locale, Product } from '../../../packages/domain/src/contracts';
+import {
+  MAX_BASKET_ITEMS,
+  type CityData,
+  type Locale,
+  type Product,
+} from '../../../packages/domain/src/contracts';
 import {
   monthNumber,
   productEligibility,
@@ -20,6 +25,7 @@ export function ProductSearch({
   locale,
   t,
   onAdd,
+  maxItems = MAX_BASKET_ITEMS,
 }: {
   products: Product[];
   selected: string[];
@@ -33,6 +39,7 @@ export function ProductSearch({
   locale: Locale;
   t: DashboardText;
   onAdd: (product: Product) => void;
+  maxItems?: number;
 }) {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('all');
@@ -54,8 +61,10 @@ export function ProductSearch({
           ),
     [products, city, start, month, observedOnly, loading],
   );
-  const matches = searchProducts(eligible, query, category);
-  const catalogMatches = searchProducts(catalog, query, category);
+  const range = { start, end: month };
+  const matches = searchProducts(eligible, query, category, range);
+  const catalogMatches = searchProducts(catalog, query, category, range);
+  const atLimit = selected.length >= maxItems;
   const activeIndex = Math.min(active, Math.max(0, matches.length - 1));
   const matchIds = matches.map((product) => product.id).join('|');
   useEffect(() => setActive(0), [matchIds]);
@@ -67,7 +76,8 @@ export function ProductSearch({
     return () => document.removeEventListener('pointerdown', dismiss);
   }, []);
   function choose(product: Product) {
-    if (selected.includes(product.id) || !eligible.some((p) => p.id === product.id)) return;
+    if (atLimit || selected.includes(product.id) || !eligible.some((p) => p.id === product.id))
+      return;
     onAdd(product);
     setQuery('');
     setActive(0);
@@ -153,6 +163,11 @@ export function ProductSearch({
       </div>
       {open && !loading && city && (
         <div className="search-menu">
+          {atLimit && (
+            <p className="notice" role="status">
+              {t.basketLimit}
+            </p>
+          )}
           <div className="search-filter">
             <label htmlFor="category">{t.category}</label>
             <select
@@ -179,6 +194,9 @@ export function ProductSearch({
               const observations = city?.series[p.id]?.filter(
                 (r) => r.status === 'observed',
               ).length;
+              const latestObserved = city.series[p.id]
+                ?.filter((row) => row.status === 'observed' && row.month <= month)
+                .at(-1)?.month;
               const segment = p.segments.find((s) => s.start <= month && s.end >= month);
               const first = p.segments[0].start;
               const last = p.segments.at(-1)!.end;
@@ -194,7 +212,7 @@ export function ProductSearch({
                   id={`${id}-${p.id}`}
                   role="option"
                   aria-selected={index === activeIndex}
-                  aria-disabled={added}
+                  aria-disabled={added || atLimit}
                   aria-label={`${added ? t.alreadyAdded : t.add}: ${p.names[locale]}`}
                   className="search-result"
                   onMouseDown={(e) => e.preventDefault()}
@@ -206,10 +224,14 @@ export function ProductSearch({
                       {segment?.quoteLabel?.[locale] ?? p.quoteLabel[locale]} · {p.code}
                       {limited ? ` · ${first} – ${last}` : ''}
                       {interrupted ? ` · ${t.interruptedPeriods}` : ''}
+                      {segment && segment.surveyMonths.length < 12 ? ` · ${t.seasonalProduct}` : ''}
+                      {latestObserved && latestObserved < month
+                        ? ` · ${t.latestObserved}: ${latestObserved}`
+                        : ''}
                       {observations === 0 ? ` · ${t.noCityPrices}` : ''}
                     </span>
                   </div>
-                  <span className={added ? 'hint' : 'add-label'}>
+                  <span className={added || atLimit ? 'hint' : 'add-label'}>
                     {added ? t.alreadyAdded : '+ ' + t.add}
                   </span>
                 </div>

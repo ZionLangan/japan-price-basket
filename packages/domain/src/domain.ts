@@ -25,7 +25,11 @@ export type Result = {
   status: Status;
   items: ItemValue[];
   change: string | null;
+  changeYen: string | null;
   index: string | null;
+  observedCount: number;
+  estimatedCount: number;
+  unavailableCount: number;
   comparable: boolean;
   yoy: string | null;
   yoyEstimated: boolean;
@@ -297,7 +301,11 @@ export function evaluate(
           ? null
           : items.reduce((sum, i) => sum.plus(i.cost!), new Decimal(0)).toString(),
       change: null,
+      changeYen: null,
       index: null,
+      observedCount: items.filter((item) => item.status === 'observed').length,
+      estimatedCount: items.filter((item) => item.status === 'estimated').length,
+      unavailableCount: items.filter((item) => item.status === 'unavailable').length,
       comparable: !products.some((p) => hasBreak(p, basket.start, month)),
       yoy: null,
       yoyEstimated: false,
@@ -310,6 +318,7 @@ export function evaluate(
       if (row.cost !== null && row.comparable) {
         row.index = new Decimal(row.cost).div(baseline).mul(100).toString();
         row.change = new Decimal(row.index).minus(100).toString();
+        row.changeYen = new Decimal(row.cost).minus(baseline).toString();
       }
   }
   for (const row of results) {
@@ -350,26 +359,4 @@ export function evaluate(
   }
   return results;
 }
-export function searchProducts(products: Product[], query: string, category: string) {
-  const normalize = (text: string) => text.normalize('NFKC').toLocaleLowerCase().trim();
-  const words = normalize(query).split(/\s+/).filter(Boolean);
-  const matches = products.filter(
-    (p) =>
-      (category === 'all' || p.category === category) &&
-      words.every((w) =>
-        normalize([p.names.en, p.names.ja, p.code, ...p.aliases].join(' ')).includes(w),
-      ),
-  );
-  const term = normalize(query);
-  const rank = (p: Product) =>
-    p.code === term
-      ? 0
-      : [p.names.en, p.names.ja].some((n) => normalize(n) === term)
-        ? 1
-        : p.aliases.some((n) => normalize(n) === term)
-          ? 2
-          : [p.names.en, p.names.ja].some((n) => normalize(n).startsWith(term))
-            ? 3
-            : 4;
-  return term ? matches.sort((a, b) => rank(a) - rank(b)) : matches;
-}
+export { searchProducts } from './productSearch';

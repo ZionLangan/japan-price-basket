@@ -33,6 +33,7 @@ export function ChartViews({
 }) {
   const [tab, setTab] = useState('cost');
   const [chosen, setChosen] = useState('');
+  const [dataMode, setDataMode] = useState<'basket' | 'product'>('basket');
   const tabs = [
     { id: 'cost', label: t.tabCost },
     { id: 'breakdown', label: t.tabBreakdown },
@@ -60,8 +61,21 @@ export function ChartViews({
   );
   const last = rows.at(-1);
   const shown = tab === 'product' ? productRows : rows;
+  const tableProduct = dataMode === 'product' ? selected : undefined;
+  const tableRows = tableProduct ? productRows : rows;
+  const tableItem = basket.items.find((item) => item.productId === tableProduct?.id);
   const measure = tab === 'index' ? 'index' : 'cost';
   const text = (key: string) => t[key as keyof DashboardText] ?? key;
+  const signedYen = (value: string | null | undefined) =>
+    `${value != null && Number(value) > 0 ? '+' : ''}${yen(value)}`;
+  const indexValue = (value: string | null) =>
+    value === null
+      ? '—'
+      : new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(Number(value));
+  function selectTab(next: string) {
+    if (next === 'data' && tab !== 'data') setDataMode(tab === 'product' ? 'product' : 'basket');
+    setTab(next);
+  }
   function quality(row: Result) {
     const notes = row.items
       .filter((i) => i.status !== 'observed')
@@ -74,8 +88,9 @@ export function ChartViews({
         }`;
       });
     if (!row.comparable) notes.push(t.breakWarning);
+    if (tableRows[0]?.cost === null && row.cost !== null) notes.push(t.baselineUnavailable);
     if (row.yoyEstimated) notes.push(t.yoyEstimated);
-    if (row.change !== null && (row.status === 'estimated' || rows[0]?.status === 'estimated'))
+    if (row.change !== null && (row.status === 'estimated' || tableRows[0]?.status === 'estimated'))
       notes.push(t.estimatedChange);
     return notes.join(' · ');
   }
@@ -93,7 +108,7 @@ export function ChartViews({
             aria-controls={`panel-${view.id}`}
             aria-selected={view.id === tab}
             tabIndex={view.id === tab ? 0 : -1}
-            onClick={() => setTab(view.id)}
+            onClick={() => selectTab(view.id)}
             onKeyDown={(e) => {
               let next = index;
               if (e.key === 'ArrowRight') next = (index + 1) % tabs.length;
@@ -102,7 +117,7 @@ export function ChartViews({
               else if (e.key === 'End') next = tabs.length - 1;
               else return;
               e.preventDefault();
-              setTab(tabs[next].id);
+              selectTab(tabs[next].id);
               buttons.current[next]?.focus();
             }}
           >
@@ -169,36 +184,72 @@ export function ChartViews({
                 </div>
               </>
             ) : tab === 'data' ? (
-              <div className="table-scroll" tabIndex={0} role="region" aria-label={t.table}>
-                <table className="monthly-table">
-                  <caption>
-                    {release.cities.find((c) => c.id === basket.cityId)!.names[locale]} ·{' '}
-                    {basket.start} – {basket.end}
-                  </caption>
-                  <thead>
-                    <tr>
-                      <th scope="col">{t.month}</th>
-                      <th scope="col">{t.cost}</th>
-                      <th scope="col">{t.change}</th>
-                      <th scope="col">{t.yoy}</th>
-                      <th scope="col">{t.status}</th>
-                      <th scope="col">{t.notes}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rows.map((row) => (
-                      <tr key={row.month}>
-                        <th scope="row">{row.month}</th>
-                        <td className="numeric">{yen(row.cost)}</td>
-                        <td className="numeric">{percent(row.change)}</td>
-                        <td className="numeric">{percent(row.yoy)}</td>
-                        <td>{text(row.status)}</td>
-                        <td className="quality-notes">{quality(row) || '—'}</td>
+              <>
+                <div className="view-heading">
+                  <div className="product-series">
+                    <label htmlFor="table-series">{t.dataSeries}</label>
+                    <select
+                      id="table-series"
+                      value={tableProduct?.id ?? 'basket'}
+                      onChange={(event) => {
+                        setDataMode(event.target.value === 'basket' ? 'basket' : 'product');
+                        if (event.target.value !== 'basket') setChosen(event.target.value);
+                      }}
+                    >
+                      <option value="basket">{t.basketSeries}</option>
+                      {products.map((product) => (
+                        <option key={product.id} value={product.id}>
+                          {product.names[locale]}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="table-scroll" tabIndex={0} role="region" aria-label={t.table}>
+                  <table className="monthly-table">
+                    <caption>
+                      {release.cities.find((c) => c.id === basket.cityId)!.names[locale]} ·{' '}
+                      {tableProduct?.names[locale] ?? t.basketSeries}
+                      {tableItem
+                        ? ` · ${tableItem.quantity} ${tableItem.unit === 'count' ? t.count : tableItem.unit === 'package' ? t.package : tableItem.unit}`
+                        : ''}{' '}
+                      · {basket.start} – {basket.end}
+                    </caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">{t.month}</th>
+                        <th scope="col">{t.cost}</th>
+                        <th scope="col">{t.changeYen}</th>
+                        <th scope="col">{t.change}</th>
+                        <th scope="col">{t.index}</th>
+                        <th scope="col">{t.yoy}</th>
+                        <th scope="col">{t.status}</th>
+                        <th scope="col">{t.observedItems}</th>
+                        <th scope="col">{t.estimatedItems}</th>
+                        <th scope="col">{t.unavailableItems}</th>
+                        <th scope="col">{t.notes}</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {tableRows.map((row) => (
+                        <tr key={row.month}>
+                          <th scope="row">{row.month}</th>
+                          <td className="numeric">{yen(row.cost)}</td>
+                          <td className="numeric">{signedYen(row.changeYen)}</td>
+                          <td className="numeric">{percent(row.change)}</td>
+                          <td className="numeric">{indexValue(row.index)}</td>
+                          <td className="numeric">{percent(row.yoy)}</td>
+                          <td>{text(row.status)}</td>
+                          <td className="numeric">{row.observedCount}</td>
+                          <td className="numeric">{row.estimatedCount}</td>
+                          <td className="numeric">{row.unavailableCount}</td>
+                          <td className="quality-notes">{quality(row) || '—'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
             ) : (
               <>
                 {tab === 'product' && (

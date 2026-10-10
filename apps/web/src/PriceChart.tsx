@@ -127,7 +127,7 @@ export function PriceChart({
     if (!row) return;
     setSelection({ month: row.month, mode: 'keyboard' });
     setAnnouncement(
-      `${row.month} · ${shownValue(row)} · ${text(row.status)} · ${notes(row).join(' · ')}`,
+      `${row.month} · ${shownValue(row)} · ${text(inspectedStatusFor(row))} · ${notes(row).join(' · ')}`,
     );
   }
   function nearest(clientX: number) {
@@ -144,6 +144,10 @@ export function PriceChart({
   function estimated(row: Result) {
     return row.status === 'estimated' || (measure === 'index' && rows[0].status === 'estimated');
   }
+  function inspectedStatusFor(row: Result) {
+    return row[measure] === null ? 'unavailable' : estimated(row) ? 'estimated' : row.status;
+  }
+  const inspectedStatus = active ? inspectedStatusFor(active) : 'unavailable';
   const positions =
     size.width < 480
       ? [...new Set([0, rows.length - 1])]
@@ -188,16 +192,30 @@ export function PriceChart({
             <div className="chart-readout-summary">
               <strong>{active.month}</strong>
               <strong className="chart-readout-value">{shownValue(active)}</strong>
-              <span className={`chart-status ${active.status}`}>{text(active.status)}</span>
+              <span className={`chart-status ${inspectedStatus}`}>{text(inspectedStatus)}</span>
               {measure === 'index' && <span>{t.indexUnit}</span>}
               {selection?.mode === 'pinned' && <span className="hint">{t.pinned}</span>}
             </div>
             <div className="chart-readout-details">
               <span>
+                {t.changeYen}:{' '}
+                <strong>
+                  {active.changeYen !== null && Number(active.changeYen) > 0 ? '+' : ''}
+                  {currency(active.changeYen)}
+                </strong>
+              </span>
+              <span>
                 {t.change}: <strong>{percentage(active.change)}</strong>
               </span>
               <span>
                 {t.yoy}: <strong>{percentage(active.yoy)}</strong>
+              </span>
+              <span data-testid="chart-price-counts">
+                {active.observedCount} {t.observedItems} · {active.estimatedCount}{' '}
+                {t.estimatedItems}
+                {active.unavailableCount > 0
+                  ? ` · ${active.unavailableCount} ${t.unavailableItems}`
+                  : ''}
               </span>
             </div>
             {notes(active).length > 0 && (

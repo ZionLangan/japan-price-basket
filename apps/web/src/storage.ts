@@ -2,6 +2,7 @@ import { z } from 'zod';
 import Decimal from 'decimal.js';
 import {
   BasketSchema,
+  Month,
   validateBasket,
   type Basket,
   type Release,
@@ -9,6 +10,16 @@ import {
 import { createDefaultBasket, isLegacyDefault } from '../../../packages/domain/src/defaultBasket';
 
 const KEY = 'japan-basket-prices:v1';
+const ReleaseNoticeSchema = z
+  .object({
+    fromReleaseId: z.string().min(1).max(128),
+    toReleaseId: z.string().min(1).max(128),
+    previousEnd: Month.optional(),
+    nextEnd: Month,
+    advancedLatest: z.boolean(),
+  })
+  .strict();
+export type ReleaseNotice = z.infer<typeof ReleaseNoticeSchema>;
 const StateSchema = z
   .object({
     schemaVersion: z.literal(1),
@@ -16,6 +27,8 @@ const StateSchema = z
     locale: z.enum(['en', 'ja']),
     observedOnly: z.boolean(),
     endMode: z.enum(['latest', 'fixed']).optional(),
+    releaseEnd: Month.optional(),
+    pendingReleaseNotice: ReleaseNoticeSchema.optional(),
     current: BasketSchema,
     saved: z.array(BasketSchema).max(10),
   })
@@ -80,6 +93,23 @@ export function readState(release: Release, storage: Storage): RestoredState | n
   if (text.length > 128 * 1024) throw new Error('storageInvalid');
   try {
     const parsed = StateSchema.parse(JSON.parse(text));
+    const previousBasketEnd = parsed.current.end;
+    if (parsed.releaseId !== release.releaseId) {
+      const previousEnd = parsed.pendingReleaseNotice
+        ? parsed.pendingReleaseNotice.previousEnd
+        : parsed.releaseEnd;
+      parsed.pendingReleaseNotice = ReleaseNoticeSchema.parse({
+        fromReleaseId: parsed.pendingReleaseNotice?.fromReleaseId ?? parsed.releaseId,
+        toReleaseId: release.releaseId,
+        ...(previousEnd ? { previousEnd } : {}),
+        nextEnd: release.end,
+        advancedLatest:
+          Boolean(parsed.pendingReleaseNotice?.advancedLatest) ||
+          (parsed.endMode === 'latest' && previousBasketEnd !== release.end),
+      });
+      parsed.releaseId = release.releaseId;
+      parsed.releaseEnd = release.end;
+    }
     const migrated = migrateBasket(parsed.current, true);
     parsed.current = migrated.basket;
     let convertedEggs = migrated.convertedEggs;
@@ -111,6 +141,10 @@ export function readState(release: Release, storage: Storage): RestoredState | n
 }
 export function writeState(state: StoredState, storage: Storage) {
   storage.setItem(KEY, JSON.stringify(StateSchema.parse(state)));
+}
+export function acknowledgeReleaseNotice(state: StoredState): StoredState {
+  const { pendingReleaseNotice: _notice, ...acknowledged } = state;
+  return acknowledged;
 }
 export function parseImport(text: string, release: Release): Basket {
   if (new TextEncoder().encode(text).length > 64 * 1024) throw new Error('invalidBasket');

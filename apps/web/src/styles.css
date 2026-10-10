@@ -201,11 +201,73 @@ small {
   gap: 1rem;
 }
 .source-popover p {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
 }
 .source-popover a {
   display: inline-block;
+  margin-top: 0.5rem;
+}
+.source-popover section {
+  border-top: 1px solid var(--divider);
+  margin-top: 1rem;
+  padding-top: 0.875rem;
+}
+.source-popover h3 {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+.source-identity {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+.source-facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 0.5rem 1rem;
+  margin-top: 0.625rem;
+  font-size: 0.875rem;
+}
+.source-facts dt {
+  color: var(--muted);
+}
+.source-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.source-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1rem;
+}
+.source-technical {
+  border-top: 1px solid var(--divider);
+  margin-top: 1rem;
+  padding-top: 0.875rem;
+  font-size: 0.875rem;
+}
+.source-release-notice button {
   margin-top: 0.75rem;
+}
+.source-update {
+  display: inline-block;
+  font-size: 0.75rem;
+  margin-left: 0.375rem;
+  color: var(--action);
+  font-weight: 600;
+}
+.totals .yen-difference {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 480px) {
+  .source-facts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.125rem;
+  }
+  .source-facts dd + dt {
+    margin-top: 0.5rem;
+  }
 }
 .search-area {
   position: relative;

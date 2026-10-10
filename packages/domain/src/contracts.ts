@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const MAX_BASKET_ITEMS = 50;
+
 export const Month = z.string().regex(/^20\d{2}-(0[1-9]|1[0-2])$/);
 export const PositiveDecimal = z
   .string()
@@ -157,7 +159,7 @@ export const BasketSchema = z
           quantityEstimated: z.boolean().optional(),
         }),
       )
-      .max(50),
+      .max(MAX_BASKET_ITEMS),
   })
   .strict();
 export type Product = z.infer<typeof ProductSchema>;
