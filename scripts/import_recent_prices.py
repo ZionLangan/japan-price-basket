@@ -36,22 +36,33 @@ DOWNLOAD_LOCKS = {}
 DOWNLOAD_LOCKS_GUARD = Lock()
 
 
-def download(url):
+def download(url, refresh=False):
+    """Read cached evidence, or explicitly recheck an existing public URL.
+
+    Refresh preserves content-addressed bytes and prior receipts. It changes the
+    current URL receipt only after a successful fetch and evidence write; it
+    never approves or publishes corrected data.
+    """
     key = hashlib.sha256(url.encode()).hexdigest()
     with DOWNLOAD_LOCKS_GUARD:
         lock = DOWNLOAD_LOCKS.setdefault(key, Lock())
     with lock:
-        return _download(url, key)
+        return _download(url, key, refresh)
 
 
-def _download(url, key):
+def _download(url, key, refresh=False):
     receipt = CACHE / f"{key}.json"
+    previous = None
+    previous_bytes = None
     if receipt.exists():
-        info = json.loads(receipt.read_text(encoding="utf-8"))
-        data = (CACHE / info["sha256"]).read_bytes()
-        if hashlib.sha256(data).hexdigest() != info["sha256"]:
+        previous_bytes = receipt.read_bytes()
+        previous = json.loads(previous_bytes)
+        data = (CACHE / previous["sha256"]).read_bytes()
+        if (previous["url"] != url or len(data) != previous["bytes"]
+                or hashlib.sha256(data).hexdigest() != previous["sha256"]):
             raise ValueError("Cached source checksum mismatch")
-        return data, info
+        if not refresh:
+            return data, previous
     request = urllib.request.Request(url, headers={"User-Agent": "JapanInflationPrototype/0.1"})
     for attempt in range(4):
         try:
@@ -71,6 +82,12 @@ def _download(url, key):
                 raise
             time.sleep(2 ** attempt)
     CACHE.mkdir(parents=True, exist_ok=True)
+    if refresh:
+        info["refreshStatus"] = ("new" if previous is None else
+                                 "unchanged" if info["sha256"] == previous["sha256"] else "changed")
+        if previous is not None:
+            info["previousSha256"] = previous["sha256"]
+            info["previousReceiptSha256"] = hashlib.sha256(previous_bytes).hexdigest()
     evidence = CACHE / info["sha256"]
     if evidence.exists():
         if hashlib.sha256(evidence.read_bytes()).hexdigest() != info["sha256"]:
@@ -79,8 +96,19 @@ def _download(url, key):
         temporary = CACHE / f"{key}.download.tmp"
         temporary.write_bytes(data)
         temporary.replace(evidence)
+    current_bytes = json.dumps(info, indent=2).encode("utf-8")
+    history = CACHE / "receipts" / key
+    history.mkdir(parents=True, exist_ok=True)
+    for preserved in [previous_bytes, current_bytes]:
+        if preserved is None:
+            continue
+        archived = history / f"{hashlib.sha256(preserved).hexdigest()}.json"
+        if archived.exists() and archived.read_bytes() != preserved:
+            raise ValueError("Immutable receipt checksum mismatch")
+        if not archived.exists():
+            archived.write_bytes(preserved)
     temporary = CACHE / f"{key}.receipt.tmp"
-    temporary.write_text(json.dumps(info, indent=2), encoding="utf-8")
+    temporary.write_bytes(current_bytes)
     temporary.replace(receipt)
     return data, info
 
@@ -194,9 +222,9 @@ def month_range(start, end):
     return months
 
 
-def discover_specification_links():
+def discover_specification_links(refresh=False):
     spec_index_url = "https://www.stat.go.jp/data/kouri/doukou/3.html"
-    spec_page, _ = download(spec_index_url)
+    spec_page, _ = download(spec_index_url, refresh)
     spec_links = {}
     # The Statistics Bureau archive page declares Shift_JIS; e-Stat is UTF-8.
     for tr in re.findall(r"<tr\b.*?</tr>", spec_page.decode("cp932"), re.S):
@@ -212,17 +240,17 @@ def discover_specification_links():
     return spec_links
 
 
-def acquire_specifications(start, end, workers=3):
+def acquire_specifications(start, end, workers=3, refresh=False):
     """Stage all dated definitions before prices; preserve every original file."""
     months = month_range(start, end)
-    links = discover_specification_links()
+    links = discover_specification_links(refresh)
     missing = [month for month in months if month not in links]
     if missing:
         raise ValueError(f"No dated specification workbooks discovered: {missing}")
     urls = list(dict.fromkeys(links[month] for month in months))
 
     def read_one(url):
-        data, info = download(url)
+        data, info = download(url, refresh)
         return url, info, read_specs(data, REVIEW_CODES)
 
     specifications = {}
@@ -240,11 +268,11 @@ def acquire_specifications(start, end, workers=3):
     return payload
 
 
-def discover_month_listing(month):
+def discover_month_listing(month, refresh=False):
     year, number = month.split("-")
     index_url = (BASE + "/stat-search/files?cycle=1&layout=datalist&tclass1val=0"
                  f"&toukei=00200571&tstat=000000680001&year={year}0")
-    yearly, _ = download(index_url)
+    yearly, _ = download(index_url, refresh)
     links = re.findall(r'href="([^"<>]+)"[^>]*>\s*' + str(int(number)) + r"月\s*</a>",
                        yearly.decode("utf-8"))
     links = [unescape(x) for x in links if "month=" in x]
@@ -280,7 +308,7 @@ def discover_price_sources(page, month):
     return sources
 
 
-def acquire_history(start, end, workers=3):
+def acquire_history(start, end, workers=3, refresh=False):
     """Checkpoint every complete month; publish staging only after all verify."""
     from scripts.legacy_geography import resolve_legacy_city
     parser_files = [Path(__file__), ROOT / "scripts/legacy_prices.py",
@@ -292,22 +320,22 @@ def acquire_history(start, end, workers=3):
     checkpoints = folder / "history-months"
     checkpoints.mkdir(parents=True, exist_ok=True)
     specs_path = folder / "history-specifications.json"
-    if specs_path.exists():
+    if specs_path.exists() and not refresh:
         specifications = json.loads(specs_path.read_text(encoding="utf-8"))
     else:
-        specifications = acquire_specifications(start, end, workers)
+        specifications = acquire_specifications(start, end, workers, refresh)
     if specifications["start"] != start or specifications["end"] != end:
-        specifications = acquire_specifications(start, end, workers)
+        specifications = acquire_specifications(start, end, workers, refresh)
     by_month = {s["month"]: s for s in specifications["snapshots"]}
     months = month_range(start, end)
 
     def read_month(month):
-        url = discover_month_listing(month)
-        page, listing = download(url)
+        url = discover_month_listing(month, refresh)
+        page, listing = download(url, refresh)
         source_links = discover_price_sources(page, month)
         sources, prices, roster = [], [], None
         for category, locator in source_links.items():
-            raw, info = download(locator["url"])
+            raw, info = download(locator["url"], refresh)
             cities, values = read_prices(raw, month, resolve_legacy_city)
             if roster is not None and [c["id"] for c in cities] != [c["id"] for c in roster]:
                 raise ValueError(f"Food/household city rosters differ in {month}")
@@ -366,9 +394,9 @@ def acquire_history(start, end, workers=3):
     return payload
 
 
-def acquire(start, end, workers=3):
+def acquire(start, end, workers=3, refresh=False):
     """Compatibility name for the one reviewed monthly acquisition path."""
-    return acquire_history(start, end, workers)
+    return acquire_history(start, end, workers, refresh)
 
 
 if __name__ == "__main__":
@@ -378,10 +406,12 @@ if __name__ == "__main__":
     parser.add_argument("--end", default="2026-08")
     parser.add_argument("--history", action="store_true", help="Accepted for compatibility; reviewed history is always used")
     parser.add_argument("--workers", type=int, default=3, choices=range(1, 5))
+    parser.add_argument("--refresh", action="store_true",
+                        help="Recheck known URLs, preserving original bytes and receipt history; never publishes")
     args = parser.parse_args()
     for date in [args.start, args.end]:
         if not re.fullmatch(r"20\d{2}-(0[1-9]|1[0-2])", date):
             parser.error("Dates must be YYYY-MM")
     if args.start > args.end:
         parser.error("Start must precede end")
-    acquire(args.start, args.end, args.workers)
+    acquire(args.start, args.end, args.workers, args.refresh)
