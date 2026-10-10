@@ -1,8 +1,10 @@
 import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { expectRange, selectMonth } from './helpers/dates';
+import { seedAuditedBasket } from './helpers/auditedBasket';
 
 async function load(page: Page) {
+  await seedAuditedBasket(page);
   await page.goto('/');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
   // Keep independent calculation checks on their audited 24-month window.
@@ -172,14 +174,19 @@ test('blocked storage and a failed city file preserve the session with retry', a
       },
     }),
   );
-  await load(page);
+  await page.goto('/');
+  await expect(page.locator('.price-chart')).toBeVisible();
+  await selectMonth(page, 'start', '2024-09');
   await expect(page.getByText('Browser storage is unavailable.', { exact: false })).toBeVisible();
+  const before = await page.getByTestId('latest-cost').textContent();
   await page.locator('#qty-white-bread').fill('0.5');
-  await expect(page.getByTestId('latest-cost')).toHaveText('¥1,815');
+  await expect(page.getByTestId('latest-cost')).not.toHaveText(before!);
+  await expect(page.getByTestId('latest-cost')).not.toHaveText('—');
+  const changed = await page.getByTestId('latest-cost').textContent();
   await page.route('**/cities/01100.json', (r) => r.fulfill({ status: 503, body: 'Unavailable' }));
   await page.locator('#city').selectOption('01100');
   await expect(page.getByRole('alert')).toContainText('bundled data');
-  await expect(page.getByTestId('latest-cost')).toHaveText('¥1,815');
+  await expect(page.getByTestId('latest-cost')).toHaveText(changed!);
   await expect(page.locator('#city')).toHaveValue('13100');
   await page.unroute('**/cities/01100.json');
   await page.getByRole('button', { name: 'Retry', exact: true }).click();
@@ -195,12 +202,15 @@ test('corrupt stored data stays intact until Reset basket and old named records 
     if (localStorage.getItem('japan-basket-prices:v1') === null)
       localStorage.setItem('japan-basket-prices:v1', '{broken');
   });
-  await load(page);
+  await page.goto('/');
+  await expect(page.locator('.price-chart')).toBeVisible();
   await expect(page.getByText('Saved data could not be restored', { exact: false })).toBeVisible();
   await page.locator('#qty-white-bread').fill('0.5');
   expect(await page.evaluate(() => localStorage.getItem('japan-basket-prices:v1'))).toBe('{broken');
   await page.getByRole('button', { name: 'Reset basket', exact: true }).click();
-  await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
+  await expect(page.locator('.basket-row')).toHaveCount(16);
+  await expect(page.locator('#qty-koshihikari-rice')).toHaveValue('5');
+  await expect(page.getByTestId('latest-cost')).not.toHaveText('—');
   await page.evaluate(() => {
     const key = 'japan-basket-prices:v1',
       state = JSON.parse(localStorage.getItem(key)!);

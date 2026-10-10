@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test';
 import { expectRange, selectMonth } from './helpers/dates';
+import { seedAuditedBasket } from './helpers/auditedBasket';
 
 test('expanded foods are bilingual and miso keeps a fixed weight across a package-size change', async ({
   page,
 }) => {
+  await seedAuditedBasket(page);
   await page.goto('/');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
   await page.getByRole('button', { name: 'Clear basket', exact: true }).click();
@@ -31,6 +33,7 @@ test('expanded foods are bilingual and miso keeps a fixed weight across a packag
 test('genuine later starts remain guarded and scheduled off-seasons keep actual price anchors', async ({
   page,
 }) => {
+  await seedAuditedBasket(page);
   await page.goto('/');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
   await page.getByRole('button', { name: 'Clear basket', exact: true }).click();
@@ -56,6 +59,7 @@ test('genuine later starts remain guarded and scheduled off-seasons keep actual 
 test('full food catalog exposes drained corn history with a fixed gram quantity', async ({
   page,
 }) => {
+  await seedAuditedBasket(page);
   await page.goto('/');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
   await page.getByRole('button', { name: 'Clear basket', exact: true }).click();
@@ -84,6 +88,7 @@ test('full food catalog exposes drained corn history with a fixed gram quantity'
 test('conflicting source captions stay estimated and explain the dated conversion in both languages', async ({
   page,
 }) => {
+  await seedAuditedBasket(page);
   await page.goto('/');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
   await page.getByRole('button', { name: 'Clear basket', exact: true }).click();

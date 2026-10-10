@@ -1,8 +1,10 @@
 import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { expectRange, selectMonth } from './helpers/dates';
+import { seedAuditedBasket } from './helpers/auditedBasket';
 
 async function load(page: Page) {
+  await seedAuditedBasket(page);
   await page.goto('/');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
   await expect(page.locator('.price-chart')).toBeVisible();

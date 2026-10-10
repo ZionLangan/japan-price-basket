@@ -2,10 +2,12 @@ import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import type { Release } from '../../packages/domain/src/contracts';
 import { expectRange, selectMonth } from './helpers/dates';
+import { seedAuditedBasket } from './helpers/auditedBasket';
 
 async function load(page: import('@playwright/test').Page) {
   const pointer = await (await page.request.get('/data/current.json')).json();
   const release: Release = await (await page.request.get(`/data/${pointer.manifest}`)).json();
+  await seedAuditedBasket(page);
   await page.goto('/');
   await expect(page.getByTestId('latest-cost')).toHaveText('¥2,098');
   return release;

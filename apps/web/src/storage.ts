@@ -6,6 +6,7 @@ import {
   type Basket,
   type Release,
 } from '../../../packages/domain/src/contracts';
+import { createDefaultBasket, isLegacyDefault } from '../../../packages/domain/src/defaultBasket';
 
 const KEY = 'japan-basket-prices:v1';
 const StateSchema = z
@@ -27,7 +28,7 @@ export const retiredDetergentIds = new Set([
   'liquid-laundry-detergent',
   'powder-laundry-detergent',
 ]);
-type Migration = { removedDetergents: number; convertedEggs: boolean };
+type Migration = { removedDetergents: number; convertedEggs: boolean; updatedDefault?: boolean };
 export type RestoredState = StoredState & { migration?: Migration };
 
 function migrateBasket(basket: Basket, removeDetergents: boolean) {
@@ -88,14 +89,20 @@ export function readState(release: Release, storage: Storage): RestoredState | n
       return saved.basket;
     });
     if (parsed.endMode === 'latest') parsed.current.end = release.end;
+    const updatedDefault = isLegacyDefault(parsed.current, release, parsed.observedOnly);
+    if (updatedDefault) parsed.current = createDefaultBasket(release);
     validateBasket(parsed.current, release);
     parsed.saved.forEach((b) => validateBasket(b, release));
     if (new Set(parsed.saved.map((b) => b.name)).size !== parsed.saved.length)
       throw new Error('storageInvalid');
-    return migrated.removedDetergents || convertedEggs
+    return migrated.removedDetergents || convertedEggs || updatedDefault
       ? {
           ...parsed,
-          migration: { removedDetergents: migrated.removedDetergents, convertedEggs },
+          migration: {
+            removedDetergents: migrated.removedDetergents,
+            convertedEggs,
+            ...(updatedDefault ? { updatedDefault: true } : {}),
+          },
         }
       : parsed;
   } catch {

@@ -19,6 +19,14 @@ const english = {
   historicalCities: 'Historical city areas',
   dataSource: 'Data source',
   independent: 'Independent project using official statistics. Not a government website.',
+  defaultBasketNote:
+    'The starter basket uses fixed, roughly monthly quantities informed by 2025 purchases of households with two or more people. It is an editable staples sample, not a full food budget. Eggs use an approximate 60 g count; tofu uses a chosen 2 kg because the purchase report counts blocks without weights.',
+  defaultBasketSource: '2025 household purchases · quantity table 6-2',
+  defaultUpdated:
+    'The starter basket now includes rice and other everyday staples, informed by household purchases.',
+  defaultRange: 'The complete starter basket is available for:',
+  defaultUnavailable:
+    'The complete starter basket has no usable latest month here. Change the city or edit the basket.',
   tabCost: 'Basket price',
   tabBreakdown: 'Breakdown',
   tabProduct: 'Product history',
@@ -115,6 +123,13 @@ const japanese: typeof english = {
   historicalCities: '過去の調査区域',
   dataSource: '出典',
   independent: '公式統計を利用した個人プロジェクトです。政府のウェブサイトではありません。',
+  defaultBasketNote:
+    '基本のかごは、2025年の二人以上の世帯の購入量を参考に、おおむね1か月分の数量を固定した食材の例です。食費全体を表すものではなく、自由に変更できます。卵は1個約60gとして個数を設定し、豆腐は購入統計が重さのない丁数のため、例として2kgを選んでいます。',
+  defaultBasketSource: '2025年の世帯購入量・第6-2表',
+  defaultUpdated: '世帯購入量を参考に、基本のかごを米などの日常の食材に更新しました。',
+  defaultRange: 'すべての基本食材を比較できる期間：',
+  defaultUnavailable:
+    'この地域の最新月では、すべての基本食材を比較できません。都市を変更するか、かごを編集してください。',
   tabCost: 'かごの価格',
   tabBreakdown: '内訳',
   tabProduct: '商品の推移',

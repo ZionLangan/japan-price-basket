@@ -12,6 +12,11 @@ import {
   type Release,
 } from '../../../packages/domain/src/contracts';
 import { evaluate, months, productEligibility } from '../../../packages/domain/src/domain';
+import {
+  createDefaultBasket,
+  defaultBasketForCity,
+  DEFAULT_BASKET_SOURCE,
+} from '../../../packages/domain/src/defaultBasket';
 import { readState, writeState } from './storage';
 import { dashboardMessages } from './dashboardMessages';
 import { ProductSearch } from './ProductSearch';
@@ -49,21 +54,6 @@ async function loadCity(release: Release, cityId: string, signal: AbortSignal): 
     throw new Error('loadError');
   return data;
 }
-function example(release: Release, cityId = '13100'): Basket {
-  return {
-    schemaVersion: 1,
-    name: 'Staples / 基本食材',
-    cityId,
-    start: release.start,
-    end: release.end,
-    items: ['white-bread', 'white-sugar', 'cabbage', 'potatoes', 'carrots'].map((productId) => ({
-      productId,
-      quantity: '1',
-      unit: release.products.find((p) => p.id === productId)!.unit,
-    })),
-  };
-}
-
 export function App() {
   const [release, setRelease] = useState<Release>();
   const [error, setError] = useState(false);
@@ -117,7 +107,9 @@ function Workbench({ release }: { release: Release }) {
   });
   // Preserve old named records while the public interface edits one current basket.
   const [saved] = useState(initial.state?.saved ?? []);
-  const [basket, setBasket] = useState<Basket>(initial.state?.current ?? example(release));
+  const [basket, setBasket] = useState<Basket>(
+    initial.state?.current ?? createDefaultBasket(release),
+  );
   const [endMode, setEndMode] = useState<EndMode>(
     initial.state?.endMode ?? (initial.state ? 'fixed' : 'latest'),
   );
@@ -343,19 +335,26 @@ function Workbench({ release }: { release: Release }) {
       setNotice({ key: 'waitForCity' });
       return;
     }
-    const reset = example(release, basket.cityId);
-    reset.start = selectedCity.start;
-    reset.end = selectedCity.end;
-    if (matchingCity)
-      reset.items = reset.items.filter(
-        (item) => !blockedItems({ ...reset, items: [item] }, matchingCity, observedOnly).length,
-      );
+    const {
+      basket: reset,
+      available,
+      rangeChanged,
+    } = defaultBasketForCity(release, matchingCity, observedOnly);
     setBasket(reset);
     setEndMode(reset.end === release.end ? 'latest' : 'fixed');
     setPreserveStored(false);
     setStorageIssue('');
     setMigration(undefined);
-    setNotice(undefined);
+    setNotice(
+      !available
+        ? { key: 'defaultUnavailable' }
+        : rangeChanged
+          ? {
+              key: 'defaultRange',
+              range: `${reset.start} – ${reset.end}`,
+            }
+          : undefined,
+    );
   }
   return (
     <div className="dashboard-shell">
@@ -428,6 +427,10 @@ function Workbench({ release }: { release: Release }) {
         </a>
         <p>{t.method1}</p>
         <p>{t.method3}</p>
+        <p>{t.defaultBasketNote}</p>
+        <a href={DEFAULT_BASKET_SOURCE} target="_blank" rel="noreferrer">
+          {t.defaultBasketSource}
+        </a>
         <p>{t.definitionNote}</p>
         <p>{t.quantityNote}</p>
         <p>{t.carryNote}</p>
@@ -487,6 +490,7 @@ function Workbench({ release }: { release: Release }) {
         <p className="notice storage-notice" role="status">
           {migration.removedDetergents ? t.detergentRemoved : ''}{' '}
           {migration.convertedEggs ? t.eggsMigrated : ''}
+          {migration.updatedDefault ? t.defaultUpdated : ''}
         </p>
       )}
       {notice && (
