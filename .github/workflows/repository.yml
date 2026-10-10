@@ -51,7 +51,7 @@ jobs:
       - name: Build static artifact from approved fixture
         run: npm run build
       - name: Install test browsers
-        run: npm exec playwright install --with-deps chromium firefox webkit
+        run: npm exec -- playwright install --with-deps chromium firefox webkit
       - name: Check desktop, mobile and browser-engine user flows
         run: npm run test:e2e
       - name: Retain failed browser diagnostics

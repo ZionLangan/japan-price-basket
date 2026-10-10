@@ -19,6 +19,10 @@ kubeconfig.*
 acme.json
 *.page.json
 
+# Private working notes, agent instructions, tooling, and history backups
+/.local/
+/AGENTS.md
+
 # Dependencies, build output, reports, and local tooling
 node_modules/
 dist/
@@ -48,7 +52,7 @@ Thumbs.db
 /data/releases/
 /apps/web/public/data/
 
-# Preserve a fixed, curated set of original pilot evidence and audit indexes.
+# Preserve a fixed, curated set of original evidence and audit indexes.
 # New bulk downloads remain local. Never force-add the whole audit directory.
 /data/audit/**
 !/data/audit/2026-10-05/
