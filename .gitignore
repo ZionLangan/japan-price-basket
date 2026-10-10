@@ -7,6 +7,17 @@
 *.p12
 *.pfx
 credentials.json
+kubeconfig
+kubeconfig.*
+!kubeconfig.example
+.kube/
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfvars
+!*.tfvars.example
+acme.json
+*.page.json
 
 # Dependencies, build output, reports, and local tooling
 node_modules/

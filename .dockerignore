@@ -1,0 +1,25 @@
+# Production image input is a tested static build, not the development checkout.
+# CI builds dist before invoking Docker. No credentials, raw archive, Git history,
+# dependencies or test reports are sent to the Docker build context.
+**
+!dist/
+!dist/**
+!ops/
+!ops/containers/
+!ops/containers/**
+!Dockerfile
+!LICENSE
+!DATA_ATTRIBUTION.md
+
+# These remain excluded even if mistakenly placed in an allowed build folder.
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/credentials.json
+**/kubeconfig
+**/kubeconfig.*
+**/acme.json
+**/*.tfstate*
