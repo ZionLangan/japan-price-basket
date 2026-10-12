@@ -26,7 +26,7 @@ import { DateRangeControls, type EndMode } from './DateRangeControls';
 import { DataSource } from './DataSource';
 
 async function loadRelease(): Promise<Release> {
-  const response = await fetch('/data/current.json');
+  const response = await fetch(`${import.meta.env.BASE_URL}data/current.json`);
   if (!response.ok) throw new Error('loadError');
   const pointer = z
     .object({
@@ -35,7 +35,7 @@ async function loadRelease(): Promise<Release> {
     })
     .parse(await response.json());
   if (pointer.manifest !== `${pointer.releaseId}/manifest.json`) throw new Error('loadError');
-  const data = await fetch(`/data/${pointer.manifest}`);
+  const data = await fetch(`${import.meta.env.BASE_URL}data/${pointer.manifest}`);
   if (!data.ok) throw new Error('loadError');
   const release = ReleaseSchema.parse(await data.json());
   if (release.releaseId !== pointer.releaseId) throw new Error('loadError');
@@ -43,7 +43,10 @@ async function loadRelease(): Promise<Release> {
 }
 async function loadCity(release: Release, cityId: string, signal: AbortSignal): Promise<CityData> {
   const city = release.cities.find((c) => c.id === cityId)!;
-  const response = await fetch(`/data/${release.releaseId}/${city.file}`, { signal });
+  const response = await fetch(
+    `${import.meta.env.BASE_URL}data/${release.releaseId}/${city.file}`,
+    { signal },
+  );
   if (!response.ok) throw new Error('loadError');
   const bytes = await response.arrayBuffer();
   const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]

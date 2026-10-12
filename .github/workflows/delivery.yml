@@ -1,0 +1,251 @@
+name: Static image delivery
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - apps/**
+      - packages/**
+      - scripts/**
+      - tests/**
+      - data/**
+      - demo/**
+      - ops/containers/**
+      - package.json
+      - package-lock.json
+      - requirements-import.txt
+      - '*.ts'
+      - .nvmrc
+      - .python-version
+      - .dockerignore
+      - .github/workflows/delivery.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: static-image-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Delivery validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Check out the tested source commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Use the repository Python version
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version-file: .python-version
+      - name: Check tracked syntax and audited demonstration
+        run: |
+          python scripts/check_repository.py
+          python scripts/build_staple_price_test.py
+          git diff --exit-code -- demo/staple-price-test.html demo/staple-price-test.json
+      - name: Install locked ingestion test dependencies
+        run: python -m pip install -r requirements-import.txt
+      - name: Test ingestion and quantity safeguards
+        run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: Test defensive restore archive inspection
+        run: python -m unittest discover -s tests/deployment -p 'test_*.py'
+      - name: Use the repository Node version
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Check formatting, types and calculations
+        run: |
+          npm run format:check
+          npm run check
+          npm test
+      - name: Test release helpers and real disk staging on Linux
+        run: |
+          command -v bash
+          command -v jq
+          node --test tests/deployment/*.test.mjs
+      - name: Publish the reviewed snapshot and build exactly once
+        run: |
+          SOURCE_COMMIT=$(git rev-parse HEAD)
+          APP_RELEASE="app-$SOURCE_COMMIT"
+          node scripts/publish_snapshot.mjs
+          npm exec -- vite build --base="/app-releases/$APP_RELEASE/"
+          node scripts/write_third_party_notices.mjs
+      - name: Install test browsers on the build runner
+        run: npm exec -- playwright install --with-deps chromium firefox webkit
+      - name: Run the complete regression suite on the exact release-base artifact
+        run: npm exec -- playwright test --config scripts/playwright.release.config.ts
+      - name: Prepare and hash the tested bytes without rebuilding
+        run: |
+          node scripts/prepare-release.mjs
+          node scripts/verify-release-artifact.mjs dist "$(git rev-parse HEAD)"
+          tar -czf "$RUNNER_TEMP/tested-static.tar.gz" -C dist .
+          cd "$RUNNER_TEMP"
+          sha256sum tested-static.tar.gz > tested-static.tar.gz.sha256
+      - name: Hand off the exact tested artifact
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: tested-static-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/tested-static.tar.gz
+            ${{ runner.temp }}/tested-static.tar.gz.sha256
+          if-no-files-found: error
+          retention-days: 14
+      - name: Keep failed browser diagnostics
+        if: failure()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: failed-delivery-validation-${{ github.sha }}
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  publish:
+    name: Test and publish the same image
+    needs: validate
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    steps:
+      - name: Check out the same source commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Set up Node for artifact checks and browser tests
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Download the already tested artifact
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        with:
+          name: tested-static-${{ github.sha }}
+          path: ${{ runner.temp }}/handoff
+      - name: Verify the handoff and unpack only tested bytes
+        working-directory: ${{ runner.temp }}/handoff
+        run: |
+          sha256sum --check tested-static.tar.gz.sha256
+          mkdir "$GITHUB_WORKSPACE/dist"
+          tar -xzf tested-static.tar.gz -C "$GITHUB_WORKSPACE/dist"
+          cd "$GITHUB_WORKSPACE"
+          node scripts/verify-release-artifact.mjs dist "$(git rev-parse HEAD)"
+      - name: Set the immutable build identities
+        id: identity
+        run: |
+          SOURCE_COMMIT=$(git rev-parse HEAD)
+          APP_RELEASE="app-$SOURCE_COMMIT"
+          IMAGE_TAG="ghcr.io/zionlangan/japan-price-basket:sha-$SOURCE_COMMIT"
+          NGINX_BASE=$(node --input-type=module -e 'import fs from "node:fs"; const lock=JSON.parse(fs.readFileSync("ops/containers/base-image.lock.json","utf8")); if(!/@sha256:[a-f0-9]{64}$/.test(lock.image))throw new Error("Review a digest-pinned base image"); console.log(lock.image);')
+          printf 'source_commit=%s\napp_release=%s\nimage_tag=%s\nnginx_base=%s\n' "$SOURCE_COMMIT" "$APP_RELEASE" "$IMAGE_TAG" "$NGINX_BASE" >> "$GITHUB_OUTPUT"
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Build the runtime image once on the runner
+        run: |
+          docker buildx build --platform linux/amd64 --load --provenance=false --sbom=false \
+            --file ops/containers/Dockerfile \
+            --build-arg NGINX_BASE='${{ steps.identity.outputs.nginx_base }}' \
+            --build-arg SOURCE_COMMIT='${{ steps.identity.outputs.source_commit }}' \
+            --build-arg APP_RELEASE='${{ steps.identity.outputs.app_release }}' \
+            --tag '${{ steps.identity.outputs.image_tag }}' .
+          docker image inspect '${{ steps.identity.outputs.image_tag }}' --format '{{.Id}}' > "$RUNNER_TEMP/tested-image-id.txt"
+      - name: Run the image with production security constraints
+        run: |
+          docker run --detach --name jpb-ci --read-only --cap-drop ALL \
+            --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+            --publish 127.0.0.1:8080:8080 '${{ steps.identity.outputs.image_tag }}'
+          for attempt in $(seq 1 120); do
+            if curl --fail --silent http://127.0.0.1:8080/readyz; then exit 0; fi
+            sleep 1
+          done
+          docker logs jpb-ci
+          exit 1
+      - name: Install the same browser test dependencies
+        run: |
+          npm ci
+          npm exec -- playwright install --with-deps chromium firefox webkit
+      - name: Test actual container paths, both languages, persistence and byte integrity
+        run: npm exec -- playwright test --config scripts/playwright.container.config.ts
+      - name: Create a pinned-tool SBOM of the actual local image
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
+        with:
+          image: ${{ steps.identity.outputs.image_tag }}
+          syft-version: v1.54.1
+          format: spdx-json
+          output-file: ${{ runner.temp }}/image.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+          dependency-snapshot: false
+      - name: Scan the same image; stop on high or critical findings
+        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7
+        with:
+          image: ${{ steps.identity.outputs.image_tag }}
+          grype-version: v0.120.1
+          output-format: json
+          output-file: ${{ runner.temp }}/image.scan.json
+          severity-cutoff: high
+          fail-build: true
+          cache-db: true
+      - name: Log in only after image validation
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push the tested image without a second build
+        id: push
+        run: |
+          IMAGE='${{ steps.identity.outputs.image_tag }}'
+          test "$(docker image inspect "$IMAGE" --format '{{.Id}}')" = "$(cat "$RUNNER_TEMP/tested-image-id.txt")"
+          docker push "$IMAGE"
+          IMAGE_REF=$(docker image inspect "$IMAGE" --format '{{index .RepoDigests 0}}')
+          case "$IMAGE_REF" in ghcr.io/zionlangan/japan-price-basket@sha256:*) ;; *) exit 1 ;; esac
+          DIGEST="${IMAGE_REF##*@}"
+          printf 'image=%s\ndigest=%s\n' "$IMAGE_REF" "$DIGEST" >> "$GITHUB_OUTPUT"
+          IMAGE_REF="$IMAGE_REF" node --input-type=module -e 'import fs from "node:fs"; const m=JSON.parse(fs.readFileSync("dist/release-meta.json","utf8")); fs.writeFileSync(process.env.RUNNER_TEMP+"/candidate.json",JSON.stringify({schemaVersion:1,sourceCommit:m.sourceCommit,appRelease:m.appRelease,dataset:m.dataset,policyVersion:m.policyVersion,sourceCutoff:m.sourceCutoff,payloadInventorySha256:m.payloadInventorySha256,image:process.env.IMAGE_REF},null,2)+"\n");'
+      - name: Attest where this digest came from
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
+        with:
+          subject-name: ghcr.io/zionlangan/japan-price-basket
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
+      - name: Bind the SBOM to the published digest
+        uses: actions/attest-sbom@4651f806c01d8637787e274ac3bdf724ef169f34 # v3
+        with:
+          subject-name: ghcr.io/zionlangan/japan-price-basket
+          subject-digest: ${{ steps.push.outputs.digest }}
+          sbom-path: ${{ runner.temp }}/image.spdx.json
+          push-to-registry: true
+      - name: Prove that the digest is anonymously pullable
+        run: |
+          mkdir "$RUNNER_TEMP/anonymous-docker"
+          printf '{"auths":{}}\n' > "$RUNNER_TEMP/anonymous-docker/config.json"
+          docker --config "$RUNNER_TEMP/anonymous-docker" pull '${{ steps.push.outputs.image }}'
+      - name: Retain candidate identity, SBOM, scan and diagnostics
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: delivery-candidate-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/candidate.json
+            ${{ runner.temp }}/image.spdx.json
+            ${{ runner.temp }}/image.scan.json
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Stop the test container
+        if: always()
+        run: docker rm --force jpb-ci || true

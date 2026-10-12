@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "fluxVersion": "v2.9.6",
+  "reviewedAt": "2026-10-12",
+  "releaseUrl": "https://github.com/fluxcd/flux2/releases/tag/v2.9.6",
+  "license": "Apache-2.0",
+  "exportComponents": [
+    "source-controller",
+    "kustomize-controller"
+  ],
+  "cliArchives": {
+    "flux_2.9.6_linux_amd64.tar.gz": {
+      "sha256": "b4d22673e9246cbd628881f1a9ef3b090085dced291e42d804555cee8e8d42c5",
+      "url": "https://github.com/fluxcd/flux2/releases/download/v2.9.6/flux_2.9.6_linux_amd64.tar.gz"
+    },
+    "flux_2.9.6_linux_arm64.tar.gz": {
+      "sha256": "6663c154755b732f43dc993d72321f71c2fc1ff0bcb94b2696e0a8638fa562b4",
+      "url": "https://github.com/fluxcd/flux2/releases/download/v2.9.6/flux_2.9.6_linux_arm64.tar.gz"
+    },
+    "flux_2.9.6_windows_amd64.zip": {
+      "sha256": "164e87a13ee8be864a96dbfe597d938cfcea60b9f309a2bd8eaad3e539fba054",
+      "url": "https://github.com/fluxcd/flux2/releases/download/v2.9.6/flux_2.9.6_windows_amd64.zip"
+    }
+  },
+  "controllerImages": {
+    "source-controller": "ghcr.io/fluxcd/source-controller@sha256:6a6693172589f8ff26123a231d5fa6ceb194a6efb4dc647cdf057c959f76a2e3",
+    "kustomize-controller": "ghcr.io/fluxcd/kustomize-controller@sha256:2ebeaa341da77d52b6abbbba5efcee0450d47f8b42f0e6f33b08f9020262d606"
+  },
+  "upstreamInstallSha256": "95b5f53380585545ba4413d6925ff1816334fd6ab34779f5b3d55ce41afd1c65",
+  "installSha256": "1f954852802b3e0dc7086ba9d8a579022fdae23d3a168a568b6d867d53a16a3f",
+  "resourcePolicy": "Each controller requests64Mi,limit256Mi and concurrency1 as starting measurement settings. Inspect OOM/pressure and measure; these do not establish the Lightsail host has sufficient capacity."
+}
