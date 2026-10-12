@@ -87,12 +87,19 @@ cutoff; a fixed-end selection remains fixed.
 
 ## Delivery boundary
 
-The implemented output is a static `dist/` directory. A Docker/GHCR, K3s and
-minimal Flux delivery design is specified in [Operations](OPERATIONS.md), but
-the repository does not yet provide a Dockerfile or Kubernetes manifests.
-Production rolling updates require frontend release pinning and retained shared
-assets; the current mutable discovery pointer alone does not satisfy that
-contract. Serving multiple replicas on one host does not create host redundancy.
+The application output is a static `dist/` directory. The container build
+packages already tested bytes into non-root Nginx; it does not run acquisition
+or rebuild the application. Each production frontend uses an immutable
+`/app-releases/app-<sourceCommit>/` base, including its discovery pointer and
+compatible dataset files. Old browser tabs retain that release namespace.
+
+`scripts/render_deployment.py` generates complete Kubernetes configuration from
+a reviewed image digest, app release and dataset receipt. An exact-release Job
+validates and atomically stages shared files before two read-only web replicas
+activate the new HTML. Flux source-controller and kustomize-controller reconcile
+reviewed Git configuration with explicit stage dependencies. See
+[Operations](OPERATIONS.md). Serving multiple replicas on one host does not
+create host redundancy; runtime capacity and update behavior require acceptance.
 
 Changes must preserve schema and dataset compatibility, source traceability,
 both languages, chart/table parity, unavailable states and bounded persistence.

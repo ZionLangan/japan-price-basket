@@ -59,7 +59,7 @@ The deployed application requires no database, application API or source secret.
 | `scripts/`         | Source acquisition, reconciliation, publication and packaging.         |
 | `data/`            | Review mappings, a bounded approved snapshot and fixed audit evidence. |
 | `tests/`           | Domain, ingestion, integrity and browser-flow tests.                   |
-| `ops/`             | Static serving configuration examples.                                 |
+| `ops/`             | Container runtime, Kubernetes rendering and pinned Flux installation. |
 
 Raw archives, generated releases, build output and local working notes are
 excluded from version control. The original endpoint demonstration remains in
@@ -74,12 +74,14 @@ excluded from version control. The original endpoint demonstration remains in
 - [Development](docs/DEVELOPMENT.md): environment setup, reproducible builds and
   verification commands.
 - [Operations](docs/OPERATIONS.md): artifact packaging, serving requirements,
-  historical corrections and the container delivery specification.
+  historical corrections and immutable container delivery.
 - [Contributing](CONTRIBUTING.md): review and repository conventions.
 
 GitHub Actions checks ingestion, formatting, calculations, builds and browser
-flows. Docker/K3s delivery and automated collection are specified separately;
-the current executable artifact is the static website.
+flows. The delivery workflow packages and tests a static Nginx image for GHCR.
+K3s uses containerd; minimal Flux reconciles reviewed release configuration.
+Image publication and production promotion are separate. Automated acquisition
+remains separate from reviewed data publication.
 
 ## License and attribution
 

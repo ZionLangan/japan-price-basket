@@ -1,0 +1,56 @@
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { expect, test } from '@playwright/test';
+
+const meta = JSON.parse(readFileSync('dist/release-meta.json', 'utf8'));
+const base = `/app-releases/${meta.appRelease}/`;
+
+test('real container serves a pinned bilingual basket and exact manifest/city bytes', async ({ page, request, context }) => {
+  const errors: string[] = [];
+  const badResponses: string[] = [];
+  const dataRequests: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  page.on('response', (response) => {
+    if (response.status() >= 400) badResponses.push(`${response.status()} ${response.url()}`);
+    if (response.url().includes('/data/')) dataRequests.push(new URL(response.url()).pathname);
+  });
+  await page.goto('/');
+  await expect(page.getByTestId('latest-cost')).toHaveText(/^\u00A5[\d,]+$/);
+  await expect(page.locator('.basket-row')).toHaveCount(16);
+  const original = await page.getByTestId('latest-cost').textContent();
+  await page.locator('#qty-koshihikari-rice').fill('6');
+  await expect(page.getByTestId('latest-cost')).not.toHaveText(original!);
+  await page.locator('#search').fill('onion');
+  await expect(page.getByRole('listbox')).toBeVisible();
+  await page.locator('#search').press('Escape');
+  await page.getByRole('button', { name: '日本語', exact: true }).click();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+  await page.reload();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+  await expect(page.locator('#qty-koshihikari-rice')).toHaveValue('6');
+  await page.locator('#city').selectOption('01100');
+  // ja-JP formats JPY with the full-width yen sign; en-US uses U+00A5.
+  await expect(page.getByTestId('latest-cost')).toHaveText(/^\uFFE5[\d,]+$/);
+  await page.getByRole('button', { name: 'English', exact: true }).click();
+  await page.getByRole('tab', { name: 'Monthly data', exact: true }).click();
+  await expect(page.locator('.monthly-table tbody tr').first()).toBeVisible();
+  expect(errors).toEqual([]);
+  expect(badResponses).toEqual([]);
+  expect(dataRequests.length).toBeGreaterThanOrEqual(3);
+  expect(dataRequests.every((path) => path.startsWith(`${base}data/`))).toBe(true);
+  expect(await context.cookies()).toEqual([]);
+  const pointerResponse = await request.get(`${base}data/current.json`);
+  expect(pointerResponse.status()).toBe(200);
+  const pointer = await pointerResponse.json();
+  expect(pointer.releaseId).toBe(meta.dataset);
+  const manifestResponse = await request.get(`${base}data/${pointer.manifest}`);
+  expect(manifestResponse.status()).toBe(200);
+  const manifest = await manifestResponse.json();
+  const city = manifest.cities.find((item: { id: string }) => item.id === '13100');
+  const cityResponse = await request.get(`${base}data/${meta.dataset}/${city.file}`);
+  expect(cityResponse.status()).toBe(200);
+  expect(createHash('sha256').update(await cityResponse.body()).digest('hex')).toBe(city.sha256);
+  expect((await request.get('/data/current.json')).status()).toBe(404);
+  expect((await request.get(`${base}assets/missing-file.js`)).status()).toBe(404);
+  expect((await request.get(`${base}data/${meta.dataset}/cities/missing-city.json`)).status()).toBe(404);
+});

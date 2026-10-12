@@ -1,0 +1,8 @@
+# Operator-owned file: copy to /etc/rancher/k3s/config.yaml with mode 0600.
+# Do not copy this file into the application's GitOps promotion directory.
+selinux: true
+write-kubeconfig-mode: "0600"
+cluster-cidr: "10.42.0.0/16"
+service-cidr: "10.43.0.0/16"
+# Single-node setup: keep the cloud firewall closed on 6443, 10250 and 8472.
+# Use sudo k3s kubectl locally through SSH rather than exposing the API.

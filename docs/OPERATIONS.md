@@ -1,9 +1,11 @@
 # Operations
 
 The website is delivered as static files. Node and Python are build and data
-tools; neither runs on the public serving host. Container and GitOps deployment
-below is a delivery specification, not an installed service: a Dockerfile,
-Kubernetes manifests and image-publication workflows are not yet supplied.
+tools; neither runs on the public serving host. `ops/containers/` supplies the
+non-root Nginx runtime; `scripts/render_deployment.py` generates Kubernetes
+configuration from reviewed release metadata. `ops/flux/` supplies a pinned
+two-controller installation. Infrastructure installation and production
+acceptance are operator actions, separate from supplying these files.
 
 ## Build, verify and package
 
@@ -37,16 +39,19 @@ For local inspection:
 npm run preview -- --port 4173 --strictPort
 ```
 
-Vite preview is a verification tool, not the production server. Serve the full
-`dist/` directory at the origin root. Retain runtime license notices and data
+Vite preview is a verification tool, not the production server. Ordinary local
+builds serve `dist/` at the origin root. Container delivery instead builds Vite
+with `/app-releases/app-<fullSourceCommit>/` as its base and records the exact
+tested payload using `scripts/prepare-release.mjs`. Do not rebuild after testing
+and call the result the same artifact. Retain runtime license notices and data
 attribution with every distributed artifact.
 
 ## Static serving contract
 
 | Resource                                        | Required behavior                                                                                         |
 | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| HTML and `/data/current.json`                   | Revalidate; do not cache as immutable.                                                                    |
-| Hashed JavaScript/CSS and dataset-version paths | Correct MIME types; immutable caching only when published bytes cannot change.                            |
+| Entry HTML and release status                   | Revalidate; do not cache as immutable.                                                                    |
+| Immutable app-release assets and data           | Correct MIME types and immutable caching only when published bytes cannot change.                         |
 | JSON, JavaScript and CSS                        | Gzip where negotiated, with `Vary: Accept-Encoding`; support clients that request uncompressed responses. |
 | Missing assets or JSON                          | Real 404 response, never an HTML fallback.                                                                |
 | City data                                       | Exact manifest bytes so browser SHA-256 checks succeed.                                                   |
@@ -59,7 +64,7 @@ directives replace inherited ones: repeat the selected security headers or use
 a shared include. Do not add source credentials, tracking or cookie-setting
 middleware to the serving layer.
 
-## Container and orchestration specification
+## Container and orchestration
 
 Build and test a non-root static Nginx OCI image on a runner. Record its source
 commit, dataset, policy, observation cutoff, payload hashes and base/image
@@ -102,14 +107,18 @@ failure, reboot, ingress interruption or cluster maintenance.
 
 ## CI/CD and rollback
 
-The existing GitHub Actions workflow validates source, data contracts and
-browser behavior. Image publication and production promotion are separate
-deliverables. Keep public PR jobs read-only and free of production credentials;
+The `delivery.yml` GitHub Actions workflow validates source, data contracts and
+browser behavior, hands off the tested static artifact, and tests/scans/publishes
+the same image. It emits `candidate.json` with source, app, dataset and immutable
+image identities. Image publication and production promotion are separate. Keep public PR jobs read-only and free of production credentials;
 pin external actions and grant package-write permission only to trusted image
 publication. Verify anonymous pulls if using public GHCR.
 
-Promote tested image digests through reviewed manifest changes. Flux pulls
-protected configuration with minimal permissions. Exact-release staging and
+Promote tested image digests through reviewed manifest changes.
+`scripts/copy-deployment-release.mjs` preserves add-only release directories and
+updates the reviewed selector. Flux pulls protected public configuration and
+impersonates namespace-scoped application service accounts. Its trusted
+controller infrastructure retains the upstream cluster-admin installation role. Exact-release staging and
 web reconciliation need separate dependencies and health checks; readiness of
 an earlier staging Job must not authorize a newer release. Serialize promotions
 and verify the expected application/dataset metadata over public HTTPS after
@@ -121,6 +130,20 @@ reconcile and repeat smoke checks. Back up manifests, release bytes, cluster
 state and TLS state outside the host; test restoration and keep credentials out
 of source control. [K3s backup](https://docs.k3s.io/datastore/backup-restore)
 documents datastore-specific procedures.
+
+The complete deployment configuration is generated for each candidate; never
+copy an example digest into production. Bootstrap namespace policy, storage
+ownership and TLS separately. Two web replicas use `maxUnavailable: 0` and
+`maxSurge: 1`; startup and readiness validate the desired staged receipt.
+`scripts/verify-live-release.mjs` checks serving identity and actual data bytes.
+`scripts/measure-requests.mjs` records bounded update/rollback request evidence.
+
+`scripts/backup-k3s-host.sh` performs planned-maintenance SQLite/local-volume
+backup, refusing staging writers and preserving original replica counts.
+Encrypt and retain its private archive off-host. `scripts/restore-k3s-host.sh`
+uses the accompanying archive validator and supports a fresh replacement host
+only, preserving the recorded node identity and leaving Flux paused for initial
+acceptance. These helpers do not establish a tested restore on their own.
 
 ## Manual historical correction review
 
