@@ -15,7 +15,7 @@ test('real container serves a pinned bilingual basket and exact manifest/city by
     if (response.url().includes('/data/')) dataRequests.push(new URL(response.url()).pathname);
   });
   await page.goto('/');
-  await expect(page.getByTestId('latest-cost')).toHaveText(/^¥[\d,]+$/);
+  await expect(page.getByTestId('latest-cost')).toHaveText(/^\u00A5[\d,]+$/);
   await expect(page.locator('.basket-row')).toHaveCount(16);
   const original = await page.getByTestId('latest-cost').textContent();
   await page.locator('#qty-koshihikari-rice').fill('6');
@@ -29,7 +29,8 @@ test('real container serves a pinned bilingual basket and exact manifest/city by
   await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
   await expect(page.locator('#qty-koshihikari-rice')).toHaveValue('6');
   await page.locator('#city').selectOption('01100');
-  await expect(page.getByTestId('latest-cost')).toHaveText(/^¥[\d,]+$/);
+  // ja-JP formats JPY with the full-width yen sign; en-US uses U+00A5.
+  await expect(page.getByTestId('latest-cost')).toHaveText(/^\uFFE5[\d,]+$/);
   await page.getByRole('button', { name: 'English', exact: true }).click();
   await page.getByRole('tab', { name: 'Monthly data', exact: true }).click();
   await expect(page.locator('.monthly-table tbody tr').first()).toBeVisible();
