@@ -8,8 +8,8 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 // harness supplies root aliases for fixture requests, not for production delivery.
 export default defineConfig({
   ...original,
-  // Full-history browser pages load sizable per-city data; cap concurrent pages.
-  workers: 4,
+  // Full-history pages and axe scans are CPU intensive on shared CI runners.
+  workers: 2,
   testDir: '../tests/browser',
   outputDir: `${root}/test-results/release`,
   webServer: {

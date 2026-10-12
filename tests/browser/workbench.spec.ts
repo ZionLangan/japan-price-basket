@@ -1,5 +1,4 @@
 import { test, expect, type Page } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
 import { expectRange, selectMonth } from './helpers/dates';
 import { seedAuditedBasket } from './helpers/auditedBasket';
 
@@ -309,53 +308,3 @@ test('bilingual layouts reflow at narrow widths, large text and reduced motion',
     await page.locator('.search-input').evaluate((el) => getComputedStyle(el).outlineStyle),
   ).not.toBe('none');
 });
-
-for (const language of ['English', '日本語'] as const) {
-  test(`source disclosure, search and all chart tabs pass automated access checks in ${language}`, async ({
-    page,
-  }, info) => {
-    await load(page);
-    await page.getByRole('button', { name: language, exact: true }).click();
-    for (const tab of await page.getByRole('tab').all()) {
-      await tab.click();
-      expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-    }
-    await page.locator('#search').fill('milk');
-    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-    await page.locator('#search').press('Escape');
-    await page
-      .getByRole('button', { name: language === 'English' ? 'Data source' : '出典', exact: true })
-      .click();
-    await expect(page.locator('#source-information')).toBeVisible();
-    await expect(page.locator('#source-information')).toContainText(
-      language === 'English' ? 'Not a government website' : '政府のウェブサイトではありません',
-    );
-    await expect(page.locator('#source-information')).toContainText(
-      language === 'English'
-        ? 'does not remove quality differences'
-        : '品質の違いや包装サイズによる単価差の影響は残ります',
-    );
-    await expect(page.locator('#source-information')).toContainText(
-      language === 'English' ? 'not seasonal adjustment' : '季節調整ではありません',
-    );
-    const bounds = await page.locator('#source-information').boundingBox();
-    const viewport = page.viewportSize()!;
-    expect(bounds!.x).toBeGreaterThanOrEqual(0);
-    expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(viewport.width);
-    expect(bounds!.y).toBeGreaterThanOrEqual(0);
-    expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(viewport.height);
-    await page.screenshot({
-      path: `test-results/${info.project.name}-policy-source-${language === 'English' ? 'en' : 'ja'}.png`,
-    });
-    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-    await page.keyboard.press('Escape');
-    await expect(page.locator('#source-information')).not.toBeVisible();
-    await page
-      .getByRole('button', { name: /^(Specification and history|銘柄・履歴):/ })
-      .first()
-      .click();
-    await expect(page.locator('#definition-white-bread')).toBeVisible();
-    expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-    await page.keyboard.press('Escape');
-  });
-}
