@@ -5,7 +5,8 @@ ARG SOURCE_COMMIT
 ARG APP_RELEASE
 USER root
 # jq is used to validate bounded release receipts. No app build runs here.
-RUN apk add --no-cache jq \
+# Alpine's 1.3.2-r1 zlib package fixes CVE-2026-85091; reject older packages.
+RUN apk add --no-cache jq 'zlib>=1.3.2-r1' \
     && mkdir -p /opt/site /opt/app-releases \
     && chown -R 101:101 /opt/site /opt/app-releases
 COPY --chown=101:101 dist/ /opt/site/
