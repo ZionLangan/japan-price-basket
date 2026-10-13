@@ -45,8 +45,10 @@ curl.exe --fail http://127.0.0.1:8080/release.json
 Use `linux/arm64` instead if `uname -m` on the target is `aarch64`. The verified
 base lock records both architectures. Replacing a base requires reviewing its
 maintainer, registry digest, architecture, scan and resulting application tests.
-The base is pinned, while the added Alpine jq package is resolved at build time;
-the final application image digest and SBOM identify the actual result.
+The base is pinned, while Alpine jq and zlib are resolved at build time. The
+Dockerfile requires zlib `1.3.2-r1` or newer to fix CVE-2026-85091 and fails if
+that constraint cannot be satisfied. The final image digest and SBOM identify
+the actual result; every resulting image must pass the high/critical scan gate.
 
 ## Runtime modes
 

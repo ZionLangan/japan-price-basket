@@ -71,6 +71,13 @@ commit, dataset, policy, observation cutoff, payload hashes and base/image
 digests; publish provenance, an SBOM and scan results alongside the image. A
 deployment references an immutable digest, not a mutable `latest` tag.
 
+The Nginx base is digest-pinned in `ops/containers/base-image.lock.json`.
+The Dockerfile also requires Alpine zlib `1.3.2-r1` or newer, the patched
+package for CVE-2026-85091. This constraint replaces an older inherited
+package and fails the build if the configured repositories cannot supply it.
+Rebuild, test and scan the resulting image after any base or package change;
+the high/critical vulnerability gate still applies to the whole final image.
+
 K3s runs images through bundled containerd; a production Docker daemon is not
 needed. The selected design uses two web replicas, bundled ingress, persistent
 release storage and only Flux source-controller and kustomize-controller.
