@@ -67,6 +67,15 @@ class RenderDeploymentTests(unittest.TestCase):
         self.assertIn('path: "/japan-basket"\n', emitted)
         self.assertNotIn('path: "/"\n', emitted)
 
+    def test_traefik_uses_path_element_prefix_matching(self):
+        documents = self.render()
+        values, = documents["bootstrap/traefik-values.yaml"]
+        self.assertIs(values["providers"]["kubernetesIngress"]["strictPrefixMatching"], True)
+        config, = documents["bootstrap/traefik-config.yaml"]
+        expected = "providers:\n  kubernetesIngress:\n    strictPrefixMatching: true\n"
+        self.assertIn(expected, config["spec"]["valuesContent"])
+        self.assertIn(expected, (self.output / "bootstrap/traefik-values.yaml").read_text(encoding="utf-8"))
+
     def test_descriptor_records_mount_and_exact_candidate_identity(self):
         self.render()
         descriptor = json.loads((self.output / f"production/releases/{self.release}/release.json").read_text(encoding="utf-8"))
