@@ -1,0 +1,125 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "web"
+  namespace: "japan-price-basket"
+  annotations:
+    jpb.example/image: "ghcr.io/zionlangan/japan-price-basket@sha256:45ee145ccc57a6ecf4a6d5f5855346da6642aa161fdefe3f99454ff907790352"
+    jpb.example/dataset: "rps-2026-08-bb299a380848"
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  minReadySeconds: 5
+  progressDeadlineSeconds: 180
+  strategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "japan-price-basket"
+      app.kubernetes.io/component: "web"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "japan-price-basket"
+        app.kubernetes.io/component: "web"
+        jpb.example/app-release: "app-bb4c2e260b22b8a9e99224339f0437e45b37d30f"
+      annotations:
+        jpb.example/image: "ghcr.io/zionlangan/japan-price-basket@sha256:45ee145ccc57a6ecf4a6d5f5855346da6642aa161fdefe3f99454ff907790352"
+        jpb.example/dataset: "rps-2026-08-bb299a380848"
+    spec:
+      serviceAccountName: "web"
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 101
+        runAsGroup: 101
+        fsGroup: 101
+        fsGroupChangePolicy: "OnRootMismatch"
+        seccompProfile:
+          type: "RuntimeDefault"
+      containers:
+        -
+          name: "web"
+          image: "ghcr.io/zionlangan/japan-price-basket@sha256:45ee145ccc57a6ecf4a6d5f5855346da6642aa161fdefe3f99454ff907790352"
+          imagePullPolicy: "IfNotPresent"
+          args:
+            - "serve"
+          env:
+            -
+              name: "EXPECTED_APP_RELEASE"
+              value: "app-bb4c2e260b22b8a9e99224339f0437e45b37d30f"
+            -
+              name: "EXPECTED_DATASET"
+              value: "rps-2026-08-bb299a380848"
+            -
+              name: "EXPECTED_IMAGE"
+              value: "ghcr.io/zionlangan/japan-price-basket@sha256:45ee145ccc57a6ecf4a6d5f5855346da6642aa161fdefe3f99454ff907790352"
+            -
+              name: "SERVE_MODE"
+              value: "production"
+          ports:
+            -
+              name: "http"
+              containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - "ALL"
+          resources:
+            requests:
+              cpu: "25m"
+              memory: "32Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
+          startupProbe:
+            httpGet:
+              path: "/readyz"
+              port: "http"
+            timeoutSeconds: 2
+            periodSeconds: 2
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: "/readyz"
+              port: "http"
+            timeoutSeconds: 2
+            periodSeconds: 3
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: "/livez"
+              port: "http"
+            timeoutSeconds: 2
+            periodSeconds: 10
+            failureThreshold: 3
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - "/bin/sh"
+                  - "-c"
+                  - "rm -f /tmp/ready; sleep 5; nginx -s quit"
+          volumeMounts:
+            -
+              name: "releases"
+              mountPath: "/srv/releases"
+              readOnly: true
+            -
+              name: "tmp"
+              mountPath: "/tmp"
+      volumes:
+        -
+          name: "releases"
+          persistentVolumeClaim:
+            claimName: "release-store"
+        -
+          name: "tmp"
+          emptyDir:
+            sizeLimit: "64Mi"

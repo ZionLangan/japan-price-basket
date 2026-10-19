@@ -1,0 +1,15 @@
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "web"
+  namespace: "japan-price-basket"
+spec:
+  type: "ClusterIP"
+  selector:
+    app.kubernetes.io/name: "japan-price-basket"
+    app.kubernetes.io/component: "web"
+  ports:
+    -
+      name: "http"
+      port: 80
+      targetPort: "http"
