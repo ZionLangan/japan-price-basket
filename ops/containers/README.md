@@ -20,7 +20,7 @@ $AppRelease = 'app-' + $SourceCommit
 $NginxBase = (Get-Content ops/containers/base-image.lock.json -Raw | ConvertFrom-Json).image
 node scripts/publish_snapshot.mjs
 npm run check
-npm exec -- vite build --base=/app-releases/$AppRelease/
+npm exec -- vite build --base=/japan-basket/app-releases/$AppRelease/
 node scripts/write_third_party_notices.mjs
 node scripts/prepare-release.mjs
 node --test tests/deployment/runtime-helpers.test.mjs
@@ -39,23 +39,30 @@ docker build --platform linux/amd64 --build-arg "NGINX_BASE=$NginxBase" --build-
 docker run --detach --name japan-price-basket-local --read-only --cap-drop ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=64m --publish 127.0.0.1:8080:8080 --stop-timeout 35 japan-price-basket:local
 docker logs japan-price-basket-local
 curl.exe --fail http://127.0.0.1:8080/readyz
-curl.exe --fail http://127.0.0.1:8080/release.json
+curl.exe --fail http://127.0.0.1:8080/japan-basket/release.json
 ```
+
+Open `http://127.0.0.1:8080/japan-basket/` for the application. The container
+returns 404 for `/`, leaving that public path available for another service.
 
 Use `linux/arm64` instead if `uname -m` on the target is `aarch64`. The verified
 base lock records both architectures. Replacing a base requires reviewing its
 maintainer, registry digest, architecture, scan and resulting application tests.
-The base is pinned, while Alpine jq and zlib are resolved at build time. The
-Dockerfile requires zlib `1.3.2-r1` or newer to fix CVE-2026-85091 and fails if
-that constraint cannot be satisfied. The final image digest and SBOM identify
-the actual result; every resulting image must pass the high/critical scan gate.
+The base is pinned, while Alpine packages are resolved at build time. The
+Dockerfile requires zlib `1.3.2-r1` or newer for CVE-2026-85091, libexpat
+`2.9.0-r0` or newer for CVE-2026-77214, libx11 `1.8.14-r0` or newer for
+CVE-2026-88806, and libxpm `3.5.20-r0` or newer for CVE-2026-94287. See the
+[Alpine 3.24 security database](https://secdb.alpinelinux.org/v3.24/main.json)
+for package fixes. The build fails if those constraints cannot be satisfied.
+The final image digest and SBOM identify the actual result; every resulting
+image must pass the high/critical scan gate.
 
 ## Runtime modes
 
 | Command | Use | Writable mounts |
 | --- | --- | --- |
 | `serve` | Default local test, verified files from this image | `/tmp` |
-| `serve`, `SERVE_MODE=production` | Serve root HTML from this image and retained immutable files from the PVC | `/tmp`; `/srv/releases` read-only |
+| `serve`, `SERVE_MODE=production` | Serve entry HTML from this image and retained immutable files from the PVC | `/tmp`; `/srv/releases` read-only |
 | `stage` | Verify and atomically add this exact release to shared storage | `/tmp`; `/srv/releases` read-write |
 
 Production serving and staging require all three environment variables:
@@ -65,7 +72,7 @@ Production serving and staging require all three environment variables:
 - `EXPECTED_IMAGE`: the published `ghcr.io/...@sha256:<64 hex>` image digest.
 
 An image cannot embed its own final digest. Deployment configuration supplies
-that digest, and the completion receipt and `/release.json` retain it. Verify
+that digest, and the completion receipt and `/japan-basket/release.json` retain it. Verify
 the Pod image/imageID independently; a matching environment value alone does
 not prove which image the runtime pulled.
 
@@ -93,18 +100,30 @@ The layout is:
   receipts/app-<commit>.json
 ```
 
-Both old and new web Pods serve all retained `/app-releases/` paths. An old tab
+Both old and new web Pods serve all retained `/japan-basket/app-releases/` paths. An old tab
 therefore keeps its old JavaScript and compatible data when it selects another
-city. Root HTML belongs to the currently serving image. The readiness check
+city. Entry HTML at `/japan-basket/` belongs to the currently serving image. The readiness check
 requires the exact receipt, metadata and retained file sizes for that image;
 staging already checked full hashes. Public metadata does not contain secrets.
 
 `/livez` tests the Nginx process. `/readyz` is created only after release checks
-pass. `/release.json` reports source, app, dataset, policy, cutoff and expected
+pass. Both probes remain internal to the container. `/japan-basket/release.json`
+reports source, app, dataset, policy, cutoff and expected
 image. Missing assets and JSON return 404; `/data/current.json` at the origin
 root deliberately returns 404 so an unpinned browser request is exposed. HTML
 revalidates, successful immutable paths cache, failures do not cache as immutable,
 and gzip negotiation retains the uncompressed bytes for browser SHA checks.
+
+The application owns only `/japan-basket/` and its immutable descendants.
+Production ingress forwards `/japan-basket` unchanged to this container and
+does not expose internal health endpoints. DNS resolves the hostname to the
+ingress host; HTTP path routing chooses this service or another future service
+at the same hostname. The release-storage filesystem is unchanged by this URL
+prefix. Verify the complete mount after deployment:
+
+```powershell
+node scripts/verify-live-release.mjs https://your-domain/japan-basket/ .local/candidate.json
+```
 
 Do not delete locks or partial directories by guessing. First stop promotions,
 inspect the staging Job, prove no process still holds the operation and identify

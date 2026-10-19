@@ -33,9 +33,10 @@ export async function prepareRelease(root = process.cwd(), { compress = true } =
   if (!/^rps-20\d{2}-(?:0[1-9]|1[0-2])-[a-f0-9]{12}$/.test(pointer.releaseId) || pointer.manifest !== `${pointer.releaseId}/manifest.json`) throw new Error('Invalid reviewed dataset pointer');
   const manifest = JSON.parse(await readFile(join(dist, 'data', pointer.manifest), 'utf8'));
   if (manifest.releaseId !== pointer.releaseId || !/^\d+\.\d+$/.test(manifest.policyVersion) || !/^20\d{2}-(?:0[1-9]|1[0-2])$/.test(manifest.end)) throw new Error('Invalid dataset release metadata');
-  const prefix = `/app-releases/${appRelease}/`;
+  const prefix = `/japan-basket/app-releases/${appRelease}/`;
   const index = await readFile(join(dist, 'index.html'), 'utf8');
-  if (!index.includes(`${prefix}assets/`) || /(?:src|href)=["']\/assets\//.test(index)) throw new Error(`Rebuild with Vite --base=${prefix}; the index is not pinned to this commit.`);
+  const assetUrls = [...index.matchAll(/(?:src|href)=["']([^"']+)["']/g)].map((match) => match[1]).filter((url) => /(?:^|\/)assets\//.test(url));
+  if (!assetUrls.length || assetUrls.some((url) => !url.startsWith(`${prefix}assets/`))) throw new Error(`Rebuild with Vite --base=${prefix}; the index is not pinned to this commit and application path.`);
   const source = await readFile(join(root, 'apps/web/src/App.tsx'), 'utf8');
   if ((source.match(/import\.meta\.env\.BASE_URL/g) ?? []).length < 3 || /fetch\(['"`]\/data\//.test(source)) throw new Error('Run wire-release-base.mjs, format and commit before building.');
   const found = [];
