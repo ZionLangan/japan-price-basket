@@ -13,6 +13,15 @@ complete `bootstrap/bootstrap.yaml`.
 Run the lab first using a localhost port-forward. Domain and certificate files
 are required only for production mode. TLS starts against Let's Encrypt's
 staging service. Staging certificates are deliberately not browser trusted.
+During initial TLS bootstrap and the staging-to-production resolver switch,
+withhold the application Ingress while Traefik's configuration reconciles.
+Confirm the effective CA and storage arguments, wait for the new Deployment to
+be ready, and verify public port 80 before creating the Ingress. Helm updates
+are asynchronous; readiness of the old template is insufficient. An HTTP-01
+challenge started during the restart can be refused before load-balancer
+endpoints are ready. Diagnose that failure before retrying, and keep staging
+and production ACME stores separate. Routine certificate renewal runs in the
+existing controller and does not require this bootstrap sequence.
 The complete configuration was schema checked and Helm rendered locally using
 both upstream chart `40.1.0` and the actual K3s packaged chart
 `40.1.5+up40.1.0`. Actual cluster server dry-run, certificate issuance and
