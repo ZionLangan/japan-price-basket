@@ -27,6 +27,6 @@
     "kustomize-controller": "ghcr.io/fluxcd/kustomize-controller@sha256:2ebeaa341da77d52b6abbbba5efcee0450d47f8b42f0e6f33b08f9020262d606"
   },
   "upstreamInstallSha256": "95b5f53380585545ba4413d6925ff1816334fd6ab34779f5b3d55ce41afd1c65",
-  "installSha256": "1f954852802b3e0dc7086ba9d8a579022fdae23d3a168a568b6d867d53a16a3f",
-  "resourcePolicy": "Each controller requests64Mi,limit256Mi and concurrency1 as starting measurement settings. Inspect OOM/pressure and measure; these do not establish the Lightsail host has sufficient capacity."
+  "installSha256": "8a75f51fcbc431387c69f36d7f3ee13473fd4c5307e13f96b0978b45f173d13e",
+  "resourcePolicy": "Each controller requests 64Mi, limits memory to 256Mi and uses concurrency 1 as starting measurement settings. A 120-second startup probe budget prevents premature liveness restarts during measured slow initialization; startup and liveness probes time out after 2 seconds. Inspect OOM/pressure and measure capacity on the Lightsail host."
 }
