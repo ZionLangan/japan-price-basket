@@ -48,14 +48,14 @@ attribution with every distributed artifact.
 
 ## Static serving contract
 
-| Resource                                        | Required behavior                                                                                         |
-| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Entry HTML and release status                   | Revalidate; do not cache as immutable.                                                                    |
-| Immutable app-release assets and data           | Correct MIME types and immutable caching only when published bytes cannot change.                         |
-| JSON, JavaScript and CSS                        | Gzip where negotiated, with `Vary: Accept-Encoding`; support clients that request uncompressed responses. |
-| Missing assets or JSON                          | Real 404 response, never an HTML fallback.                                                                |
-| City data                                       | Exact manifest bytes so browser SHA-256 checks succeed.                                                   |
-| Public origin                                   | HTTPS, with verified certificate renewal and appropriately scoped access.                                 |
+| Resource                              | Required behavior                                                                                         |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Entry HTML and release status         | Revalidate; do not cache as immutable.                                                                    |
+| Immutable app-release assets and data | Correct MIME types and immutable caching only when published bytes cannot change.                         |
+| JSON, JavaScript and CSS              | Gzip where negotiated, with `Vary: Accept-Encoding`; support clients that request uncompressed responses. |
+| Missing assets or JSON                | Real 404 response, never an HTML fallback.                                                                |
+| City data                             | Exact manifest bytes so browser SHA-256 checks succeed.                                                   |
+| Public origin                         | HTTPS, with verified certificate renewal and appropriately scoped access.                                 |
 
 The application uses anchor navigation and needs no client-router fallback.
 Production entry HTML is served at `/japan-basket/`, with release status at
@@ -94,6 +94,23 @@ K3s demonstrates Kubernetes delivery and recovery; the static application does
 not intrinsically require a cluster. Capacity must be measured during image
 pull, staging, rollout and rollback, including terminating pods and disk
 retention. Keep builds and the large source archive off the serving host.
+
+On small AlmaLinux hosts, check usable memory and the crash-kernel reservation
+before sizing the workload:
+
+```sh
+free -m
+cat /sys/kernel/kexec_crash_size
+cat /proc/cmdline
+systemctl is-enabled kdump
+```
+
+Reserved crash-kernel memory is unavailable to normal workloads. Reclaiming it
+disables kernel crash-dump capture and requires a deliberate diagnostic tradeoff,
+saved original settings, reboot verification and a check after kernel updates.
+Keep that host-policy record off-host; the cluster backup does not archive the
+bootloader or kdump configuration. Repeat full-stack capacity measurements after
+any change, preserving the 20% available-memory gate and SELinux enforcement.
 
 Preserve SELinux enforcement on compatible hosts and expose only public HTTP(S)
 and restricted administration access. Keep Kubernetes APIs private. Application

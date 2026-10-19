@@ -4,6 +4,8 @@ Explore how the cost of a fixed grocery basket changes across Japanese cities
 and over time. Japan Price Basket combines official monthly survey prices with
 bilingual product search, editable quantities and interactive charts.
 
+[Open Japan Price Basket](https://zionlangan.com/japan-basket/).
+
 ## Features
 
 - English and Japanese interfaces, product names and search aliases.
@@ -59,7 +61,7 @@ The deployed application requires no database, application API or source secret.
 | `scripts/`         | Source acquisition, reconciliation, publication and packaging.         |
 | `data/`            | Review mappings, a bounded approved snapshot and fixed audit evidence. |
 | `tests/`           | Domain, ingestion, integrity and browser-flow tests.                   |
-| `ops/`             | Container runtime, Kubernetes rendering and pinned Flux installation. |
+| `ops/`             | Container runtime, Kubernetes rendering and pinned Flux installation.  |
 
 Raw archives, generated releases, build output and local working notes are
 excluded from version control. The original endpoint demonstration remains in
