@@ -22,6 +22,14 @@ Both lab and production images serve the application at `/japan-basket/`.
 The production ingress matches the supplied host and only the `/japan-basket`
 path prefix, forwarding it unchanged. It does not claim the origin root or use
 a default backend. Another Kubernetes service can later own `/` independently.
+The generated Traefik values enable
+`providers.kubernetesIngress.strictPrefixMatching` so `/japan-basketball` stays
+outside this route while `/japan-basket`, `/japan-basket/` and descendants match.
+Traefik's default uses character prefixes; its
+[pinned provider implementation](https://github.com/traefik/traefik/blob/v3.7.13/pkg/provider/kubernetes/ingress/kubernetes.go#L859-L888)
+supports this path-element behavior, and the bundled chart exposes the native
+Helm value. Verify the effective Traefik argument after applying operator TLS
+configuration; this is separate from application promotion.
 The immutable asset namespace is `/japan-basket/app-releases/app-<commit>/`;
 node-local release storage retains its existing `app-releases/` layout.
 

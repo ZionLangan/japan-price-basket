@@ -154,6 +154,8 @@ def render(args):
         ca = "https://acme-staging-v02.api.letsencrypt.org/directory" if args.tls_environment == "staging" else "https://acme-v02.api.letsencrypt.org/directory"
         # Separate files keep staging and production accounts/certificates apart.
         values = {"deployment": {"replicas": 1}, "updateStrategy": {"type": "Recreate"}, "persistence": {"enabled": True, "existingClaim": "traefik-acme", "path": "/data"}, "podSecurityContext": {"runAsNonRoot": True, "runAsUser": 65532, "runAsGroup": 65532, "fsGroup": 65532, "fsGroupChangePolicy": "OnRootMismatch", "seccompProfile": {"type": "RuntimeDefault"}}, "securityContext": {"allowPrivilegeEscalation": False, "readOnlyRootFilesystem": True, "capabilities": {"drop": ["ALL"]}}, "resources": {"requests": {"cpu": "50m", "memory": "64Mi"}, "limits": {"cpu": "500m", "memory": "256Mi"}}, "ports": {"web": {"http": {"redirections": {"entryPoint": {"to": "websecure", "scheme": "https", "permanent": True}}}}, "websecure": {"http": {"tls": {"enabled": True, "certResolver": "letsencrypt"}}}}, "certificatesResolvers": {"letsencrypt": {"acme": {"email": args.acme_email, "storage": f"/data/acme-{args.tls_environment}.json", "caServer": ca, "httpChallenge": {"entryPoint": "web"}}}}}
+        # Traefik otherwise matches character prefixes, including /japan-basketball.
+        values["providers"] = {"kubernetesIngress": {"strictPrefixMatching": True}}
         helm_config = {"apiVersion": "helm.cattle.io/v1", "kind": "HelmChartConfig", "metadata": metadata("traefik", "kube-system"), "spec": {"valuesContent": "\n".join(yaml_lines(values)) + "\n"}}
         write_yaml(output / "bootstrap/traefik-config.yaml", helm_config)
         write_yaml(output / "bootstrap/traefik-values.yaml", values)
