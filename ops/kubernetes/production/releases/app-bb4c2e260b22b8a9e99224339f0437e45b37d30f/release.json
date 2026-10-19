@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "appRelease": "app-bb4c2e260b22b8a9e99224339f0437e45b37d30f",
+  "image": "ghcr.io/zionlangan/japan-price-basket@sha256:45ee145ccc57a6ecf4a6d5f5855346da6642aa161fdefe3f99454ff907790352",
+  "dataset": "rps-2026-08-bb299a380848",
+  "sourceCommit": "bb4c2e260b22b8a9e99224339f0437e45b37d30f",
+  "publicBasePath": "/japan-basket/",
+  "mode": "production",
+  "domain": "zionlangan.com",
+  "tlsEnvironment": "production",
+  "baselineK3sVersion": "v1.36.5+k3s1",
+  "traefikChart": "40.1.5+up40.1.0"
+}

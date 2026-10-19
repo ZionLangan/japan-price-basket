@@ -1,0 +1,28 @@
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "web"
+  namespace: "japan-price-basket"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: "letsencrypt"
+spec:
+  ingressClassName: "traefik"
+  tls:
+    -
+      hosts:
+        - "zionlangan.com"
+  rules:
+    -
+      host: "zionlangan.com"
+      http:
+        paths:
+          -
+            path: "/japan-basket"
+            pathType: "Prefix"
+            backend:
+              service:
+                name: "web"
+                port:
+                  number: 80

@@ -1,0 +1,46 @@
+apiVersion: "kustomize.toolkit.fluxcd.io/v1"
+kind: "Kustomization"
+metadata:
+  name: "stage-bb4c2e260b22b8a9e99224339f0437e45b37d30f"
+  namespace: "japan-price-basket"
+spec:
+  interval: "5m"
+  retryInterval: "30s"
+  timeout: "16m"
+  sourceRef:
+    kind: "GitRepository"
+    name: "app-source"
+  path: "./ops/kubernetes/production/releases/app-bb4c2e260b22b8a9e99224339f0437e45b37d30f/stage"
+  prune: false
+  serviceAccountName: "app-reconciler"
+  healthChecks:
+    -
+      apiVersion: "batch/v1"
+      kind: "Job"
+      name: "jpb-stage-bb4c2e260b22b8a9e99224339f0437e45b37d30f"
+      namespace: "japan-price-basket"
+---
+apiVersion: "kustomize.toolkit.fluxcd.io/v1"
+kind: "Kustomization"
+metadata:
+  name: "jpb-web"
+  namespace: "japan-price-basket"
+spec:
+  interval: "5m"
+  retryInterval: "30s"
+  timeout: "5m"
+  sourceRef:
+    kind: "GitRepository"
+    name: "app-source"
+  path: "./ops/kubernetes/production/releases/app-bb4c2e260b22b8a9e99224339f0437e45b37d30f/web"
+  prune: true
+  serviceAccountName: "app-reconciler"
+  dependsOn:
+    -
+      name: "stage-bb4c2e260b22b8a9e99224339f0437e45b37d30f"
+  healthChecks:
+    -
+      apiVersion: "apps/v1"
+      kind: "Deployment"
+      name: "web"
+      namespace: "japan-price-basket"
