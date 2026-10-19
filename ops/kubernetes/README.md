@@ -18,6 +18,13 @@ both upstream chart `40.1.0` and the actual K3s packaged chart
 `40.1.5+up40.1.0`. Actual cluster server dry-run, certificate issuance and
 traffic continuity are separate acceptance checks described in the guide.
 
+Both lab and production images serve the application at `/japan-basket/`.
+The production ingress matches the supplied host and only the `/japan-basket`
+path prefix, forwarding it unchanged. It does not claim the origin root or use
+a default backend. Another Kubernetes service can later own `/` independently.
+The immutable asset namespace is `/japan-basket/app-releases/app-<commit>/`;
+node-local release storage retains its existing `app-releases/` layout.
+
 The baseline is K3s `v1.36.5+k3s1`, Kubernetes `v1.36`, with bundled Traefik
 `3.7.13`, chart `40.1.5+up40.1.0`. These were checked against the official
 stable channel and release assets on 2026-10-12. Recheck release requirements

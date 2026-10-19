@@ -76,7 +76,7 @@ jobs:
           SOURCE_COMMIT=$(git rev-parse HEAD)
           APP_RELEASE="app-$SOURCE_COMMIT"
           node scripts/publish_snapshot.mjs
-          npm exec -- vite build --base="/app-releases/$APP_RELEASE/"
+          npm exec -- vite build --base="/japan-basket/app-releases/$APP_RELEASE/"
           node scripts/write_third_party_notices.mjs
       - name: Install test browsers on the build runner
         run: npm exec -- playwright install --with-deps chromium firefox webkit

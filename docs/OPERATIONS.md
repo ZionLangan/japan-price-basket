@@ -41,7 +41,7 @@ npm run preview -- --port 4173 --strictPort
 
 Vite preview is a verification tool, not the production server. Ordinary local
 builds serve `dist/` at the origin root. Container delivery instead builds Vite
-with `/app-releases/app-<fullSourceCommit>/` as its base and records the exact
+with `/japan-basket/app-releases/app-<fullSourceCommit>/` as its base and records the exact
 tested payload using `scripts/prepare-release.mjs`. Do not rebuild after testing
 and call the result the same artifact. Retain runtime license notices and data
 attribution with every distributed artifact.
@@ -58,6 +58,13 @@ attribution with every distributed artifact.
 | Public origin                                   | HTTPS, with verified certificate renewal and appropriately scoped access.                                 |
 
 The application uses anchor navigation and needs no client-router fallback.
+Production entry HTML is served at `/japan-basket/`, with release status at
+`/japan-basket/release.json`. Immutable assets and city data stay within
+`/japan-basket/app-releases/`. The exact-host ingress routes only the
+`/japan-basket` path prefix, preserving `/` for another service. No root route is
+created for the basket; an unassigned root returns the ingress controller's 404.
+`/japan-basket` redirects to its trailing-slash form. Liveness and readiness
+remain internal `/livez` and `/readyz` endpoints.
 `ops/nginx-static.conf.example` illustrates routes and cache behavior; it is not
 a complete TLS or security configuration. Nginx location-level `add_header`
 directives replace inherited ones: repeat the selected security headers or use
@@ -72,9 +79,11 @@ digests; publish provenance, an SBOM and scan results alongside the image. A
 deployment references an immutable digest, not a mutable `latest` tag.
 
 The Nginx base is digest-pinned in `ops/containers/base-image.lock.json`.
-The Dockerfile also requires Alpine zlib `1.3.2-r1` or newer, the patched
-package for CVE-2026-85091. This constraint replaces an older inherited
-package and fails the build if the configured repositories cannot supply it.
+The Dockerfile requires patched Alpine package floors: zlib `1.3.2-r1`
+(CVE-2026-85091), libexpat `2.9.0-r0` (CVE-2026-77214), and libx11
+`1.8.14-r0` (CVE-2026-88806), and libxpm `3.5.20-r0` (CVE-2026-94287).
+These constraints replace older inherited
+packages and fail the build if the configured repositories cannot supply them.
 Rebuild, test and scan the resulting image after any base or package change;
 the high/critical vulnerability gate still applies to the whole final image.
 

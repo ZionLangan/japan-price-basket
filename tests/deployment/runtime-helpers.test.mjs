@@ -25,7 +25,7 @@ async function fixture() {
   const dataset = 'rps-2026-08-000000000000';
   await mkdir(join(root, 'dist/data', dataset), { recursive: true });
   await mkdir(join(root, 'dist/assets'), { recursive: true });
-  await writeFile(join(root, 'dist/index.html'), `<script src="/app-releases/app-${commit}/assets/synthetic.js"></script>\n`);
+  await writeFile(join(root, 'dist/index.html'), `<script src="/japan-basket/app-releases/app-${commit}/assets/synthetic.js"></script>\n`);
   await writeFile(join(root, 'dist/assets/synthetic.js'), '/* Synthetic non-price test bytes. */\n');
   await writeFile(join(root, 'dist/THIRD_PARTY_NOTICES.txt'), 'Synthetic fixture, not a distributable application.\n');
   await writeFile(join(root, 'dist/data/current.json'), JSON.stringify({ releaseId: dataset, manifest: `${dataset}/manifest.json` }));
@@ -49,6 +49,15 @@ test('rejects an index built for another commit instead of mislabeling it', asyn
   try {
     await writeFile(join(f.root, 'dist/index.html'), '<script src="/assets/synthetic.js"></script>');
     await assert.rejects(prepareRelease(f.root), /Rebuild with Vite/);
+  } finally { await rm(f.root, { recursive: true, force: true }); }
+});
+test('rejects a legacy root mount or mixed root asset URLs even for the correct commit', async () => {
+  const f = await fixture();
+  try {
+    await writeFile(join(f.root, 'dist/index.html'), `<script src="/app-releases/app-${f.commit}/assets/synthetic.js"></script>`);
+    await assert.rejects(prepareRelease(f.root), /application path/);
+    await writeFile(join(f.root, 'dist/index.html'), `<script src="/japan-basket/app-releases/app-${f.commit}/assets/synthetic.js"></script><link href="/assets/leaked.css" rel="stylesheet">`);
+    await assert.rejects(prepareRelease(f.root), /application path/);
   } finally { await rm(f.root, { recursive: true, force: true }); }
 });
 test('gzip companions retain exact decoded bytes and deterministic inventory', async () => {

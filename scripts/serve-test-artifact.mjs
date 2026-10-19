@@ -6,7 +6,7 @@ import { execFileSync } from 'node:child_process';
 
 const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 if (!/^[a-f0-9]{40}$/.test(sourceCommit)) throw new Error('Invalid source commit');
-const prefix = `/app-releases/app-${sourceCommit}/`;
+const prefix = `/japan-basket/app-releases/app-${sourceCommit}/`;
 const root = resolve('dist');
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.txt': 'text/plain; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon' };
 
@@ -15,7 +15,7 @@ createServer((request, response) => {
     if (!['GET', 'HEAD'].includes(request.method)) { response.writeHead(405).end(); return; }
     let pathname = decodeURIComponent(new URL(request.url, 'http://127.0.0.1:4173').pathname);
     if (pathname.startsWith(prefix)) pathname = pathname.slice(prefix.length);
-    else if (pathname === '/') pathname = 'index.html';
+    else if (pathname === '/' || pathname === '/japan-basket/') pathname = 'index.html';
     else if (pathname.startsWith('/data/')) pathname = pathname.slice(1);
     else { response.writeHead(404).end(); return; }
     if (!pathname || pathname.endsWith('/')) pathname += 'index.html';

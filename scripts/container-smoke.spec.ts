@@ -3,7 +3,8 @@ import { createHash } from 'node:crypto';
 import { expect, test } from '@playwright/test';
 
 const meta = JSON.parse(readFileSync('dist/release-meta.json', 'utf8'));
-const base = `/app-releases/${meta.appRelease}/`;
+const appPath = '/japan-basket/';
+const base = `${appPath}app-releases/${meta.appRelease}/`;
 
 test('real container serves a pinned bilingual basket and exact manifest/city bytes', async ({ page, request, context }) => {
   const errors: string[] = [];
@@ -14,7 +15,7 @@ test('real container serves a pinned bilingual basket and exact manifest/city by
     if (response.status() >= 400) badResponses.push(`${response.status()} ${response.url()}`);
     if (response.url().includes('/data/')) dataRequests.push(new URL(response.url()).pathname);
   });
-  await page.goto('/');
+  await page.goto(appPath);
   await expect(page.getByTestId('latest-cost')).toHaveText(/^\u00A5[\d,]+$/);
   await expect(page.locator('.basket-row')).toHaveCount(16);
   const original = await page.getByTestId('latest-cost').textContent();
@@ -39,6 +40,16 @@ test('real container serves a pinned bilingual basket and exact manifest/city by
   expect(dataRequests.length).toBeGreaterThanOrEqual(3);
   expect(dataRequests.every((path) => path.startsWith(`${base}data/`))).toBe(true);
   expect(await context.cookies()).toEqual([]);
+  const entry = await request.get(appPath);
+  expect(entry.headers()['cache-control']).toBe('no-cache');
+  expect(entry.headers()['content-type']).toContain('text/html');
+  const redirect = await request.get('/japan-basket', { maxRedirects: 0 });
+  expect(redirect.status()).toBe(308);
+  expect(redirect.headers().location).toBe(appPath);
+  const release = await request.get(`${appPath}release.json`);
+  expect(release.status()).toBe(200);
+  expect(release.headers()['cache-control']).toBe('no-cache');
+  expect((await release.json()).appRelease).toBe(meta.appRelease);
   const pointerResponse = await request.get(`${base}data/current.json`);
   expect(pointerResponse.status()).toBe(200);
   const pointer = await pointerResponse.json();
@@ -51,6 +62,12 @@ test('real container serves a pinned bilingual basket and exact manifest/city by
   expect(cityResponse.status()).toBe(200);
   expect(createHash('sha256').update(await cityResponse.body()).digest('hex')).toBe(city.sha256);
   expect((await request.get('/data/current.json')).status()).toBe(404);
+  expect((await request.get('/')).status()).toBe(404);
+  expect((await request.get('/index.html')).status()).toBe(404);
+  expect((await request.get('/release.json')).status()).toBe(404);
+  expect((await request.get(`/app-releases/${meta.appRelease}/assets/missing-file.js`)).status()).toBe(404);
+  expect((await request.get(`/app-releases/${meta.appRelease}/data/current.json`)).status()).toBe(404);
+  expect((await request.get(`${appPath}data/current.json`)).status()).toBe(404);
   expect((await request.get(`${base}assets/missing-file.js`)).status()).toBe(404);
   expect((await request.get(`${base}data/${meta.dataset}/cities/missing-city.json`)).status()).toBe(404);
 });

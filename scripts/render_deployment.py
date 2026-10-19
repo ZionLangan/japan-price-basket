@@ -15,6 +15,7 @@ NAMESPACE = "japan-price-basket"
 K3S_VERSION = "v1.36.5+k3s1"
 PSA_VERSION = "v1.36"
 TRAEFIK_CHART = "40.1.5+up40.1.0"
+PUBLIC_BASE_PATH = "/japan-basket/"
 
 
 def scalar(value):
@@ -145,7 +146,9 @@ def render(args):
     write_yaml(output / f"production/releases/{args.app_release}/web/service.yaml", service)
     web_resources = ["deployment.yaml", "service.yaml"]
     if args.mode == "production":
-        ingress = {"apiVersion": "networking.k8s.io/v1", "kind": "Ingress", "metadata": {**metadata("web"), "annotations": {"traefik.ingress.kubernetes.io/router.entrypoints": "websecure", "traefik.ingress.kubernetes.io/router.tls": "true", "traefik.ingress.kubernetes.io/router.tls.certresolver": "letsencrypt"}}, "spec": {"ingressClassName": "traefik", "tls": [{"hosts": [domain]}], "rules": [{"host": domain, "http": {"paths": [{"path": "/", "pathType": "Prefix", "backend": {"service": {"name": "web", "port": {"number": 80}}}}]}}]}}
+        # Preserve the application prefix at Nginx and leave the host root free
+        # for another service. Prefix matching also accepts the mount without /.
+        ingress = {"apiVersion": "networking.k8s.io/v1", "kind": "Ingress", "metadata": {**metadata("web"), "annotations": {"traefik.ingress.kubernetes.io/router.entrypoints": "websecure", "traefik.ingress.kubernetes.io/router.tls": "true", "traefik.ingress.kubernetes.io/router.tls.certresolver": "letsencrypt"}}, "spec": {"ingressClassName": "traefik", "tls": [{"hosts": [domain]}], "rules": [{"host": domain, "http": {"paths": [{"path": PUBLIC_BASE_PATH.rstrip("/"), "pathType": "Prefix", "backend": {"service": {"name": "web", "port": {"number": 80}}}}]}}]}}
         write_yaml(output / f"production/releases/{args.app_release}/web/ingress.yaml", ingress)
         web_resources.append("ingress.yaml")
         ca = "https://acme-staging-v02.api.letsencrypt.org/directory" if args.tls_environment == "staging" else "https://acme-v02.api.letsencrypt.org/directory"
@@ -165,7 +168,7 @@ def render(args):
     parent_flux = {"apiVersion": "kustomize.toolkit.fluxcd.io/v1", "kind": "Kustomization", "metadata": metadata("app-config"), "spec": {"interval": "1m", "retryInterval": "30s", "timeout": "2m", "sourceRef": {"kind": "GitRepository", "name": "app-source"}, "path": "./ops/kubernetes/production", "prune": False, "serviceAccountName": "config-manager"}}
     write_yaml(output / "flux/app-source.yaml", source)
     write_yaml(output / "flux/app-config.yaml", parent_flux)
-    descriptor = {"schemaVersion": 1, "appRelease": args.app_release, "image": args.image, "dataset": args.dataset, "sourceCommit": commit, "mode": args.mode, "domain": domain if args.mode == "production" else None, "tlsEnvironment": args.tls_environment if args.mode == "production" else None, "baselineK3sVersion": K3S_VERSION, "traefikChart": TRAEFIK_CHART}
+    descriptor = {"schemaVersion": 1, "appRelease": args.app_release, "image": args.image, "dataset": args.dataset, "sourceCommit": commit, "publicBasePath": PUBLIC_BASE_PATH, "mode": args.mode, "domain": domain if args.mode == "production" else None, "tlsEnvironment": args.tls_environment if args.mode == "production" else None, "baselineK3sVersion": K3S_VERSION, "traefikChart": TRAEFIK_CHART}
     descriptor_path = output / f"production/releases/{args.app_release}/release.json"
     descriptor_path.write_text(json.dumps(descriptor, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({"output": str(output), "appRelease": args.app_release, "stageJob": job_name, "stageKustomization": stage_name, "mode": args.mode}, indent=2))

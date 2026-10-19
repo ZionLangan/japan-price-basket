@@ -90,8 +90,12 @@ cutoff; a fixed-end selection remains fixed.
 The application output is a static `dist/` directory. The container build
 packages already tested bytes into non-root Nginx; it does not run acquisition
 or rebuild the application. Each production frontend uses an immutable
-`/app-releases/app-<sourceCommit>/` base, including its discovery pointer and
+`/japan-basket/app-releases/app-<sourceCommit>/` base, including its discovery pointer and
 compatible dataset files. Old browser tabs retain that release namespace.
+The application entry point is `/japan-basket/`. Ingress routes that path prefix
+to the basket service without rewriting it; the origin root remains available
+for an independently deployed application. Health probes use internal container
+paths and are not exposed through the basket ingress.
 
 `scripts/render_deployment.py` generates complete Kubernetes configuration from
 a reviewed image digest, app release and dataset receipt. An exact-release Job
