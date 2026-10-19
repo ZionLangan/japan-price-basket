@@ -5,8 +5,10 @@ ARG SOURCE_COMMIT
 ARG APP_RELEASE
 USER root
 # jq is used to validate bounded release receipts. No app build runs here.
-# Alpine's 1.3.2-r1 zlib package fixes CVE-2026-85091; reject older packages.
+# Alpine package floors fix CVE-2026-85091 (zlib), CVE-2026-77214
+# (libexpat), CVE-2026-88806 (libx11) and CVE-2026-94287 (libxpm).
 RUN apk add --no-cache jq 'zlib>=1.3.2-r1' \
+    'libexpat>=2.9.0-r0' 'libx11>=1.8.14-r0' 'libxpm>=3.5.20-r0' \
     && mkdir -p /opt/site /opt/app-releases \
     && chown -R 101:101 /opt/site /opt/app-releases
 COPY --chown=101:101 dist/ /opt/site/
