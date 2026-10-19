@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page, type Route } from '@playwright/test';
 import { expectRange, selectMonth } from './helpers/dates';
 import { seedAuditedBasket } from './helpers/auditedBasket';
 
@@ -236,16 +236,55 @@ test('unit presets and rapid city switching keep the correct city and quantities
   await expect(page.locator('#qty-carton-milk')).toHaveValue('500');
   await page.locator('#preset-carton-milk').selectOption('2000');
   await expect(page.locator('#qty-carton-milk')).toHaveValue('2000');
-  await page.route('**/cities/01100.json', async (route) => {
-    const response = await route.fetch();
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    await route.fulfill({ response });
+  let releaseSapporo!: () => void;
+  const sapporoGate = new Promise<void>((resolve) => {
+    releaseSapporo = resolve;
   });
-  await page.locator('#city').selectOption('01100');
-  await page.locator('#city').selectOption('47201');
-  await page.getByRole('tab', { name: 'Monthly data', exact: true }).click();
-  await expect(page.locator('table caption')).toContainText('Naha');
-  await expect(page.locator('.monthly-table tbody tr')).toHaveCount(8);
+  let markSapporoReady!: () => void;
+  let rejectSapporoReady!: (error: unknown) => void;
+  const sapporoReady = new Promise<void>((resolve, reject) => {
+    markSapporoReady = resolve;
+    rejectSapporoReady = reject;
+  });
+  let sapporoHandler: Promise<void> | undefined;
+  const delayedSapporo = (route: Route) => {
+    sapporoHandler = (async () => {
+      const response = await route.fetch();
+      const status = response.status();
+      const headers = response.headers();
+      const body = await response.body();
+      await response.dispose();
+      markSapporoReady();
+      await sapporoGate;
+      await route.fulfill({ status, headers, body });
+    })();
+    // A failed fetch must reject the readiness wait as well as the route handler.
+    void sapporoHandler.catch(rejectSapporoReady);
+    return sapporoHandler;
+  };
+  const sapporoRoute = '**/cities/01100.json';
+  await page.route(sapporoRoute, delayedSapporo);
+  try {
+    await page.locator('#city').selectOption('01100');
+    await sapporoReady;
+    await page.locator('#city').selectOption('47201');
+    await page.getByRole('tab', { name: 'Monthly data', exact: true }).click();
+    await expect(page.locator('table caption')).toContainText('Naha');
+    await expect(page.locator('.monthly-table tbody tr')).toHaveCount(8);
+    releaseSapporo();
+    await sapporoHandler;
+    await expect(page.locator('table caption')).toContainText('Naha');
+    await expect(page.locator('#city')).toHaveValue('47201');
+    await expect(page.locator('#qty-carton-milk')).toHaveValue('2000');
+    await expect(page.locator('#unit-carton-milk')).toHaveValue('mL');
+  } finally {
+    releaseSapporo();
+    try {
+      await sapporoHandler;
+    } finally {
+      await page.unroute(sapporoRoute, delayedSapporo);
+    }
+  }
 });
 
 test('desktop fits its viewport and long basket and data lists scroll inside panels', async ({
