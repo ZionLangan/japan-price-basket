@@ -1,7 +1,7 @@
 apiVersion: "kustomize.toolkit.fluxcd.io/v1"
 kind: "Kustomization"
 metadata:
-  name: "stage-b6a0591741a638f84b1b74933a017cb469fcc1c1"
+  name: "stage-bb4c2e260b22b8a9e99224339f0437e45b37d30f"
   namespace: "japan-price-basket"
 spec:
   interval: "5m"
@@ -10,14 +10,14 @@ spec:
   sourceRef:
     kind: "GitRepository"
     name: "app-source"
-  path: "./ops/kubernetes/production/releases/app-b6a0591741a638f84b1b74933a017cb469fcc1c1/stage"
+  path: "./ops/kubernetes/production/releases/app-bb4c2e260b22b8a9e99224339f0437e45b37d30f/stage"
   prune: false
   serviceAccountName: "app-reconciler"
   healthChecks:
     -
       apiVersion: "batch/v1"
       kind: "Job"
-      name: "jpb-stage-b6a0591741a638f84b1b74933a017cb469fcc1c1"
+      name: "jpb-stage-bb4c2e260b22b8a9e99224339f0437e45b37d30f"
       namespace: "japan-price-basket"
 ---
 apiVersion: "kustomize.toolkit.fluxcd.io/v1"
@@ -32,12 +32,12 @@ spec:
   sourceRef:
     kind: "GitRepository"
     name: "app-source"
-  path: "./ops/kubernetes/production/releases/app-b6a0591741a638f84b1b74933a017cb469fcc1c1/web"
+  path: "./ops/kubernetes/production/releases/app-bb4c2e260b22b8a9e99224339f0437e45b37d30f/web"
   prune: true
   serviceAccountName: "app-reconciler"
   dependsOn:
     -
-      name: "stage-b6a0591741a638f84b1b74933a017cb469fcc1c1"
+      name: "stage-bb4c2e260b22b8a9e99224339f0437e45b37d30f"
   healthChecks:
     -
       apiVersion: "apps/v1"
