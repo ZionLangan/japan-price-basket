@@ -104,6 +104,15 @@ not intrinsically require a cluster. Capacity must be measured during image
 pull, staging, rollout and rollback, including terminating pods and disk
 retention. Keep builds and the large source archive off the serving host.
 
+The current image copies the roughly 1.25 GB static payload and source-specific
+release metadata in one `COPY` layer. Even a runtime security update can require
+unpacking that payload when the image is not cached. On the current 2 GB host
+baseline, a cold image pull has failed capacity and availability acceptance.
+Success with a cached image does not establish that future cold pulls are safe.
+Preserve the 20% available-memory and disk gates; remedy packaging or host
+capacity and repeat measurements through a cold pull, staging, rollout and
+rollback before claiming uninterrupted releases with a cold image cache.
+
 On small AlmaLinux hosts, check usable memory and the crash-kernel reservation
 before sizing the workload:
 
