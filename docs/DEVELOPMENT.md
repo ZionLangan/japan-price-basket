@@ -7,7 +7,7 @@ server.
 
 ## Requirements
 
-- Node.js 24.15.0, pinned in `.nvmrc`, and npm.
+- Node.js 24.22.1, pinned in `.nvmrc`, and npm.
 - Python 3.12, pinned in `.python-version`, for ingestion checks and data tools.
 - Several GB of available RAM for publication and testing. The approved archive
   expands to about 1.21 GB, and publication creates separate files for each city.
@@ -20,6 +20,7 @@ server serves the generated files without running Node.js or Python.
 Run these commands from the repository root:
 
 ```sh
+node --version # must match .nvmrc
 npm ci
 npm run build
 npm run preview -- --port 4173 --strictPort

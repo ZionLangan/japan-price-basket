@@ -29,7 +29,7 @@ official Consumer Price Index or a complete household food budget. See
 
 ## Run locally
 
-Use Node **24.15.0**, recorded in `.nvmrc`:
+Use Node **24.22.1**, recorded in `.nvmrc`:
 
 ```sh
 npm ci
