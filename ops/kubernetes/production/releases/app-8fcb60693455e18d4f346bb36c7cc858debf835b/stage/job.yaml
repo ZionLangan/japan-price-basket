@@ -1,0 +1,79 @@
+apiVersion: "batch/v1"
+kind: "Job"
+metadata:
+  name: "jpb-stage-8fcb60693455e18d4f346bb36c7cc858debf835b"
+  namespace: "japan-price-basket"
+  labels:
+    app.kubernetes.io/name: "japan-price-basket"
+    app.kubernetes.io/component: "stage"
+    jpb.example/app-release: "app-8fcb60693455e18d4f346bb36c7cc858debf835b"
+  annotations:
+    jpb.example/image: "ghcr.io/zionlangan/japan-price-basket@sha256:ab7337f0c7667cf915d94ec3ea22c809a8633fe3176c1438b0000374b3be5480"
+    jpb.example/dataset: "rps-2026-08-bb299a380848"
+spec:
+  activeDeadlineSeconds: 900
+  backoffLimit: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "japan-price-basket"
+        app.kubernetes.io/component: "stage"
+        jpb.example/app-release: "app-8fcb60693455e18d4f346bb36c7cc858debf835b"
+    spec:
+      serviceAccountName: "web"
+      automountServiceAccountToken: false
+      restartPolicy: "Never"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 101
+        runAsGroup: 101
+        fsGroup: 101
+        fsGroupChangePolicy: "OnRootMismatch"
+        seccompProfile:
+          type: "RuntimeDefault"
+      containers:
+        -
+          name: "stage"
+          image: "ghcr.io/zionlangan/japan-price-basket@sha256:ab7337f0c7667cf915d94ec3ea22c809a8633fe3176c1438b0000374b3be5480"
+          imagePullPolicy: "IfNotPresent"
+          args:
+            - "stage"
+          env:
+            -
+              name: "EXPECTED_APP_RELEASE"
+              value: "app-8fcb60693455e18d4f346bb36c7cc858debf835b"
+            -
+              name: "EXPECTED_DATASET"
+              value: "rps-2026-08-bb299a380848"
+            -
+              name: "EXPECTED_IMAGE"
+              value: "ghcr.io/zionlangan/japan-price-basket@sha256:ab7337f0c7667cf915d94ec3ea22c809a8633fe3176c1438b0000374b3be5480"
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - "ALL"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          volumeMounts:
+            -
+              name: "releases"
+              mountPath: "/srv/releases"
+            -
+              name: "tmp"
+              mountPath: "/tmp"
+      volumes:
+        -
+          name: "releases"
+          persistentVolumeClaim:
+            claimName: "release-store"
+        -
+          name: "tmp"
+          emptyDir:
+            sizeLimit: "64Mi"
