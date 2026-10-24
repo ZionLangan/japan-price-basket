@@ -1,13 +1,13 @@
 {
-  "image": "docker.io/nginxinc/nginx-unprivileged:1.30.5-alpine@sha256:56b8272e43a0525f67aed68d1e0794a712d10e3e45a563e118e9a77c817e6f86",
-  "repository": "docker.io/nginxinc/nginx-unprivileged",
-  "tag": "1.30.5-alpine",
-  "digest": "sha256:56b8272e43a0525f67aed68d1e0794a712d10e3e45a563e118e9a77c817e6f86",
-  "reference": "docker.io/nginxinc/nginx-unprivileged:1.30.5-alpine@sha256:56b8272e43a0525f67aed68d1e0794a712d10e3e45a563e118e9a77c817e6f86",
-  "verifiedAt": "2026-10-12",
-  "registry": "https://registry-1.docker.io/v2/nginxinc/nginx-unprivileged/manifests/1.30.5-alpine",
+  "image": "docker.io/nginx/nginx-unprivileged:1.30.6-alpine@sha256:517607ae849a46afbd400616a783e4ead0290f52d20ccc0618ccea1a49362474",
+  "repository": "docker.io/nginx/nginx-unprivileged",
+  "tag": "1.30.6-alpine",
+  "digest": "sha256:517607ae849a46afbd400616a783e4ead0290f52d20ccc0618ccea1a49362474",
+  "reference": "docker.io/nginx/nginx-unprivileged:1.30.6-alpine@sha256:517607ae849a46afbd400616a783e4ead0290f52d20ccc0618ccea1a49362474",
+  "verifiedAt": "2026-10-24",
+  "registry": "https://registry-1.docker.io/v2/nginx/nginx-unprivileged/manifests/1.30.6-alpine",
   "platforms": {
-    "linux/amd64": "sha256:0f5f7068c5f5bf7046dbf649a08810ec1693967a9f488b8ff3998be6dd34bf6c",
-    "linux/arm64": "sha256:6e599b96f10ade2c6e6c8bd708b888e43cb7ae0364031c363ef44eacda0228ba"
+    "linux/amd64": "sha256:9a7517258993d0a83994969223b4e9b75a30aae86a649706385a5875dff5deea",
+    "linux/arm64": "sha256:1a22921d4a875df3deaca7710ecd4667886ef15a890baef80ff44df6cfc4cd62"
   }
 }

@@ -78,7 +78,14 @@ commit, dataset, policy, observation cutoff, payload hashes and base/image
 digests; publish provenance, an SBOM and scan results alongside the image. A
 deployment references an immutable digest, not a mutable `latest` tag.
 
-The Nginx base is digest-pinned in `ops/containers/base-image.lock.json`.
+The Nginx 1.30.6 base is digest-pinned in `ops/containers/base-image.lock.json`.
+It uses the `nginx/nginx-unprivileged` Docker Hub namespace selected by the
+[upstream project](https://github.com/nginx/docker-nginx-unprivileged) for this
+release. Nginx 1.30.6 includes the
+[October 2026 security fixes](https://nginx.org/en/security_advisories.html).
+The container removes inherited `curl` and `libcurl`, which serving and staging
+do not use, and fails its build if either remains after package installation.
+CI HTTP smoke checks use the runner's curl.
 The Dockerfile requires patched Alpine package floors: zlib `1.3.2-r1`
 (CVE-2026-85091), libexpat `2.9.0-r0` (CVE-2026-77214), and libx11
 `1.8.14-r0` (CVE-2026-88806), and libxpm `3.5.20-r0` (CVE-2026-94287).
