@@ -87,8 +87,10 @@ The container removes inherited `curl` and `libcurl`, which serving and staging
 do not use, and fails its build if either remains after package installation.
 CI HTTP smoke checks use the runner's curl.
 The Dockerfile requires patched Alpine package floors: zlib `1.3.2-r1`
-(CVE-2026-85091), libexpat `2.9.0-r0` (CVE-2026-77214), and libx11
-`1.8.14-r0` (CVE-2026-88806), and libxpm `3.5.20-r0` (CVE-2026-94287).
+(CVE-2026-85091), libexpat `2.9.0-r0` (CVE-2026-77214), libx11
+`1.8.14-r0` (CVE-2026-88806), libxpm `3.5.20-r0` (CVE-2026-94287),
+and both musl and musl-utils `1.2.6-r3`
+([CVE-2026-107891](https://www.alpinelinux.org/posts/Alpine-3.21.9-3.22.7-3.23.7-3.24.3-released.html#musl)).
 These constraints replace older inherited
 packages and fail the build if the configured repositories cannot supply them.
 Rebuild, test and scan the resulting image after any base or package change;
